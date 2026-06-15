@@ -1,0 +1,27 @@
+{%- doc -%}
+  Compact product card used inside the wishlist drawer (and recommendations).
+  @param {object} product - required
+{%- enddoc -%}
+<div class="favorite-card">
+  <div class="favorite-card__media">
+    <a href="{{ product.url }}" class="favorite-card__media-link" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '165, 360, 535', sizes: '200px', alt: product.title, class: 'favorite-card__image' }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'favorite-card__image' }}
+      {%- endif -%}
+    </a>
+    {% render 'favorite-toggle', product: product %}
+  </div>
+  <div class="favorite-card__info">
+    <a href="{{ product.url }}" class="favorite-card__title">{{ product.title }}</a>
+    <span class="favorite-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="favorite-card__price-sale">{{ product.price | money }}</span>
+        <s class="favorite-card__price-compare">{{ product.compare_at_price | money }}</s>
+      {%- else -%}
+        {{ product.price | money }}
+      {%- endif -%}
+    </span>
+  </div>
+</div>

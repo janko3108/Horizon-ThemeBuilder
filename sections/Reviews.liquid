@@ -1,0 +1,411 @@
+{%- comment -%}
+  ============================================================
+  Review Carousel (Trustpilot-style)
+  ------------------------------------------------------------
+  Fully customizable review/testimonial slider.
+  Everything is editable from the theme editor:
+    • Each review is a block (stars, title, text, author, date)
+    • Star color / shape / optional custom star image
+    • Provider logo (Trustpilot, Reviews.io, etc.)
+    • Summary rating, review count + link, summary text
+    • Cards per view (desktop / tablet / mobile), colors, spacing
+    • Heading + body font AND size
+  Scroll: arrow buttons scroll one card at a time (smooth, snap).
+  ============================================================
+{%- endcomment -%}
+
+{%- liquid
+  assign sec = section.settings
+  assign heading_font = sec.heading_font
+  assign body_font = sec.body_font
+-%}
+
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+
+  #ReviewCarousel-{{ section.id }} {
+    --rc-gap: {{ sec.card_gap }}px;
+    --rc-cards: {{ sec.cards_desktop }};
+    --rc-cards-tablet: {{ sec.cards_tablet }};
+    --rc-cards-mobile: {{ sec.cards_mobile }};
+    --rc-card-bg: {{ sec.card_bg }};
+    --rc-card-radius: {{ sec.card_radius }}px;
+    --rc-card-border: {{ sec.card_border }};
+    --rc-title: {{ sec.title_color }};
+    --rc-text: {{ sec.text_color }};
+    --rc-muted: {{ sec.muted_color }};
+    --rc-star: {{ sec.star_color }};
+    --rc-star-empty: {{ sec.star_empty_color }};
+    --rc-arrow: {{ sec.arrow_color }};
+    --rc-arrow-border: {{ sec.arrow_border_color }};
+    --rc-arrow-size: {{ sec.arrow_size }}px;
+    --rc-arrow-icon: {{ sec.arrow_icon_size }}px;
+    --rc-arrow-stroke: {{ sec.arrow_stroke }};
+    --rc-arrow-radius: {{ sec.arrow_radius }}%;
+    --rc-arrow-bw: {{ sec.arrow_border_width }}px;
+    --rc-arrow-bg: {% if sec.arrow_bg_transparent %}transparent{% else %}{{ sec.arrow_bg }}{% endif %};
+    --rc-arrow-bg-hover: {{ sec.arrow_bg_hover }};
+    --rc-link: {{ sec.link_color }};
+    --rc-font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --rc-font-heading-weight: {{ heading_font.weight }};
+    --rc-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --rc-font-body-weight: {{ body_font.weight }};
+    --rc-title-size: {{ sec.title_size }}px;
+    --rc-body-size: {{ sec.body_size }}px;
+    --rc-meta-size: {{ sec.meta_size }}px;
+    background: {{ sec.section_bg }};
+    padding: {{ sec.padding_top }}px 0 {{ sec.padding_bottom }}px;
+    font-family: var(--rc-font-body);
+    font-weight: var(--rc-font-body-weight);
+  }
+  #ReviewCarousel-{{ section.id }} .rc-heading,
+  #ReviewCarousel-{{ section.id }} .rc-card-title,
+  #ReviewCarousel-{{ section.id }} .rc-card-author {
+    font-family: var(--rc-font-heading);
+  }
+  #ReviewCarousel-{{ section.id }} .rc-wrap {
+    max-width: {{ sec.max_width }}px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-heading {
+    text-align: center;
+    color: var(--rc-title);
+    font-size: {{ sec.heading_size }}px;
+    margin: 0 0 24px;
+    font-weight: 700;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-viewport {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-track {
+    display: flex;
+    gap: var(--rc-gap);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    flex: 1 1 auto;
+    padding: 4px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-track::-webkit-scrollbar { display: none; }
+
+  #ReviewCarousel-{{ section.id }} .rc-card {
+    flex: 0 0 calc((100% - (var(--rc-cards) - 1) * var(--rc-gap)) / var(--rc-cards));
+    scroll-snap-align: start;
+    background: var(--rc-card-bg);
+    border: 1px solid var(--rc-card-border);
+    border-radius: var(--rc-card-radius);
+    padding: 22px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-stars {
+    display: inline-flex;
+    gap: 3px;
+    margin-bottom: 12px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-star {
+    width: {{ sec.star_size }}px;
+    height: {{ sec.star_size }}px;
+    background: var(--rc-star);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-star.is-empty { background: var(--rc-star-empty); }
+  #ReviewCarousel-{{ section.id }} .rc-star svg { width: 70%; height: 70%; fill: #fff; }
+  #ReviewCarousel-{{ section.id }} .rc-star-img { width: {{ sec.star_size }}px; height: {{ sec.star_size }}px; object-fit: contain; }
+
+  #ReviewCarousel-{{ section.id }} .rc-card-title {
+    color: var(--rc-title);
+    font-weight: 700;
+    font-size: var(--rc-title-size);
+    margin: 0 0 8px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-card-body {
+    color: var(--rc-text);
+    font-family: var(--rc-font-body);
+    font-weight: var(--rc-font-body-weight);
+    font-size: var(--rc-body-size);
+    line-height: 1.45;
+    margin: 0 0 18px;
+    {%- if sec.clamp_lines > 0 -%}
+    display: -webkit-box;
+    -webkit-line-clamp: {{ sec.clamp_lines }};
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    {%- endif -%}
+  }
+  #ReviewCarousel-{{ section.id }} .rc-card-meta {
+    color: var(--rc-muted);
+    font-size: var(--rc-meta-size);
+    margin-top: auto;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-card-author { color: var(--rc-text); font-weight: 700; }
+
+  #ReviewCarousel-{{ section.id }} .rc-arrow {
+    flex: 0 0 auto;
+    width: var(--rc-arrow-size);
+    height: var(--rc-arrow-size);
+    border-radius: var(--rc-arrow-radius);
+    border: var(--rc-arrow-bw) solid var(--rc-arrow-border);
+    background: var(--rc-arrow-bg);
+    color: var(--rc-arrow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .2s, background .2s;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-arrow:hover { background: var(--rc-arrow-bg-hover); }
+  #ReviewCarousel-{{ section.id }} .rc-arrow:disabled { opacity: .35; cursor: default; }
+  #ReviewCarousel-{{ section.id }} .rc-arrow svg { width: var(--rc-arrow-icon); height: var(--rc-arrow-icon); stroke-width: var(--rc-arrow-stroke); }
+
+  #ReviewCarousel-{{ section.id }} .rc-summary {
+    text-align: center;
+    color: var(--rc-text);
+    margin-top: 18px;
+    font-size: var(--rc-body-size);
+  }
+  #ReviewCarousel-{{ section.id }} .rc-summary a { color: var(--rc-link); }
+  #ReviewCarousel-{{ section.id }} .rc-provider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  #ReviewCarousel-{{ section.id }} .rc-provider img { height: {{ sec.logo_height }}px; width: auto; }
+
+  @media (max-width: 990px) {
+    #ReviewCarousel-{{ section.id }} .rc-card {
+      flex: 0 0 calc((100% - (var(--rc-cards-tablet) - 1) * var(--rc-gap)) / var(--rc-cards-tablet));
+    }
+  }
+  @media (max-width: 749px) {
+    #ReviewCarousel-{{ section.id }} .rc-card {
+      flex: 0 0 calc((100% - (var(--rc-cards-mobile) - 1) * var(--rc-gap)) / var(--rc-cards-mobile));
+    }
+  }
+</style>
+
+<div id="ReviewCarousel-{{ section.id }}" class="rc-section">
+  <div class="rc-wrap">
+
+    {%- if sec.heading != blank -%}
+      <h2 class="rc-heading">{{ sec.heading }}</h2>
+    {%- endif -%}
+
+    <div class="rc-viewport">
+      {%- if sec.show_arrows -%}
+        <button class="rc-arrow rc-prev" type="button" aria-label="Previous reviews">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+      {%- endif -%}
+
+      <div class="rc-track" data-rc-track>
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            assign rating = b.stars | plus: 0
+            if rating > 5
+              assign rating = 5
+            endif
+          -%}
+          <article class="rc-card" {{ block.shopify_attributes }}>
+            <div class="rc-stars" aria-label="{{ rating }} of 5 stars">
+              {%- assign star_src = b.star_image | default: sec.star_image_global -%}
+              {%- if star_src != blank -%}
+                {%- for i in (1..5) -%}
+                  {%- if i <= rating -%}
+                    <img class="rc-star-img" src="{{ star_src | image_url: width: 60 }}" alt="" loading="lazy" width="30" height="30">
+                  {%- else -%}
+                    <span class="rc-star is-empty"></span>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- for i in (1..5) -%}
+                  <span class="rc-star{% if i > rating %} is-empty{% endif %}">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  </span>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+
+            {%- if b.title != blank -%}
+              <h3 class="rc-card-title">{{ b.title | escape }}</h3>
+            {%- endif -%}
+
+            {%- if b.body != blank -%}
+              <p class="rc-card-body">{{ b.body }}</p>
+            {%- endif -%}
+
+            {%- if b.author != blank or b.date != blank -%}
+              <p class="rc-card-meta">
+                {%- if b.author != blank -%}<span class="rc-card-author">{{ b.author | escape }}</span>{%- endif -%}
+                {%- if b.author != blank and b.date != blank -%}, {% endif -%}
+                {{ b.date | escape }}
+              </p>
+            {%- endif -%}
+          </article>
+        {%- else -%}
+          <article class="rc-card">
+            <p class="rc-card-body">Add review blocks in the theme editor to get started.</p>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if sec.show_arrows -%}
+        <button class="rc-arrow rc-next" type="button" aria-label="Next reviews">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      {%- endif -%}
+    </div>
+
+    {%- if sec.summary_text != blank -%}
+      <div class="rc-summary">{{ sec.summary_text }}</div>
+    {%- endif -%}
+
+    {%- if sec.provider_logo != blank -%}
+      <div class="rc-provider">
+        {%- if sec.provider_url != blank -%}<a href="{{ sec.provider_url }}" target="_blank" rel="noopener">{% endif -%}
+          <img src="{{ sec.provider_logo | image_url: width: 400 }}" alt="{{ sec.provider_name | default: 'Reviews' | escape }}" loading="lazy">
+        {%- if sec.provider_url != blank -%}</a>{% endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('ReviewCarousel-{{ section.id }}');
+    if (!root) return;
+    var track = root.querySelector('[data-rc-track]');
+    var prev = root.querySelector('.rc-prev');
+    var next = root.querySelector('.rc-next');
+    if (!track) return;
+
+    function step() {
+      var card = track.querySelector('.rc-card');
+      if (!card) return track.clientWidth;
+      var gap = parseInt(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0', 10) || 0;
+      return card.getBoundingClientRect().width + gap;
+    }
+    function update() {
+      if (!prev || !next) return;
+      var max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max;
+    }
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Review Carousel",
+  "tag": "section",
+  "class": "section-review-carousel",
+  "settings": [
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font (titles & names)", "default": "helvetica_n7" },
+    { "type": "font_picker", "id": "body_font", "label": "Body font (review text)", "default": "helvetica_n4" },
+    { "type": "range", "id": "title_size", "label": "Card title size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "body_size", "label": "Body / review text size", "min": 11, "max": 24, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "meta_size", "label": "Author / date size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 14 },
+
+    { "type": "header", "content": "General" },
+    { "type": "text", "id": "heading", "label": "Heading (optional)" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 16, "max": 48, "step": 1, "unit": "px", "default": 28 },
+    { "type": "range", "id": "max_width", "label": "Max content width", "min": 800, "max": 1600, "step": 20, "unit": "px", "default": 1200 },
+
+    { "type": "header", "content": "Layout & scroll" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrow buttons", "default": true },
+    { "type": "range", "id": "cards_desktop", "label": "Cards per view (desktop)", "min": 1, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "cards_tablet", "label": "Cards per view (tablet)", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "cards_mobile", "label": "Cards per view (mobile)", "min": 1, "max": 4, "step": 1, "default": 1 },
+    { "type": "range", "id": "card_gap", "label": "Gap between cards", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "clamp_lines", "label": "Max body lines (0 = no limit)", "min": 0, "max": 8, "step": 1, "default": 3 },
+
+    { "type": "header", "content": "Stars" },
+    { "type": "paragraph", "content": "Set the star count per review on each block. Uses SVG stars by default; upload a star image to override." },
+    { "type": "range", "id": "star_size", "label": "Star size", "min": 12, "max": 40, "step": 1, "unit": "px", "default": 22 },
+    { "type": "color", "id": "star_color", "label": "Star color (filled)", "default": "#00b67a" },
+    { "type": "color", "id": "star_empty_color", "label": "Star color (empty)", "default": "#dcdce6" },
+    { "type": "image_picker", "id": "star_image_global", "label": "Custom star image (optional, overrides SVG)" },
+
+    { "type": "header", "content": "Provider logo & summary" },
+    { "type": "image_picker", "id": "provider_logo", "label": "Provider logo (Trustpilot, etc.)" },
+    { "type": "text", "id": "provider_name", "label": "Provider name (alt text)", "default": "Trustpilot" },
+    { "type": "url", "id": "provider_url", "label": "Provider link" },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 14, "max": 60, "step": 1, "unit": "px", "default": 24 },
+    { "type": "richtext", "id": "summary_text", "label": "Summary text", "default": "<p>Rated <strong>4.4</strong> / 5 based on <strong>1,209 reviews</strong>. Showing our 4 & 5 star reviews.</p>" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "section_bg", "label": "Section background", "default": "#ffffff" },
+    { "type": "color", "id": "card_bg", "label": "Card background", "default": "#f7f7f9" },
+    { "type": "color", "id": "card_border", "label": "Card border", "default": "#ececf0" },
+    { "type": "range", "id": "card_radius", "label": "Card corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 6 },
+    { "type": "color", "id": "title_color", "label": "Title text", "default": "#191919" },
+    { "type": "color", "id": "text_color", "label": "Body text", "default": "#2b2b2b" },
+    { "type": "color", "id": "muted_color", "label": "Meta / date text", "default": "#6b6b76" },
+    { "type": "color", "id": "link_color", "label": "Link color", "default": "#191919" },
+
+    { "type": "header", "content": "Arrows (scroll buttons)" },
+    { "type": "range", "id": "arrow_size", "label": "Button size", "min": 24, "max": 72, "step": 1, "unit": "px", "default": 40 },
+    { "type": "range", "id": "arrow_icon_size", "label": "Icon size", "min": 8, "max": 32, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "arrow_stroke", "label": "Icon thickness", "min": 1, "max": 4, "step": 0.5, "default": 2.5 },
+    { "type": "range", "id": "arrow_radius", "label": "Corner radius (0 = square, 50 = circle)", "min": 0, "max": 50, "step": 1, "unit": "%", "default": 50 },
+    { "type": "range", "id": "arrow_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "arrow_color", "label": "Icon color", "default": "#191919" },
+    { "type": "color", "id": "arrow_border_color", "label": "Border color", "default": "#cccccc" },
+    { "type": "checkbox", "id": "arrow_bg_transparent", "label": "Transparent background", "default": true },
+    { "type": "color", "id": "arrow_bg", "label": "Background color", "default": "#ffffff" },
+    { "type": "color", "id": "arrow_bg_hover", "label": "Background on hover", "default": "#f0f0f0" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "stars", "label": "Star rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Title", "default": "Great product!" },
+        { "type": "textarea", "id": "body", "label": "Review text", "default": "Loved it — fast delivery and exactly as described." },
+        { "type": "text", "id": "author", "label": "Author name", "default": "Customer" },
+        { "type": "text", "id": "date", "label": "Date", "default": "May 16" },
+        { "type": "image_picker", "id": "star_image", "label": "Custom star image (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Review Carousel",
+      "blocks": [
+        { "type": "review", "settings": { "stars": 5, "title": "Köpte kaffe i slutet av förra året", "body": "Köpte kaffe i slutet av förra året den kom relativt snabbt men allt fanns inte med i...", "author": "Antonio", "date": "16 maj" } },
+        { "type": "review", "settings": { "stars": 5, "title": "Lovely coffee", "body": "Lovely coffee, so convenient getting the coffee right to my...", "author": "Emilia Rentorp", "date": "15 maj" } },
+        { "type": "review", "settings": { "stars": 5, "title": "5/5 kundservice", "body": "Gott kaffe till ett mycket konkurrenskraftigt pris. Väldigt...", "author": "Alexander Lindstrøm", "date": "28 april" } },
+        { "type": "review", "settings": { "stars": 5, "title": "Väldigt god kaffe", "body": "Väldigt god kaffe, ser väldigt fram emot nästa dryck! Stort...", "author": "Saafiyah", "date": "20 april" } },
+        { "type": "review", "settings": { "stars": 5, "title": "Kaffe", "body": "utmärkt kaffe", "author": "ka", "date": "20 april" } },
+        { "type": "review", "settings": { "stars": 4, "title": "Bra kundservice", "body": "Svårt att få adapter till Vertuo att fungera till 100%. Då jag...", "author": "Filip Hansson", "date": "26 januari" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,56 @@
+{%- doc -%}
+  Wishlist heart toggle. Ported from mimoa's favorites system, adapted for Horizon.
+  Initial active state is set client-side from localStorage (see wishlist.js).
+  Shown by default; hide it by adding a boolean theme setting `show_favorites` set to false.
+  @param {object} product - required
+{%- enddoc -%}
+{%- if product != blank and settings.show_favorites != false -%}
+  <button
+    type="button"
+    class="favorite-toggle"
+    data-action="toggle-favorites"
+    data-handle="{{ product.handle | escape }}"
+    data-title="{{ product.title | escape }}"
+    state="not-active"
+    aria-pressed="false"
+    aria-label="Add to favorites"
+  >
+    <span class="favorite-toggle__icon favorite-toggle__icon--empty" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="favorite-toggle__icon favorite-toggle__icon--filled" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z"/></svg>
+    </span>
+  </button>
+{%- endif -%}
+
+{%- stylesheet -%}
+  .favorite-toggle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgb(var(--color-background-rgb, 255 255 255) / 0.82);
+    color: var(--color-foreground, #111);
+    cursor: pointer;
+    line-height: 0;
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+  .favorite-toggle:hover { background: var(--color-background, #fff); transform: scale(1.06); }
+  .favorite-toggle__icon { display: none; line-height: 0; }
+  .favorite-toggle .favorite-toggle__icon--empty { display: inline-flex; }
+  .favorite-toggle[state="active"] .favorite-toggle__icon--empty { display: none; }
+  .favorite-toggle[state="active"] .favorite-toggle__icon--filled { display: inline-flex; }
+  .favorite-toggle[state="active"] { color: #e2424a; }
+  @media (prefers-reduced-motion: reduce) { .favorite-toggle { transition: none; } }
+{%- endstylesheet -%}

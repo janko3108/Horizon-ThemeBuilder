@@ -1,0 +1,116 @@
+{%- comment -%}
+  Loading overlay — logic ported from the Palo Alto theme, adapted for Horizon.
+  Configurable from the theme editor under Theme settings > Loading overlay.
+
+  How it works:
+  - layout/theme.liquid renders <html class="page-loading ...">
+  - This snippet renders <loading-overlay> as the first element inside <body>
+  - CSS keeps the overlay visible while <html> has the .page-loading class
+  - The inline script removes .page-loading once the page has loaded; CSS then fades the overlay out
+{%- endcomment -%}
+
+{%- liquid
+  assign appearance = settings.loading_appearance | default: 'always'
+  assign image = settings.loading_image
+  assign image_width = settings.loading_image_width | default: 150
+  assign bg = settings.loading_background
+  assign image_width_2x = image_width | times: 2
+-%}
+
+{%- style -%}
+  {%- if bg != blank and bg.alpha != 0.0 -%}
+    :root { --loading-overlay-bg: {{ bg }}; }
+  {%- endif -%}
+
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--loading-overlay-bg, var(--color-background, #ffffff));
+  }
+
+  html:not(.page-loading) .loading-overlay {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    animation: lo-fade-out 0.6s ease;
+    transition: visibility 0s linear 0.6s;
+  }
+
+  .loading-overlay__spinner {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 3px solid rgb(var(--color-foreground-rgb, 0 0 0) / 0.2);
+    border-top-color: var(--color-foreground, #000000);
+    animation: lo-spin 0.8s linear infinite;
+  }
+
+  .loading-overlay__image {
+    max-width: {{ image_width }}px;
+    height: auto;
+    object-fit: contain;
+    animation: lo-pulse 2s infinite ease-in-out;
+  }
+
+  .loading-overlay__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  @keyframes lo-spin { to { transform: rotate(360deg); } }
+  @keyframes lo-fade-out { 0% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes lo-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-overlay__spinner, .loading-overlay__image { animation: none; }
+    html:not(.page-loading) .loading-overlay { animation: none; }
+  }
+{%- endstyle -%}
+
+{%- unless appearance == 'never' -%}
+  <loading-overlay class="loading-overlay" role="status" aria-live="polite">
+    {%- if image != blank -%}
+      {{ image | image_url: width: image_width_2x | image_tag:
+        class: 'loading-overlay__image',
+        loading: 'eager',
+        fetchpriority: 'high',
+        width: image_width,
+        alt: ''
+      }}
+    {%- else -%}
+      <span class="loading-overlay__spinner" aria-hidden="true"></span>
+    {%- endif -%}
+    <span class="loading-overlay__sr">Loading</span>
+  </loading-overlay>
+{%- endunless -%}
+
+<script>
+  (function () {
+    var appearance = {{ appearance | json }};
+    var root = document.documentElement;
+    function hide() { root.classList.remove('page-loading'); }
+
+    if (appearance === 'never') { hide(); return; }
+
+    if (appearance === 'once') {
+      if (sessionStorage.getItem('loaded')) { hide(); return; }
+      sessionStorage.setItem('loaded', 'true');
+    }
+
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      requestAnimationFrame(hide);
+    } else {
+      document.addEventListener('DOMContentLoaded', hide);
+    }
+    window.addEventListener('load', hide);
+    setTimeout(hide, 4000);
+  })();
+</script>

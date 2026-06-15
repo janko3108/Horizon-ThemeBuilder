@@ -1,0 +1,144 @@
+{%- liquid
+  assign show_recommendations = settings.favorites_show_recommendations
+  assign rec_collection = settings.favorites_collection
+  assign color_class = settings.drawer_color_scheme | default: 'scheme-1'
+  assign has_server_favorites = false
+  if cart.attributes.user_favorites == true or cart.attributes.user_favorites == 'true' or cart.attributes.user_favorites == '1'
+    assign has_server_favorites = true
+  endif
+-%}
+
+<script>
+  window.wishlistData = window.wishlistData || {};
+  window.wishlistData.customerLoggedIn = {% if customer %}true{% else %}false{% endif %};
+  window.wishlistData.serverHasFavorites = {{ has_server_favorites | json }};
+  window.wishlistData.root = {{ routes.root_url | json }};
+</script>
+
+<wishlist-drawer
+  id="wishlist-drawer"
+  class="wishlist-drawer"
+  section-id="{{ section.id }}"
+  data-guest-message="{{ settings.favorites_show_guest_account_message | default: false }}"
+  aria-hidden="true"
+>
+  <div class="wishlist-drawer__overlay" data-wishlist-close></div>
+  <div class="wishlist-drawer__panel color-{{ color_class }}" role="dialog" aria-modal="true" aria-label="Wishlist">
+    <div class="wishlist-drawer__header">
+      <p class="wishlist-drawer__title">Wishlist</p>
+      <button type="button" class="wishlist-drawer__close" data-wishlist-close aria-label="Close wishlist">
+        {{ 'icon-close.svg' | inline_asset_content }}
+      </button>
+    </div>
+
+    <div class="wishlist-drawer__body">
+      <div class="wishlist-drawer__content js-favorites-drawer-content">
+        <div class="favorites-drawer__empty-state">
+          <p class="favorites-drawer__empty-text">Your wishlist is empty.</p>
+
+          {%- if settings.favorites_button_text != blank and settings.favorites_button_url != blank -%}
+            <a class="button wishlist-empty__button" href="{{ settings.favorites_button_url }}">
+              {{- settings.favorites_button_text -}}
+            </a>
+          {%- endif -%}
+
+          {%- if show_recommendations and rec_collection != blank and rec_collection.products.size > 0 -%}
+            <div class="favorites-drawer__recommendations">
+              {%- if settings.favorites_title != blank -%}
+                <p class="favorites-drawer__rec-title">{{ settings.favorites_title }}</p>
+              {%- endif -%}
+              <div class="favorites-rec-scroll">
+                {%- for product in rec_collection.products limit: 8 -%}
+                  <div class="favorites-rec-slide">
+                    {%- render 'favorite-card', product: product -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="wishlist-drawer__footer">
+      <div class="favorites-removal-toast" data-removal-toast role="status" aria-live="polite" aria-atomic="true">
+        <div class="favorites-removal-toast__stack">
+          <p class="favorites-removal-toast__text"></p>
+          <button type="button" class="favorites-removal-toast__undo" data-removal-undo hidden>Undo</button>
+        </div>
+        <div class="favorites-removal-toast__border" aria-hidden="true">
+          <span class="favorites-removal-toast__border-fill" data-removal-border></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</wishlist-drawer>
+
+{% stylesheet %}
+  .wishlist-drawer { position: fixed; inset: 0; z-index: 1000; visibility: hidden; pointer-events: none; background: transparent; }
+  .wishlist-drawer.is-open { visibility: visible; pointer-events: auto; }
+  .wishlist-drawer__overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease; }
+  .wishlist-drawer.is-open .wishlist-drawer__overlay { opacity: 1; }
+  .wishlist-drawer__panel {
+    position: absolute; top: 0; right: 0; height: 100%; width: 420px; max-width: 92vw;
+    display: flex; flex-direction: column;
+    background: var(--color-background, #fff); color: var(--color-foreground, #111);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .wishlist-drawer.is-open .wishlist-drawer__panel { transform: translateX(0); }
+  .wishlist-drawer__header { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--color-border, #e6e6e6); }
+  .wishlist-drawer__title { margin: 0; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; }
+  .wishlist-drawer__close { background: none; border: none; cursor: pointer; padding: 4px; color: inherit; display: inline-flex; }
+  .wishlist-drawer__close svg { width: 18px; height: 18px; }
+  .wishlist-drawer__body { flex: 1 1 auto; overflow-y: auto; }
+  .wishlist-drawer__content { padding: 20px; }
+  .wishlist-drawer__content.favorites-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; }
+  .favorites-drawer__empty-state { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; padding: 24px 0; }
+  .favorites-drawer__empty-text { margin: 0; color: var(--color-foreground-muted, #666); }
+  .favorites-drawer__recommendations { width: 100%; margin-top: 16px; }
+  .favorites-drawer__rec-title { margin: 0 0 12px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; text-align: left; }
+  .favorites-rec-scroll { display: grid; grid-auto-flow: column; grid-auto-columns: 58%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+  .favorites-rec-slide { scroll-snap-align: start; }
+
+  .favorite-card { display: flex; flex-direction: column; gap: 8px; }
+  .favorite-card__media { position: relative; overflow: hidden; border-radius: var(--style-border-radius-popover, 4px); background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.04); aspect-ratio: 3 / 4; }
+  .favorite-card__media-link { display: block; height: 100%; }
+  .favorite-card__image { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .favorite-card__info { display: flex; flex-direction: column; gap: 2px; }
+  .favorite-card__title { font-size: 0.85rem; color: var(--color-foreground); text-decoration: none; line-height: 1.3; }
+  .favorite-card__price { font-size: 0.85rem; color: var(--color-foreground); }
+  .favorite-card__price-compare { color: var(--color-foreground-muted, #999); margin-left: 4px; }
+
+  .wishlist-drawer__footer { position: relative; }
+  .favorites-removal-toast {
+    position: absolute; left: 0; right: 0; bottom: 0; transform: translateY(100%); opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    background: var(--color-foreground, #111); color: var(--color-background, #fff); padding: 14px 18px;
+  }
+  .favorites-removal-toast.is-visible { transform: translateY(0); opacity: 1; }
+  .favorites-removal-toast__stack { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .favorites-removal-toast__text { margin: 0; font-size: 0.85rem; }
+  .favorites-removal-toast__undo { background: none; border: none; color: inherit; text-decoration: underline; cursor: pointer; font-size: 0.85rem; }
+  .favorites-removal-toast__border { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: rgb(var(--color-background-rgb, 255 255 255) / 0.25); }
+  .favorites-removal-toast__border-fill { display: block; height: 100%; width: 100%; background: currentColor; transform-origin: left; transform: scaleX(0); }
+  .favorites-removal-toast__border-fill.is-running { animation: wishlist-toast-fill linear forwards; }
+  @keyframes wishlist-toast-fill { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+  html.wishlist-open { overflow: hidden; }
+
+  .wishlist-trigger { position: relative; display: inline-flex; align-items: center; gap: 6px; background: none; border: none; cursor: pointer; color: inherit; padding: 0; font: inherit; line-height: 1; }
+  .wishlist-trigger svg { width: 20px; height: 20px; }
+  .wishlist-count { font-variant-numeric: tabular-nums; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wishlist-drawer__panel, .wishlist-drawer__overlay, .favorites-removal-toast { transition: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wishlist drawer",
+  "settings": []
+}
+{% endschema %}
