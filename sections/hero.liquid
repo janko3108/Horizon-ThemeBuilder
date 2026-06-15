@@ -455,6 +455,22 @@
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id, skip_contrast: true
   endif
 -%}
+{%- if section.settings.section_height_mobile != blank and section.settings.section_height_mobile != 'same' -%}
+  {%- liquid
+    if section.settings.section_height_mobile == 'custom'
+      assign hero_mobile_height = section.settings.section_height_custom_mobile | append: 'svh'
+    elsif section.settings.section_height_mobile == 'full-screen'
+      assign hero_mobile_height = '100svh'
+    else
+      assign hero_mobile_height = 'var(--section-height-' | append: section.settings.section_height_mobile | append: ')'
+    endif
+  -%}
+  <style>
+    @media screen and (max-width: 749px) {
+      #Hero-{{ section.id }} { --hero-min-height: {{ hero_mobile_height }} !important; }
+    }
+  </style>
+{%- endif -%}
 
 <div
   id="Hero-{{ section.id }}"
@@ -1144,6 +1160,32 @@
       "default": 50,
       "unit": "%",
       "visible_if": "{{ section.settings.section_height == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "section_height_mobile",
+      "label": "Mobile height",
+      "info": "Overrides the height above on mobile (\u2264749px).",
+      "options": [
+        { "value": "same", "label": "Same as desktop" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "full-screen", "label": "Full screen" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "same"
+    },
+    {
+      "type": "range",
+      "id": "section_height_custom_mobile",
+      "label": "Custom mobile height",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50,
+      "unit": "%",
+      "visible_if": "{{ section.settings.section_height_mobile == 'custom' }}"
     },
     {
       "type": "header",

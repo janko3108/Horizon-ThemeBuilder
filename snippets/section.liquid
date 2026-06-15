@@ -20,6 +20,22 @@
 %}
 
 <div class="section-background color-custom-{{ section_id }}"></div>
+{%- if section.settings.section_height_mobile != blank and section.settings.section_height_mobile != 'same' -%}
+  {%- liquid
+    if section.settings.section_height_mobile == 'custom'
+      assign section_mobile_height = section.settings.section_height_custom_mobile | append: 'svh'
+    elsif section.settings.section_height_mobile == 'full-screen'
+      assign section_mobile_height = '100svh'
+    else
+      assign section_mobile_height = 'var(--section-height-' | append: section.settings.section_height_mobile | append: ')'
+    endif
+  -%}
+  <style>
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .section { --section-min-height: {{ section_mobile_height }} !important; }
+    }
+  </style>
+{%- endif -%}
 <div
   class="section section--{{ section.settings.section_width }} color-custom-{{ section_id }}"
   data-testid="ui-test-section"

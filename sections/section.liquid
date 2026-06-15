@@ -230,6 +230,32 @@
       "visible_if": "{{ section.settings.section_height == 'custom' }}"
     },
     {
+      "type": "select",
+      "id": "section_height_mobile",
+      "label": "Mobile height",
+      "info": "Overrides the height above on mobile (\u2264749px).",
+      "options": [
+        { "value": "same", "label": "Same as desktop" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "full-screen", "label": "Full screen" },
+        { "value": "custom", "label": "Custom" }
+      ],
+      "default": "same"
+    },
+    {
+      "type": "range",
+      "id": "section_height_custom_mobile",
+      "label": "Custom mobile height",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50,
+      "unit": "%",
+      "visible_if": "{{ section.settings.section_height_mobile == 'custom' }}"
+    },
+    {
       "type": "header",
       "content": "t:content.appearance"
     },

@@ -1,8 +1,6 @@
 <!doctype html>
 <html
-  {% if request.design_mode %}
-    class="shopify-design-mode"
-  {% endif %}
+  class="page-loading{% if request.design_mode %} shopify-design-mode{% endif %}"
   lang="{{ request.locale.iso_code }}"
 >
   <head>
@@ -39,6 +37,7 @@
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    {% render 'loading-overlay' %}
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
@@ -140,5 +139,8 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    {% section 'favorites-drawer' %}
+    <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

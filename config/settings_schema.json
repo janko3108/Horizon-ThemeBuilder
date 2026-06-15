@@ -2116,5 +2116,56 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Loading overlay",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shows a full-screen overlay while the page loads, then fades out. Ported from the Palo Alto theme."
+      },
+      {
+        "type": "select",
+        "id": "loading_appearance",
+        "label": "Appearance",
+        "default": "always",
+        "options": [
+          {
+            "value": "always",
+            "label": "Always"
+          },
+          {
+            "value": "once",
+            "label": "Once per session"
+          },
+          {
+            "value": "never",
+            "label": "Never"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "loading_image",
+        "label": "Image",
+        "info": "Optional. If empty, a spinner is shown."
+      },
+      {
+        "type": "range",
+        "id": "loading_image_width",
+        "label": "Image width",
+        "min": 50,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "default": 150
+      },
+      {
+        "type": "color",
+        "id": "loading_background",
+        "label": "Background",
+        "default": "#FFFFFF"
+      }
+    ]
   }
 ]

@@ -4,6 +4,7 @@
 
 {% capture children %}
   {% unless product == blank %}
+    {% render 'favorite-toggle', product: product %}
     <div
       class="product-badges product-badges--{{ settings.badge_position }}"
       style="

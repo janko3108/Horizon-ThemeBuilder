@@ -336,6 +336,7 @@
   {% endif %}
   data-skip-node-update
   data-scroll-direction="none"
+  data-mobile-nav="{{ section.settings.mobile_navigation_style }}"
   {% if section.settings.menu_row == 'top' and bottom_row_blocks.size > 0 %}
     data-submenu-overlap-bottom-row
   {% endif %}
@@ -1167,6 +1168,35 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* =====================================================================
+     Mobile navigation styles (header setting "Mobile navigation style")
+     ===================================================================== */
+  @media screen and (max-width: 749px) {
+    /* Option A — centered logo, account moved into the hamburger drawer */
+    #header-component[data-mobile-nav='account_in_drawer'] header-actions .account-button {
+      display: none;
+    }
+
+    /* Option B — logo on the left next to the hamburger, all icons on the right */
+    #header-component[data-mobile-nav='logo_left'] .header__columns {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      grid-template-columns: none;
+      grid-template-areas: none;
+      padding-inline: var(--padding-3xs);
+    }
+    #header-component[data-mobile-nav='logo_left'] .header__drawer { order: 0; }
+    #header-component[data-mobile-nav='logo_left'] .header-logo {
+      order: 1;
+      justify-self: start;
+      margin-inline-end: auto;
+    }
+    #header-component[data-mobile-nav='logo_left'] .search-action { order: 2; }
+    #header-component[data-mobile-nav='logo_left'] header-actions { order: 3; }
+  }
+
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1611,6 +1641,18 @@
       ],
       "default": "none",
       "visible_if": "{{ section.settings.actions_display_style == 'text' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_navigation_style",
+      "label": "Mobile navigation style",
+      "info": "How the header is arranged on mobile.",
+      "options": [
+        { "value": "default", "label": "Centered logo (account on bar)" },
+        { "value": "account_in_drawer", "label": "Centered logo, account in menu drawer" },
+        { "value": "logo_left", "label": "Logo left, all icons right" }
+      ],
+      "default": "default"
     },
     {
       "type": "header",

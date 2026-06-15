@@ -20,6 +20,26 @@
     gap: 0;
     flex-shrink: 0;
   }
+
+  /* Align the swatches' left edge with the card name/price. The default swatch
+     padding adds the focus-ring inset on the inline-start side, which pushes the
+     swatches right of the left-aligned text. On product cards, remove that
+     inline-start inset (kept on the other sides so focus rings still clear) and
+     zero the fieldset's own default padding/border/margin. */
+  .product-card .variant-option {
+    margin-inline: 0;
+    padding: 0;
+    border: 0;
+    min-inline-size: 0;
+  }
+
+  .product-card swatches-variant-picker-component {
+    --overflow-list-padding-inline:
+      var(--product-swatches-padding-inline-start)
+      calc(
+        var(--product-swatches-padding-inline-end) + var(--focus-outline-offset) + var(--focus-outline-width)
+      );
+  }
 {% endstylesheet %}
 
 {% if product_has_swatches %}

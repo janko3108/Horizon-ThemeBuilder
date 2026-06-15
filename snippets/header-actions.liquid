@@ -63,6 +63,21 @@
   {% endif %}
   {{- block.shopify_attributes -}}
 >
+  {% comment %} Search trigger inside the actions cluster (ordered via CSS) {% endcomment %}
+  <search-button class="search-action header-actions__search">
+    <button
+      on:click="#search-modal/showDialog"
+      class="button-unstyled header-actions__action{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+      aria-label="{{ 'actions.search' | t | default: 'Search' }}"
+      aria-haspopup="dialog"
+    >
+      <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">Search</span>
+      <span class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}" aria-hidden="true">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="4.75" stroke="currentColor" stroke-width="var(--icon-stroke-width)"></circle><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="m12.5 12.5 3.25 3.25"></path></svg>
+      </span>
+    </button>
+  </search-button>
+
   {% if shop.customer_accounts_enabled %}
     {% liquid
       assign account_actions_style = ''
@@ -112,6 +127,30 @@
       </shopify-account>
     </div>
   {% endif %}
+
+  {% comment %} Wishlist action — follows the header Utilities settings (icon/text, size, font, case) {% endcomment %}
+  {% capture wishlist_heart_icon %}
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+  {% endcapture %}
+
+  <button
+    type="button"
+    class="header-actions__action wishlist-trigger button-unstyled{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+    data-wishlist-open
+    aria-haspopup="dialog"
+    aria-label="Wishlist"
+    data-testid="wishlist-trigger"
+  >
+    <span class="wishlist-trigger__label {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+      Wishlist<span class="wishlist-count"></span>
+    </span>
+    <span
+      class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
+      aria-hidden="true"
+    >
+      {{ wishlist_heart_icon }}
+    </span>
+  </button>
 
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     <button
@@ -330,4 +369,32 @@
       margin-inline-start: 0;
     }
   }
+
+  /* === Header action order: Cart, Wishlist, Search, Account === */
+  header-actions {
+    display: flex;
+    align-items: center;
+  }
+  header-actions > cart-drawer-component,
+  header-actions > .action__cart { order: 1; }
+  header-actions > .wishlist-trigger { order: 2; }
+  header-actions > .header-actions__search { order: 3; }
+  header-actions > .account-button { order: 4; }
+
+  /* Even spacing on desktop: uniform gap, no stray per-item margins */
+  @media screen and (min-width: 750px) {
+    header-actions {
+      gap: var(--gap-xl);
+    }
+    /* These items carry stray negative margins from base/search styles; force-reset for an even gap */
+    header-actions > * {
+      margin: 0 !important;
+    }
+  }
+
+  /* Hide the standalone search rendered elsewhere in the header (we use the one inside header-actions) */
+  .header .search-action:not(.header-actions__search) {
+    display: none !important;
+  }
+
 {% endstylesheet %}
