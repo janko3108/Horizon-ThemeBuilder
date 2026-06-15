@@ -80,7 +80,7 @@
         "type": "color",
         "id": "page_text_color",
         "label": "t:settings.page_text_color",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "info": "t:info.page_text_color_default_info"
       },
       {
@@ -1104,7 +1104,7 @@
         "type": "color",
         "id": "page_background_color",
         "label": "t:settings.page_background_color",
-        "default": "{{ settings.color_palette.background }}"
+        "default": "#ffffff"
       },
       {
         "type": "select",
@@ -1217,7 +1217,7 @@
         "type": "color",
         "id": "badge_sale_background_color",
         "label": "t:settings.badge_sale_background_color",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "#000000"
       },
       {
         "type": "color",
@@ -1228,13 +1228,13 @@
         "type": "color",
         "id": "badge_sold_out_background_color",
         "label": "t:settings.badge_sold_out_background_color",
-        "default": "{{ settings.color_palette.background }}"
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "badge_sold_out_text_color",
         "label": "t:settings.badge_sold_out_text_color",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "#000000"
       },
       {
         "type": "header",
@@ -1293,21 +1293,21 @@
         "type": "color",
         "id": "palette_primary_button_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_primary_button_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#ffffff",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_primary_button_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#ffffff",
         "alpha": true
       },
       {
@@ -1370,21 +1370,21 @@
         "type": "color",
         "id": "palette_secondary_button_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#ffffff",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_secondary_button_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_secondary_button_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
@@ -1628,19 +1628,19 @@
         "type": "color",
         "id": "drawer_background_color",
         "label": "t:settings.background_color",
-        "default": "{{ settings.color_palette.background }}"
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "drawer_text_color",
         "label": "t:settings.text_color",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "#000000"
       },
       {
         "type": "color",
         "id": "drawer_border_color",
         "label": "t:settings.border_color",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       }
     ]
@@ -1677,19 +1677,19 @@
         "type": "color",
         "id": "palette_input_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.background }}"
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "palette_input_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "#000000"
       },
       {
         "type": "color",
         "id": "palette_input_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "#000000"
       },
       {
         "type": "range",
@@ -1760,13 +1760,13 @@
         "type": "color",
         "id": "popover_background_color",
         "label": "t:settings.background_color",
-        "default": "{{ settings.color_palette.background }}"
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "popover_text_color",
         "label": "t:settings.text_color",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "#000000"
       },
       {
         "type": "range",
@@ -1782,7 +1782,7 @@
         "type": "color",
         "id": "popover_border_color",
         "label": "t:settings.border_color",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
@@ -1805,7 +1805,7 @@
         "type": "color",
         "id": "popover_shadow_color",
         "label": "t:settings.shadow_color",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true,
         "visible_if": "{{ settings.popover_drop_shadow == true }}"
       }
@@ -1864,14 +1864,14 @@
         "type": "color",
         "id": "quick_add_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#ffffff",
         "visible_if": "{{ settings.quick_add == true }}"
       },
       {
         "type": "color",
         "id": "quick_add_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "visible_if": "{{ settings.quick_add == true }}"
       },
       {
@@ -2033,21 +2033,21 @@
         "type": "color",
         "id": "palette_variant_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#ffffff",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_variant_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_variant_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
@@ -2058,21 +2058,21 @@
         "type": "color",
         "id": "palette_selected_variant_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_selected_variant_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "#ffffff",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_selected_variant_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "#000000",
         "alpha": true
       },
       {
