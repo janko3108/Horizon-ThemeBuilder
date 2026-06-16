@@ -136,7 +136,7 @@
         "divider_color": "",
         "border_width": 0,
         "bottom_border_color": "",
-        "actions_display_style": "text",
+        "actions_display_style": "icon",
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
