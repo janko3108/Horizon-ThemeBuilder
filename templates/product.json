@@ -298,7 +298,7 @@
                   "settings": {
                     "stacking": false,
                     "text_color": "",
-                    "show_pickup_availability": true,
+                    "show_pickup_availability": false,
                     "gift_card_form": true,
                     "recipient_button_style": "default",
                     "recipient_button_background": "#ffffff",
