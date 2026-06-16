@@ -47,6 +47,7 @@
     "currency_code_enabled_product_pages": false,
     "currency_code_enabled_product_cards": false,
     "mobile_quick_add": true,
+    "wishlist_card_icon_background": false,
     "wishlist_icon": "bookmark",
     "empty_state_collection": "frontpage",
     "product_corner_radius": 0,
