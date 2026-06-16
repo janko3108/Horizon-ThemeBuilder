@@ -4,7 +4,9 @@
 
 {% capture children %}
   {% unless product == blank %}
-    {% render 'favorite-toggle', product: product %}
+    {% if settings.wishlist_show_on_cards != false %}
+      {% render 'favorite-toggle', product: product %}
+    {% endif %}
     <div
       class="product-badges product-badges--{{ settings.badge_position }}"
       style="
@@ -24,6 +26,13 @@
           {%- elsif product.compare_at_price > product.price -%}
             {{ 'content.product_badge_sale' | t }}
           {%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- comment -%} Custom badge from the product's custom.badge metafield {%- endcomment -%}
+      {%- assign custom_badge = product.metafields.custom.badge.value -%}
+      {%- if custom_badge != blank -%}
+        <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-custom">
+          {{- custom_badge | escape -}}
         </div>
       {%- endif -%}
     </div>

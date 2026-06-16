@@ -129,28 +129,39 @@
   {% endif %}
 
   {% comment %} Wishlist action — follows the header Utilities settings (icon/text, size, font, case) {% endcomment %}
-  {% capture wishlist_heart_icon %}
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-  {% endcapture %}
+  {% if settings.wishlist_enabled != false and settings.wishlist_show_in_header != false %}
+    {% capture wishlist_heart_icon %}
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    {% endcapture %}
+    {% comment %} Bookmark / "saved" icon alternative for the mobile header {% endcomment %}
+    {% capture wishlist_bookmark_icon %}
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 4.5h12a1 1 0 0 1 1 1V20l-7-4-7 4V5.5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    {% endcapture %}
+    {% if settings.wishlist_icon == 'bookmark' %}
+      {% assign wishlist_icon = wishlist_bookmark_icon %}
+    {% else %}
+      {% assign wishlist_icon = wishlist_heart_icon %}
+    {% endif %}
 
-  <button
-    type="button"
-    class="header-actions__action wishlist-trigger button-unstyled{% if display_style == 'text' %} header-actions__text-style{% endif %}"
-    data-wishlist-open
-    aria-haspopup="dialog"
-    aria-label="Wishlist"
-    data-testid="wishlist-trigger"
-  >
-    <span class="wishlist-trigger__label {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
-      Wishlist<span class="wishlist-count"></span>
-    </span>
-    <span
-      class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
-      aria-hidden="true"
+    <button
+      type="button"
+      class="header-actions__action wishlist-trigger button-unstyled{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+      data-wishlist-open
+      aria-haspopup="dialog"
+      aria-label="Wishlist"
+      data-testid="wishlist-trigger"
     >
-      {{ wishlist_heart_icon }}
-    </span>
-  </button>
+      <span class="wishlist-trigger__label {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+        Wishlist<span class="wishlist-count"></span>
+      </span>
+      <span
+        class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
+        aria-hidden="true"
+      >
+        {{ wishlist_icon }}
+      </span>
+    </button>
+  {% endif %}
 
   {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
     <button

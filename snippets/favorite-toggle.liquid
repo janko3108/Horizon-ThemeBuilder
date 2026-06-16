@@ -1,13 +1,25 @@
 {%- doc -%}
-  Wishlist heart toggle. Ported from mimoa's favorites system, adapted for Horizon.
+  Wishlist toggle (heart or bookmark per the theme's `settings.wishlist_icon`).
+  Ported from mimoa's favorites system, adapted for Horizon.
   Initial active state is set client-side from localStorage (see wishlist.js).
-  Shown by default; hide it by adding a boolean theme setting `show_favorites` set to false.
+  Gated by the theme's Wishlist settings (master `settings.wishlist_enabled`); per-location
+  visibility is handled at each call site.
   @param {object} product - required
+  @param {string} [variant] - 'buy-buttons' renders a square button beside Add to Cart
 {%- enddoc -%}
-{%- if product != blank and settings.show_favorites != false -%}
+{%- if product != blank and settings.wishlist_enabled != false -%}
+  {%- liquid
+    assign toggle_class = 'favorite-toggle'
+    if variant == 'buy-buttons'
+      assign toggle_class = toggle_class | append: ' favorite-toggle--buy-buttons'
+    elsif settings.wishlist_card_icon_background == false
+      assign toggle_class = toggle_class | append: ' favorite-toggle--no-bg'
+    endif
+    assign wishlist_icon = settings.wishlist_icon | default: 'heart'
+  -%}
   <button
     type="button"
-    class="favorite-toggle"
+    class="{{ toggle_class }}"
     data-action="toggle-favorites"
     data-handle="{{ product.handle | escape }}"
     data-title="{{ product.title | escape }}"
@@ -15,12 +27,21 @@
     aria-pressed="false"
     aria-label="Add to favorites"
   >
-    <span class="favorite-toggle__icon favorite-toggle__icon--empty" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-    </span>
-    <span class="favorite-toggle__icon favorite-toggle__icon--filled" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z"/></svg>
-    </span>
+    {%- if wishlist_icon == 'bookmark' -%}
+      <span class="favorite-toggle__icon favorite-toggle__icon--empty" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4.5h12a1 1 0 0 1 1 1V20l-7-4-7 4V5.5a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="favorite-toggle__icon favorite-toggle__icon--filled" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6 4.5h12a1 1 0 0 1 1 1V20l-7-4-7 4V5.5a1 1 0 0 1 1-1Z"/></svg>
+      </span>
+    {%- else -%}
+      <span class="favorite-toggle__icon favorite-toggle__icon--empty" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="favorite-toggle__icon favorite-toggle__icon--filled" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.5S3.5 15.5 3.5 9.5C3.5 6.74 5.74 4.5 8.5 4.5C10.04 4.5 11.42 5.27 12 6.5C12.58 5.27 13.96 4.5 15.5 4.5C18.26 4.5 20.5 6.74 20.5 9.5C20.5 15.5 12 20.5 12 20.5Z"/></svg>
+      </span>
+    {%- endif -%}
   </button>
 {%- endif -%}
 
@@ -53,4 +74,44 @@
   .favorite-toggle[state="active"] .favorite-toggle__icon--filled { display: inline-flex; }
   .favorite-toggle[state="active"] { color: #e2424a; }
   @media (prefers-reduced-motion: reduce) { .favorite-toggle { transition: none; } }
+
+  /* Optional (theme setting "Show white background behind heart icon"):
+     drop the circular white backing so the heart sits directly on the card. */
+  .favorite-toggle.favorite-toggle--no-bg,
+  .favorite-toggle.favorite-toggle--no-bg:hover {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  /* Buy-buttons variant: a square button beside Add to Cart that mirrors the
+     primary Add to Cart button's fill, border and corner radius so it blends in. */
+  .favorite-toggle.favorite-toggle--buy-buttons {
+    position: static;
+    inset: auto;
+    flex: 0 0 auto;
+    width: var(--height-buy-buttons);
+    height: var(--height-buy-buttons);
+    padding: 0;
+    border-radius: var(--style-border-radius-buttons-primary);
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    box-shadow: inset 0 0 0 var(--style-border-width-primary, 0px) var(--color-primary-button-border);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .favorite-toggle.favorite-toggle--buy-buttons:hover {
+    background: var(--color-primary-button-hover-background, var(--color-primary-button-background));
+    color: var(--color-primary-button-hover-text, var(--color-primary-button-text));
+    transform: none;
+  }
+  /* On the filled button, keep the heart the button's text color even when
+     active — the filled-vs-outline silhouette already signals the state. */
+  .favorite-toggle.favorite-toggle--buy-buttons[state="active"] {
+    color: var(--color-primary-button-text);
+  }
+  .favorite-toggle--buy-buttons .favorite-toggle__icon svg {
+    width: 22px;
+    height: 22px;
+  }
 {%- endstylesheet -%}

@@ -116,10 +116,71 @@
     "
   >
     {{ children }}
+    {%- comment -%}
+      Universal colour swatches (Theme settings → Product cards). Uses the same
+      <product-swatches> component as the Swatches block so they align, space and
+      swap the card image exactly like the block version.
+    {%- endcomment -%}
+    {%- if settings.product_card_show_swatches and onboarding != true and product != blank -%}
+      {%- liquid
+        assign product_has_swatches = false
+        for product_option in product.options_with_values
+          assign swatch_count = product_option.values | map: 'swatch' | compact | size
+          if swatch_count > 0
+            assign product_has_swatches = true
+          endif
+        endfor
+      -%}
+      {%- if product_has_swatches -%}
+        <product-swatches
+          class="product-card__swatches"
+          data-product-id="{{ product.id }}"
+          data-product-url="{{ product.url }}"
+          style="
+            --overflow-list-alignment: flex-start;
+            --overflow-list-alignment-mobile: flex-start;
+            --product-swatches-alignment: start;
+            --product-swatches-alignment-mobile: start;
+            --product-swatches-padding-block-start: 10px;
+            --product-swatches-padding-block-end: 0px;
+            --product-swatches-padding-inline-start: {{ settings.product_card_swatch_inline_padding | default: 10 }}px;
+            --product-swatches-padding-inline-end: 0px;
+          "
+        >
+          {% render 'variant-swatches', product_resource: product %}
+        </product-swatches>
+      {%- endif -%}
+    {%- endif -%}
   </div>
 </product-card>
 
 {% stylesheet %}
+  /* Universal colour swatches — mirror the Swatches block's card styling so the
+     setting-driven swatches align and space exactly like the block version
+     (these rules normally live on the block; duplicated here so they apply even
+     when no Swatches block is present on the card). */
+  product-swatches.product-card__swatches {
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+    flex-shrink: 0;
+  }
+
+  .product-card__swatches .variant-option {
+    margin-inline: 0;
+    padding: 0;
+    border: 0;
+    min-inline-size: 0;
+  }
+
+  .product-card product-swatches.product-card__swatches swatches-variant-picker-component {
+    --overflow-list-padding-inline:
+      var(--product-swatches-padding-inline-start)
+      calc(var(--product-swatches-padding-inline-end) + var(--focus-outline-offset) + var(--focus-outline-width));
+  }
+
   .product-card__placeholder-image svg {
     height: 100%;
   }

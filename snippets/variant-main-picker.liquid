@@ -87,17 +87,35 @@
             </span>
           </div>
         {%- elsif variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
+          {%- liquid
+            # Detect the size option so we can render the boxed "Size / Size chart" layout.
+            assign is_size_option = false
+            assign option_name_downcased = product_option.name | downcase
+            if option_name_downcased contains 'size' and variant_style != 'swatch'
+              assign is_size_option = true
+            endif
+          -%}
           <fieldset
-            class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}"
+            class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}{% if is_size_option %} variant-option--size{% endif %}"
             data-fieldset-index="{{ fieldset_index }}"
             ref="fieldsets[]"
             {{ option_id_attribute }}
           >
-            <legend>
-              {{ product_option.name | escape -}}
+            <legend class="variant-option__legend">
+              <span class="variant-option__name">{{ product_option.name | escape }}</span>
               {%- if variant_style == 'swatch' -%}
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
               {%- endif %}
+              {%- if is_size_option -%}
+                {%- comment -%} Placeholder size-chart trigger — wire up the size guide logic later. {%- endcomment -%}
+                <button
+                  type="button"
+                  class="variant-option__size-chart"
+                  data-size-chart-trigger
+                >
+                  Size chart
+                </button>
+              {%- endif -%}
             </legend>
             {%- for product_option_value in product_option.values -%}
               {% if product_option_value.size > longest_value and option_id_attribute %}

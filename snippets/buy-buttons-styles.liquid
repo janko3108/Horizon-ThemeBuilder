@@ -41,6 +41,22 @@
     padding-block: var(--padding-lg);
   }
 
+  /* Add to Cart + wishlist heart on one row. This wrapper is a single buy-button
+     slot (it inherits the flex: 1 1 <preferred-width> rule above), so Buy It Now
+     still wraps onto its own row below. The heart is a square split a little from
+     the Add to Cart button. */
+  .add-to-cart-with-favorite {
+    display: flex;
+    align-items: stretch;
+    /* Heart sits flush against the Add to Cart button. */
+    gap: 0;
+  }
+
+  .add-to-cart-with-favorite > span {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   .quantity-selector {
     flex-grow: 0;
     flex-shrink: 0;

@@ -55,6 +55,21 @@
       assign ratio = product.featured_media.preview_image.aspect_ratio | default: '1'
   endcase
 
+  # Universal product-card image height (Theme settings → Product cards → Card layout).
+  # Overrides the per-section ratio for every product card when set.
+  unless settings.product_card_image_ratio == blank or settings.product_card_image_ratio == 'default'
+    case settings.product_card_image_ratio
+      when 'landscape'
+        assign ratio = '16 / 9'
+      when 'square'
+        assign ratio = '1'
+      when 'portrait'
+        assign ratio = '4 / 5'
+      when 'tall'
+        assign ratio = '3 / 4'
+    endcase
+  endunless
+
   if block_settings.image_ratio == 'adapt' and block_settings.constrain_to_viewport
     if block_settings.constrain_to_viewport != ''
       assign constrain_to_viewport = true

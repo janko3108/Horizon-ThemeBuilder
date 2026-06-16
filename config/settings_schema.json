@@ -1237,6 +1237,22 @@
         "default": "#000000"
       },
       {
+        "type": "color",
+        "id": "badge_custom_background_color",
+        "label": "Custom badge background",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "badge_custom_text_color",
+        "label": "Custom badge text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "paragraph",
+        "content": "The custom badge shows each product's \"custom.badge\" metafield text (set it per product under Admin → product → Metafields). Products with an empty metafield show no custom badge."
+      },
+      {
         "type": "header",
         "content": "t:names.typography"
       },
@@ -1848,6 +1864,47 @@
     "name": "t:names.product_cards",
     "settings": [
       {
+        "type": "header",
+        "content": "Card layout"
+      },
+      {
+        "type": "select",
+        "id": "product_card_image_ratio",
+        "label": "Image height",
+        "info": "Universal image shape for every product card. \"Use section setting\" keeps each section's own ratio.",
+        "options": [
+          { "value": "default", "label": "Use section setting" },
+          { "value": "landscape", "label": "Landscape (16:9)" },
+          { "value": "square", "label": "Square (1:1)" },
+          { "value": "portrait", "label": "Portrait (4:5)" },
+          { "value": "tall", "label": "Tall (3:4)" }
+        ],
+        "default": "default"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_swatches",
+        "label": "Show colour swatches",
+        "info": "Shows each product's colour options as swatches on the card (siblings/colour variants).",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "product_card_swatch_inline_padding",
+        "label": "Swatch left indent",
+        "info": "Line the swatches up with the title/price by matching your card's text indent (e.g. set 20 if the text is indented 20px).",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "default": 10,
+        "visible_if": "{{ settings.product_card_show_swatches }}"
+      },
+      {
+        "type": "header",
+        "content": "Quick add"
+      },
+      {
         "type": "checkbox",
         "id": "quick_add",
         "label": "t:settings.quick_add",
@@ -1889,6 +1946,74 @@
         "id": "product_card_carousel",
         "label": "t:settings.product_card_carousel",
         "default": true
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "wishlist_enabled",
+        "label": "Enable wishlist",
+        "info": "Master switch — turns the wishlist on or off across the whole store.",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Show wishlist on",
+        "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_show_in_header",
+        "label": "Header",
+        "default": true,
+        "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_show_on_cards",
+        "label": "Product cards",
+        "default": true,
+        "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_show_on_product",
+        "label": "Product pages",
+        "default": true,
+        "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "Product card icon",
+        "visible_if": "{{ settings.wishlist_enabled and settings.wishlist_show_on_cards }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_card_icon_background",
+        "label": "Show white background behind heart icon",
+        "info": "The circular white background behind the wishlist heart on product cards.",
+        "default": true,
+        "visible_if": "{{ settings.wishlist_enabled and settings.wishlist_show_on_cards }}"
+      },
+      {
+        "type": "header",
+        "content": "Icon",
+        "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "select",
+        "id": "wishlist_icon",
+        "label": "Icon",
+        "info": "Used everywhere the wishlist appears — the header, product cards, and product pages.",
+        "options": [
+          { "value": "heart", "label": "Heart" },
+          { "value": "bookmark", "label": "Bookmark (saved)" }
+        ],
+        "default": "heart",
+        "visible_if": "{{ settings.wishlist_enabled }}"
       }
     ]
   },

@@ -221,12 +221,22 @@
               </div>
             </volume-pricing>
           {%- endif -%}
-          {% content_for 'block',
-            type: 'add-to-cart',
-            id: 'add-to-cart',
-            can_add_to_cart: can_add_to_cart,
-            add_to_cart_text: add_to_cart_text
-          %}
+          {%- comment -%}
+            Add to Cart + wishlist heart share one row (the heart is a square
+            split a little from the button). Wrapping them in one slot keeps the
+            accelerated checkout ("Buy It Now") on its own row below.
+          {%- endcomment -%}
+          <div class="add-to-cart-with-favorite">
+            {% content_for 'block',
+              type: 'add-to-cart',
+              id: 'add-to-cart',
+              can_add_to_cart: can_add_to_cart,
+              add_to_cart_text: add_to_cart_text
+            %}
+            {% if settings.wishlist_show_on_product != false %}
+              {% render 'favorite-toggle', product: product, variant: 'buy-buttons' %}
+            {% endif %}
+          </div>
 
           {% content_for 'block',
             type: 'accelerated-checkout',

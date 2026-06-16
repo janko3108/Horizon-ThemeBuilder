@@ -320,6 +320,29 @@
   {% endif %}
 
   :root { --gallery-media-border-radius: {{ block_settings.media_radius }}px; }
+
+  {% comment %}
+    Separate MOBILE media height. 'adapt' shows the media at its natural ratio
+    (the container sizes to the image) so it is never cropped on mobile,
+    independent of the desktop aspect ratio above.
+  {% endcomment %}
+  {%- assign aspect_ratio_mobile = block_settings.aspect_ratio_mobile | default: 'adapt' -%}
+  @media screen and (max-width: 749px) {
+    {% if aspect_ratio_mobile == 'adapt' %}
+      :not(.dialog-zoomed-gallery) > .product-media-container {
+        aspect-ratio: auto;
+        max-height: none;
+      }
+      .product-media {
+        aspect-ratio: var(--ratio);
+      }
+    {% else %}
+      :not(.dialog-zoomed-gallery) > .product-media-container,
+      .product-media {
+        aspect-ratio: {{ aspect_ratio_mobile }};
+      }
+    {% endif %}
+  }
 {% endstyle %}
 
 {% if closest.product == blank %}

@@ -103,4 +103,151 @@
     text-align: right;
     justify-content: right;
   }
+
+  /* ----------------------------------------------------------------------
+     Boxed size selector (reference look): a "Size / Size chart" header row
+     above filled, lightly-rounded, equal-width boxes. Scoped to the Size
+     option only, so colour swatches and other options are untouched.
+     --------------------------------------------------------------------- */
+
+  /* Header row: option name on the left, size-chart link on the right. */
+  .variant-option--size .variant-option__legend {
+    display: flex;
+    flex: 1 0 100%;
+    width: 100%;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+    margin-block-end: var(--margin-xs);
+    font-size: var(--font-size--sm);
+  }
+
+  .variant-option--size .variant-option__name {
+    font-weight: 600;
+  }
+
+  /* Placeholder size-chart link (no behaviour yet — wired up later). */
+  .variant-option__size-chart {
+    flex: 0 0 auto;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font-size: var(--font-size--sm);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .variant-option__size-chart:hover {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  /* Compact, left-aligned, filled boxes (capped so they don't stretch wide). */
+  .variant-option.variant-option--size {
+    justify-content: flex-start;
+    gap: var(--gap-2xs);
+  }
+
+  .variant-option--size .variant-option__button-label {
+    /* Opaque box colour, shared with the label text so the text can mask the
+       strikethrough (creating the broken-line effect). */
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    --size-box-bg: color-mix(in srgb, var(--color-foreground) 5%, var(--color-background));
+
+    flex: 1 1 48px;
+    min-width: 48px;
+    max-width: 72px;
+    min-height: 0;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 2px;
+    background-color: var(--size-box-bg);
+    color: var(--color-foreground);
+    font-size: var(--font-size--2xs);
+  }
+
+  /* Flat fill: drop the sliding pill and the ::before/::after fake borders
+     (the out-of-stock diagonal is a separate SVG and is intentionally kept). */
+  .variant-option--size .variant-option__button-label__pill,
+  .variant-option--size .variant-option__button-label::before,
+  .variant-option--size .variant-option__button-label::after {
+    display: none;
+  }
+
+  .variant-option--size .variant-option__button-label:hover {
+    /* Update the shared var so the box and the text mask stay in sync. */
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    --size-box-bg: color-mix(in srgb, var(--color-foreground) 10%, var(--color-background));
+  }
+
+  /* Selected: match the colour swatch's selected frame (same outline + offset)
+     so the colour row and the size row line up at the same left edge. */
+  .variant-option--size .variant-option__button-label:has(:checked) {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: var(--focus-outline-offset);
+    color: var(--color-foreground);
+  }
+
+  .variant-option--size .variant-option__button-label__text {
+    text-align: center;
+    /* Sit on top of the strikethrough with the box's own background so the
+       diagonal BREAKS around the letters (stops before, continues after),
+       like the reference — rather than running straight through them. */
+    position: relative;
+    z-index: 2;
+    padding: 2px 5px;
+    background-color: var(--size-box-bg);
+  }
+
+  /* Out-of-stock diagonal: a single, subtle line behind the label. Fill the
+     whole box and DON'T clip it — the theme reuses the same `--clip` variable
+     to animate the selected border, which was slicing it into segments. */
+  .variant-option--size .variant-option__strikethrough {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .variant-option--size .variant-option__button-label .variant-option__strikethrough line {
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: none;
+    stroke: rgb(var(--color-foreground-rgb) / 0.4);
+    stroke-width: 1px;
+  }
+
+  .variant-option--size .variant-option__button-label .variant-option__strikethrough line:last-of-type {
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    clip-path: none;
+    stroke: rgb(var(--color-foreground-rgb) / 0.4);
+  }
+
+  /* Keep the native radio hidden (its checked indicator was the stray dot). */
+  .variant-option--size .variant-option__button-label input {
+    appearance: none;
+    opacity: 0;
+  }
+
+  .variant-option--size .variant-option__button-label input::before,
+  .variant-option--size .variant-option__button-label input::after {
+    display: none;
+  }
+
+  /* Selected + available size: small status dot to the right of the label,
+     like the reference. (Represent uses green for in-stock / orange for low
+     stock — using red per request; change the colour below to taste.) */
+  .variant-option--size
+    .variant-option__button-label:has(:checked):not(:has([data-option-available='false']))
+    .variant-option__button-label__text::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #e2424a;
+  }
 {% endstylesheet %}

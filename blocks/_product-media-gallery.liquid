@@ -197,7 +197,7 @@
     {
       "type": "select",
       "id": "aspect_ratio",
-      "label": "t:settings.aspect_ratio",
+      "label": "Aspect ratio (desktop)",
       "options": [
         {
           "value": "adapt",
@@ -215,6 +215,19 @@
           "value": "2/1",
           "label": "t:options.landscape"
         }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio_mobile",
+      "label": "Aspect ratio (mobile)",
+      "info": "Media height on mobile, independent of desktop. \"Original\" shows the full image with no cropping.",
+      "options": [
+        { "value": "adapt", "label": "Original (no crop)" },
+        { "value": "1/1.25", "label": "Portrait" },
+        { "value": "1", "label": "Square" },
+        { "value": "2/1", "label": "Landscape" }
       ],
       "default": "adapt"
     },
