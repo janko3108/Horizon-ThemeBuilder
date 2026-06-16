@@ -1,1 +1,167 @@
-{"type":"header","name":"Header","sections":{"header_announcements_WbCTVz":{"type":"header-announcements","blocks":{"announcement_pjER8z":{"type":"_announcement","name":"t:names.announcement","settings":{"text":"Shop our latest arrivals!","link":"","font":"var(--font-subheading--family)","font_size":"0.75rem","weight":"","letter_spacing":"normal","case":"none"},"blocks":{}},"announcement_EABprN":{"type":"_announcement","name":"t:names.announcement","settings":{"text":"Shop our latest arrivals!","link":"","font":"var(--font-subheading--family)","font_size":"0.75rem","weight":"","letter_spacing":"normal","case":"none"},"blocks":{}},"announcement_mxxhta":{"type":"_announcement","settings":{"text":"Uplevel your office with new decor","link":"shopify:\/\/collections\/all","font":"var(--font-primary--family)","font_size":"var(--font-size--body-md)","weight":"","letter_spacing":"normal","case":"none"},"blocks":{}}},"block_order":["announcement_pjER8z","announcement_EABprN","announcement_mxxhta"],"name":"t:names.announcement_bar","settings":{"speed":3,"section_width":"page-width","divider_width":0,"padding-block-start":10,"padding-block-end":10}},"header_section":{"type":"header","blocks":{"header-logo":{"type":"_header-logo","static":true,"settings":{"hide_logo_on_home_page":false,"padding-block-start":0,"padding-block-end":0},"blocks":{}},"header-menu":{"type":"_header-menu","static":true,"settings":{"menu":"main-menu","type_font_primary_size":"var(--font-size--body-md)","menu_font_style":"inverse","type_font_primary_link":"primary","type_case_primary_link":"none","menu_style":"text","featured_products_aspect_ratio":"4 \/ 5","featured_collections_aspect_ratio":"adapt","image_border_radius":0,"navigation_bar":false,"drawer_accordion":false,"drawer_accordion_expand_first":false,"drawer_dividers":true},"blocks":{}}},"settings":{"logo_position":"center","menu_position":"left","menu_row":"top","customer_account_menu":"customer-account-main-menu","show_search":true,"search_position":"right","search_row":"top","show_country":true,"country_selector_style":true,"show_language":true,"localization_font":"body","localization_font_size":"0.875rem","localization_position":"right","localization_row":"top","section_width":"full-width","section_height":"compact","enable_sticky_header":"always","divider_width":0,"divider_size":"page-width","border_width":0,"actions_display_style":"text","actions_font_size":"0.875rem","actions_font":"body","actions_text_case":"none","mobile_navigation_style":"account_in_drawer","enable_transparent_header_home":true,"enable_transparent_header_product":false,"enable_transparent_header_collection":false}}},"order":["header_announcements_WbCTVz","header_section"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header_announcements_WbCTVz": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_pjER8z": {
+          "type": "_announcement",
+          "name": "t:names.announcement",
+          "settings": {
+            "text": "Shop our latest arrivals!",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none",
+            "text_color": ""
+          },
+          "blocks": {}
+        },
+        "announcement_EABprN": {
+          "type": "_announcement",
+          "name": "t:names.announcement",
+          "settings": {
+            "text": "Shop our latest arrivals!",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none",
+            "text_color": ""
+          },
+          "blocks": {}
+        },
+        "announcement_mxxhta": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Uplevel your office with new decor",
+            "link": "shopify://collections/all",
+            "font": "var(--font-primary--family)",
+            "font_size": "var(--font-size--body-md)",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none",
+            "text_color": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_pjER8z",
+        "announcement_EABprN",
+        "announcement_mxxhta"
+      ],
+      "name": "t:names.announcement_bar",
+      "settings": {
+        "speed": 3,
+        "section_width": "page-width",
+        "background_color": "",
+        "divider_width": 0,
+        "divider_color": "",
+        "padding-block-start": 10,
+        "padding-block-end": 10
+      }
+    },
+    "header_section": {
+      "type": "header",
+      "blocks": {
+        "header-logo": {
+          "type": "_header-logo",
+          "static": true,
+          "settings": {
+            "hide_logo_on_home_page": false,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {}
+        },
+        "header-menu": {
+          "type": "_header-menu",
+          "static": true,
+          "settings": {
+            "menu": "main-menu",
+            "background_color": "#ffffff",
+            "text_color": "",
+            "type_font_primary_size": "var(--font-size--body-md)",
+            "menu_font_style": "inverse",
+            "type_font_primary_link": "primary",
+            "type_case_primary_link": "none",
+            "menu_style": "text",
+            "featured_products_aspect_ratio": "4 / 5",
+            "featured_collections_aspect_ratio": "adapt",
+            "image_border_radius": 0,
+            "navigation_bar": false,
+            "background_color_navigation_bar": "#ffffff",
+            "text_color_navigation_bar": "",
+            "drawer_accordion": false,
+            "drawer_accordion_expand_first": false,
+            "drawer_dividers": true
+          },
+          "blocks": {}
+        }
+      },
+      "settings": {
+        "logo_position": "center",
+        "menu_position": "left",
+        "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
+        "show_search": true,
+        "search_position": "right",
+        "search_row": "top",
+        "show_country": true,
+        "country_selector_style": true,
+        "show_language": true,
+        "localization_font": "body",
+        "localization_font_size": "0.875rem",
+        "localization_position": "right",
+        "localization_row": "top",
+        "section_width": "full-width",
+        "section_height": "compact",
+        "enable_sticky_header": "always",
+        "divider_width": 0,
+        "divider_size": "page-width",
+        "divider_color": "",
+        "border_width": 0,
+        "bottom_border_color": "",
+        "actions_display_style": "text",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
+        "mobile_navigation_style": "logo_left_menu_right",
+        "background_color_top": "",
+        "text_color_top": "",
+        "background_color_bottom": "",
+        "text_color_bottom": "",
+        "bubble_style": "default",
+        "bubble_background_color": "",
+        "bubble_text_color": "",
+        "enable_transparent_header_home": true,
+        "home_inverse_logo": true,
+        "text_color_transparent_home": "{{ settings.color_palette.background }}",
+        "enable_transparent_header_product": false,
+        "product_inverse_logo": false,
+        "text_color_transparent_product": "",
+        "enable_transparent_header_collection": false,
+        "collection_inverse_logo": false,
+        "text_color_transparent_collection": ""
+      }
+    }
+  },
+  "order": [
+    "header_announcements_WbCTVz",
+    "header_section"
+  ]
+}
