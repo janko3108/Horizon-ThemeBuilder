@@ -261,7 +261,7 @@
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "center",
                 "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
+                "horizontal_alignment_flex_direction_column": "center",
                 "vertical_alignment_flex_direction_column": "center",
                 "gap": 0,
                 "width": "fill",
@@ -355,7 +355,7 @@
                   },
                   "block_order": []
                 },
-                "custom_liquid_kagMFp": {
+                "custom_liquid_THmMwz": {
                   "type": "custom-liquid",
                   "name": "t:names.custom_liquid",
                   "settings": {
@@ -366,7 +366,7 @@
               },
               "block_order": [
                 "buy_buttons_kYQQB4",
-                "custom_liquid_kagMFp"
+                "custom_liquid_THmMwz"
               ]
             },
             "group_X39hBc": {
