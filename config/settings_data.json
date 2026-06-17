@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "size_chart_page": "size-guide",
     "logo": "shopify://shop_images/mimoa-wordmark.svg",
     "logo_inverse": "shopify://shop_images/mimoa-wordmark-white.svg",
     "logo_height": 30,
