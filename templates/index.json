@@ -722,7 +722,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Limited</p>",
+                    "text": "<p>New in</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
