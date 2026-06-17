@@ -35,7 +35,7 @@
     if size_chart_metafield.type == 'page_reference'
       assign size_chart_page = size_chart_metafield.value
     else
-      assign size_chart_content = size_chart_metafield.value
+      assign size_chart_content = size_chart_metafield.value | strip
     endif
   endif
   assign has_size_chart = false

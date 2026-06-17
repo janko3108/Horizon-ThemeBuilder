@@ -465,6 +465,13 @@
     pointer-events: none;
   }
 
+  /* When the wishlist is empty the count span is rendered empty (the cart's
+     bubble gets .visually-hidden instead). Drop its margin so it leaves no
+     stray gap beside the icon. */
+  .wishlist-count:empty {
+    margin-inline-start: 0;
+  }
+
   /* Mobile: a small number raised like a superscript, pulled in tight to the
      icon (the compact "exponent" look). */
   @media screen and (max-width: 749px) {
