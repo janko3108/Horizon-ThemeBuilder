@@ -1671,7 +1671,7 @@
                 "label": "Explore",
                 "link": "shopify://pages/about",
                 "open_in_new_tab": false,
-                "style_class": "button",
+                "style_class": "button-secondary",
                 "custom_button_background": "#000000",
                 "custom_button_text": "#ffffff",
                 "custom_button_border": "#ffffff",
