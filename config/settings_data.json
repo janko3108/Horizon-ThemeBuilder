@@ -62,7 +62,7 @@
     "mobile_quick_add": true,
     "quick_add_background": "#ffffff",
     "wishlist_card_icon_background": false,
-    "wishlist_icon": "bookmark",
+    "wishlist_icon": "heart",
     "empty_state_collection": "frontpage",
     "product_corner_radius": 0,
     "card_corner_radius": 0,
