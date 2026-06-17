@@ -22,6 +22,27 @@
     assign has_custom_variant_buttons = true
   endif
   assign fieldset_index = 0
+
+  # Size chart: a per-product `custom.size_chart` metafield overrides the global
+  # size-guide page (Theme settings → Variant pickers → Size chart). The metafield
+  # may be EITHER a "Page" reference (best for measurement tables — page content
+  # supports full HTML) OR a "Rich text" field (a quick per-product note). The
+  # "Size chart" link + popup only render when one of them has content.
+  assign size_chart_metafield = product_resource.metafields.custom.size_chart
+  assign size_chart_content = ''
+  assign size_chart_page = settings.size_chart_page
+  if size_chart_metafield != blank
+    if size_chart_metafield.type == 'page_reference'
+      assign size_chart_page = size_chart_metafield.value
+    else
+      assign size_chart_content = size_chart_metafield.value
+    endif
+  endif
+  assign has_size_chart = false
+  if size_chart_content != blank or size_chart_page != blank
+    assign has_size_chart = true
+  endif
+  assign size_chart_modal_id = 'size-chart-modal-' | append: section.id | append: '-' | append: block.id
 %}
 
 {% unless product_resource.has_only_default_variant %}
@@ -78,7 +99,7 @@
             class="variant-option"
             data-testid="variant-option-single"
           >
-            {{- product_option.name | escape -}}
+            <span class="variant-option__name">{{- product_option.name | escape -}}</span>
             <span
               class="variant-option__swatch-value"
               data-testid="variant-option-single-value"
@@ -106,12 +127,12 @@
               {%- if variant_style == 'swatch' -%}
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
               {%- endif %}
-              {%- if is_size_option -%}
-                {%- comment -%} Placeholder size-chart trigger — wire up the size guide logic later. {%- endcomment -%}
+              {%- if is_size_option and has_size_chart -%}
                 <button
                   type="button"
                   class="variant-option__size-chart"
-                  data-size-chart-trigger
+                  aria-haspopup="dialog"
+                  on:click="#{{ size_chart_modal_id }}/showDialog"
                 >
                   Size chart
                 </button>
@@ -260,6 +281,13 @@
       </script>
     </form>
   </variant-picker>
+  {%- if has_size_chart -%}
+    {% render 'size-chart-modal',
+      modal_id: size_chart_modal_id,
+      content: size_chart_content,
+      page: size_chart_page
+    %}
+  {%- endif -%}
 {% endunless %}
 
 {% render 'variant-picker-styles' %}

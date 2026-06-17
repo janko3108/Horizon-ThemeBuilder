@@ -119,7 +119,7 @@
     });
 
     document.querySelectorAll('.wishlist-count').forEach(function (el) {
-      el.textContent = handles.length > 0 ? ' (' + handles.length + ')' : '';
+      el.textContent = handles.length > 0 ? '(' + handles.length + ')' : '';
     });
     document.querySelectorAll('.wishlist-trigger').forEach(function (el) {
       el.classList.toggle('has-favorites', hasFavorites);

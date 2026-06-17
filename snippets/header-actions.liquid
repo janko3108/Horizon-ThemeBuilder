@@ -152,7 +152,7 @@
       data-testid="wishlist-trigger"
     >
       <span class="wishlist-trigger__label {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
-        Wishlist<span class="wishlist-count"></span>
+        Wishlist
       </span>
       <span
         class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
@@ -160,6 +160,9 @@
       >
         {{ wishlist_icon }}
       </span>
+      {%- comment -%} Count sits next to the icon so it shows in icon mode too (it
+        was previously hidden inside the label). Populated by wishlist.js as " (N)". {%- endcomment -%}
+      <span class="wishlist-count" aria-hidden="true"></span>
     </button>
   {% endif %}
 
@@ -406,6 +409,90 @@
   /* Hide the standalone search rendered elsewhere in the header (we use the one inside header-actions) */
   .header .search-action:not(.header-actions__search) {
     display: none !important;
+  }
+
+  /* === Matching wishlist + cart counts: a small raised number next to the icon
+     (like an exponent), identical on desktop and mobile. === */
+  .wishlist-trigger,
+  .header-actions__cart-icon {
+    display: inline-flex;
+    align-items: center;
+    /* The wishlist button carries a flex gap that pushed its count further from
+       the icon than the cart's; zero it so both gaps match (margin sets spacing). */
+    gap: 0;
+  }
+
+  /* Cart: strip the floating bubble — circle, icon cut-out, and the forced
+     square (data-maintain-ratio) that made "(1)" wrap on mobile — and inherit
+     the header text colour (the bubble's own colour rendered black on the
+     transparent header). The count still updates live. */
+  .header-actions__cart-icon .cart-bubble,
+  .header-actions__cart-icon .cart-bubble[data-maintain-ratio] {
+    position: static;
+    width: auto;
+    min-width: 0;
+    aspect-ratio: auto;
+    border-radius: 0;
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  .header-actions__cart-icon .cart-bubble__background {
+    display: none;
+  }
+
+  .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
+    /* stylelint-disable-next-line declaration-no-important */
+    mask: none !important;
+  }
+
+  .header-actions__cart-icon .cart-bubble__text-count:not(.hidden):not(:empty)::before {
+    content: '(';
+  }
+
+  .header-actions__cart-icon .cart-bubble__text-count:not(.hidden):not(:empty)::after {
+    content: ')';
+  }
+
+  /* Count next to each icon (wishlist + cart). Shared bits; the size, vertical
+     offset and gap differ by breakpoint (the two media queries below). */
+  .wishlist-count,
+  .header-actions__cart-icon .cart-bubble__text {
+    line-height: 1;
+    white-space: nowrap;
+    color: inherit;
+    pointer-events: none;
+  }
+
+  /* Mobile: a small number raised like a superscript, pulled in tight to the
+     icon (the compact "exponent" look). */
+  @media screen and (max-width: 749px) {
+    .wishlist-count,
+    .header-actions__cart-icon .cart-bubble {
+      margin-inline-start: -0.5rem;
+    }
+
+    .wishlist-count,
+    .header-actions__cart-icon .cart-bubble__text {
+      font-size: 0.65rem;
+      transform: translateY(-0.4em);
+    }
+  }
+
+  /* Desktop: an inline, baseline-aligned count in parentheses sitting next to
+     the icon — like the Filippa K reference ("Favoriter (1)" / "Varukorg (2)")
+     — instead of the raised exponent. */
+  @media screen and (min-width: 750px) {
+    .wishlist-count,
+    .header-actions__cart-icon .cart-bubble {
+      margin-inline-start: var(--gap-3xs);
+    }
+
+    .wishlist-count,
+    .header-actions__cart-icon .cart-bubble__text {
+      font-size: var(--font-size--sm);
+    }
   }
 
 {% endstylesheet %}

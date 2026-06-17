@@ -1,0 +1,123 @@
+{%- doc -%}
+  Renders the size-chart popup as a native <dialog> driven by dialog-component
+  (assets/dialog.js) — the same pattern as the search modal. Opened from the
+  "Size chart" link in the size variant option (snippets/variant-main-picker.liquid)
+  via on:click="#{modal_id}/showDialog".
+
+  @param {string} modal_id - Unique id; the trigger targets "#{modal_id}/showDialog".
+  @param {string} [content] - Rich-text HTML from the per-product custom.size_chart metafield.
+  @param {object} [page] - Fallback size-guide page (settings.size_chart_page) used when no metafield is set.
+
+  @example
+  {% render 'size-chart-modal', modal_id: id, content: metafield_value, page: settings.size_chart_page %}
+{%- enddoc -%}
+
+<dialog-component id="{{ modal_id }}" class="size-chart-modal">
+  <dialog
+    ref="dialog"
+    class="size-chart-modal__content dialog-modal"
+    on:click="/closeDialogOnClickOutside"
+    on:keydown="/closeDialogOnEscapePress"
+    aria-labelledby="{{ modal_id }}-heading"
+    scroll-lock
+  >
+    <div class="size-chart-modal__header">
+      <h2 id="{{ modal_id }}-heading" class="size-chart-modal__title">Size chart</h2>
+      <button
+        type="button"
+        class="size-chart-modal__close"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+        on:click="dialog-component/closeDialog"
+      >
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+    </div>
+    <div class="size-chart-modal__body rte">
+      {%- if content != blank -%}
+        <rte-formatter>{{ content }}</rte-formatter>
+      {%- elsif page != blank -%}
+        <rte-formatter>{{ page.content }}</rte-formatter>
+      {%- endif -%}
+    </div>
+  </dialog>
+</dialog-component>
+
+{% stylesheet %}
+  .size-chart-modal__content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-foreground);
+    background: var(--color-background);
+  }
+
+  .size-chart-modal__header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    padding: var(--padding-lg) var(--padding-lg) var(--padding-md);
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  }
+
+  .size-chart-modal__title {
+    margin: 0;
+    font-size: var(--font-size--md);
+  }
+
+  .size-chart-modal__close {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    margin-inline-end: calc(-1 * var(--padding-sm));
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .size-chart-modal__close svg {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  .size-chart-modal__body {
+    flex: 1 1 auto;
+    padding: var(--padding-md) var(--padding-lg) var(--padding-lg);
+    overflow-y: auto;
+  }
+
+  /* Sensible defaults for a rich-text size table pasted into the metafield/page. */
+  .size-chart-modal__body table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .size-chart-modal__body :where(th, td) {
+    padding: var(--padding-xs) var(--padding-sm);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    text-align: start;
+  }
+
+  .size-chart-modal__body :where(p, table):not(:last-child) {
+    margin-block-end: var(--margin-md);
+  }
+
+  @media screen and (min-width: 750px) {
+    .size-chart-modal__content {
+      width: min(92vw, var(--normal-content-width));
+      max-height: min(80dvh, 720px);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .size-chart-modal__content {
+      height: 100dvh;
+    }
+  }
+{% endstylesheet %}

@@ -823,8 +823,15 @@
 
   .header__icon--summary .header-drawer-icon {
     margin: auto;
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  /* Match the header action icons (cart/search/wishlist) so all header icons
+     share the same box size across every mobile navigation style. */
+  .header__icon--summary .header-drawer-icon > svg {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
   }
 
   .menu-drawer__featured-content {

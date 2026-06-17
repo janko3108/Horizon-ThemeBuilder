@@ -18,6 +18,23 @@
   else
     assign ratio = image_aspect_ratio
   endif
+
+  # Product cards in the search modal honour the universal "Image height"
+  # product-card setting (Theme settings → Product cards → Card layout), so
+  # search results match the rest of the store's product cards.
+  if resource_type == 'product' and product_view_context == 'search'
+    case settings.product_card_image_ratio
+      when 'landscape'
+        assign ratio = '16 / 9'
+      when 'square'
+        assign ratio = '1'
+      when 'portrait'
+        assign ratio = '4 / 5'
+      when 'tall'
+        assign ratio = '3 / 4'
+    endcase
+  endif
+
   assign image_width = image_width | default: 1200
   assign widths = '240, 352, 832, 1200'
   assign image_sizes = image_sizes | default: 'auto'

@@ -121,16 +121,22 @@
       <product-swatches> component as the Swatches block so they align, space and
       swap the card image exactly like the block version.
     {%- endcomment -%}
-    {%- if settings.product_card_show_swatches and onboarding != true and product != blank -%}
-      {%- liquid
-        assign product_has_swatches = false
-        for product_option in product.options_with_values
-          assign swatch_count = product_option.values | map: 'swatch' | compact | size
-          if swatch_count > 0
-            assign product_has_swatches = true
-          endif
-        endfor
-      -%}
+    {%- liquid
+      # Skip the universal swatches when the card already includes a Swatches
+      # block (its rendered output is in `children`) — avoids duplicate rows.
+      assign has_swatches_block = false
+      if children contains 'product-swatches'
+        assign has_swatches_block = true
+      endif
+      assign product_has_swatches = false
+      for product_option in product.options_with_values
+        assign swatch_count = product_option.values | map: 'swatch' | compact | size
+        if swatch_count > 0
+          assign product_has_swatches = true
+        endif
+      endfor
+    -%}
+    {%- if settings.product_card_show_swatches and onboarding != true and product != blank and has_swatches_block == false -%}
       {%- if product_has_swatches -%}
         <product-swatches
           class="product-card__swatches"

@@ -2239,6 +2239,16 @@
           }
         ],
         "default": "equal-width-buttons"
+      },
+      {
+        "type": "header",
+        "content": "Size chart"
+      },
+      {
+        "type": "page",
+        "id": "size_chart_page",
+        "label": "Size guide page",
+        "info": "Shown in a popup from the 'Size chart' link above the size selector. Override per product with a 'custom.size_chart' rich-text metafield. The link only appears when there is content."
       }
     ]
   },

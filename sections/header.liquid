@@ -1227,13 +1227,8 @@
       padding-inline: var(--padding-sm) 0;
     }
 
-    /* Bigger, bolder hamburger (open + close states). Overrides both the icon
-       wrapper and the forced `.svg-wrapper > svg` size from base.css. */
-    #header-component[data-mobile-nav='logo_left'] .header__icon--summary .header-drawer-icon,
-    #header-component[data-mobile-nav='logo_left'] .header__icon--summary .header-drawer-icon > svg {
-      width: 1.5rem;
-      height: 1.5rem;
-    }
+    /* (Hamburger size is unified with the other header icons in
+       header-drawer.liquid, so all header icons match across nav styles.) */
 
     /* Option C — logo far left, then search → wishlist → cart, with the
        hamburger on the far right (Filippa K reference). */
