@@ -359,6 +359,22 @@
       }
     {% endif %}
   }
+
+  /* When the header is transparent, Horizon pulls the first content section up to
+     sit *under* the floating header (base.css:
+     `margin-top: calc(var(--header-group-height) * -1)`). On a PDP the product
+     media is that first section, so on mobile the top of the photo (often the
+     model's head) ends up hidden behind the header — looking "cropped from the
+     top". Cancel the pull-up on mobile only, and only for the product page (the
+     first section that contains the gallery), so the media sits fully below the
+     header. Desktop keeps the pulled-up full-bleed look. */
+  @media screen and (max-width: 749px) {
+    body:has(.header[transparent], header-component[transparent])
+      .content-for-layout
+      > .shopify-section:first-child:has(media-gallery) {
+      margin-top: 0 !important;
+    }
+  }
 {% endstyle %}
 
 {% if closest.product == blank %}
