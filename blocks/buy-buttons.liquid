@@ -226,6 +226,23 @@
             split a little from the button). Wrapping them in one slot keeps the
             accelerated checkout ("Buy It Now") on its own row below.
           {%- endcomment -%}
+          {%- liquid
+            assign wl_bg = block.settings.wishlist_button_background
+            assign wl_bd = block.settings.wishlist_button_border
+          -%}
+          {%- if wl_bg != blank or wl_bd != blank -%}
+            <style>
+              .buy-buttons-block--{{ block.id }} .favorite-toggle--buy-buttons {
+                {% if wl_bg != blank %}background: {{ wl_bg }};{% endif %}
+                {% if wl_bd != blank %}box-shadow: inset 0 0 0 1px {{ wl_bd }};{% endif %}
+              }
+              {%- if wl_bg != blank -%}
+                .buy-buttons-block--{{ block.id }} .favorite-toggle--buy-buttons:hover {
+                  background: {{ wl_bg }};
+                }
+              {%- endif -%}
+            </style>
+          {%- endif -%}
           <div class="add-to-cart-with-favorite">
             {% content_for 'block',
               type: 'add-to-cart',
@@ -408,6 +425,23 @@
       "type": "color",
       "id": "text_color",
       "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "Wishlist button"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_button_background",
+      "label": "Wishlist button background",
+      "info": "Overrides the Add to Cart colors for the wishlist (heart) button beside it. Leave empty to match the Add to Cart button.",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_button_border",
+      "label": "Wishlist button border",
       "placeholder": "t:settings.default"
     },
     {
