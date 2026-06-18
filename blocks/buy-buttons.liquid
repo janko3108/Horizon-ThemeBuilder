@@ -229,16 +229,20 @@
           {%- liquid
             assign wl_bg = block.settings.wishlist_button_background
             assign wl_bd = block.settings.wishlist_button_border
+            assign wl_icon = block.settings.wishlist_button_icon_color
           -%}
-          {%- if wl_bg != blank or wl_bd != blank -%}
+          {%- if wl_bg != blank or wl_bd != blank or wl_icon != blank -%}
             <style>
-              .buy-buttons-block--{{ block.id }} .favorite-toggle--buy-buttons {
+              .buy-buttons-block--{{ block.id }} .favorite-toggle--buy-buttons,
+              .buy-buttons-block--{{ block.id }} .favorite-toggle--buy-buttons[state="active"] {
                 {% if wl_bg != blank %}background: {{ wl_bg }};{% endif %}
                 {% if wl_bd != blank %}box-shadow: inset 0 0 0 1px {{ wl_bd }};{% endif %}
+                {% if wl_icon != blank %}color: {{ wl_icon }};{% endif %}
               }
-              {%- if wl_bg != blank -%}
+              {%- if wl_bg != blank or wl_icon != blank -%}
                 .buy-buttons-block--{{ block.id }} .favorite-toggle--buy-buttons:hover {
-                  background: {{ wl_bg }};
+                  {% if wl_bg != blank %}background: {{ wl_bg }};{% endif %}
+                  {% if wl_icon != blank %}color: {{ wl_icon }};{% endif %}
                 }
               {%- endif -%}
             </style>
@@ -442,6 +446,12 @@
       "type": "color",
       "id": "wishlist_button_border",
       "label": "Wishlist button border",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "wishlist_button_icon_color",
+      "label": "Wishlist icon color",
       "placeholder": "t:settings.default"
     },
     {
