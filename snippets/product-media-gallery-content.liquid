@@ -329,17 +329,33 @@
   {%- assign aspect_ratio_mobile = block_settings.aspect_ratio_mobile | default: 'adapt' -%}
   @media screen and (max-width: 749px) {
     {% if aspect_ratio_mobile == 'adapt' %}
+      /* Original (no crop): each image at its natural ratio on mobile, independent of
+         desktop. The container sizes to the media (auto); the media uses its own
+         --ratio (clearing any inherited --gallery-aspect-ratio); the image shows in
+         full (object-fit: contain) even if "Media fit" is set to cover.
+         !important is required to beat Horizon's base var-driven rules. */
       :not(.dialog-zoomed-gallery) > .product-media-container {
-        aspect-ratio: auto;
-        max-height: none;
+        aspect-ratio: auto !important;
+        max-height: none !important;
       }
       .product-media {
-        aspect-ratio: var(--ratio);
+        --gallery-aspect-ratio: initial;
+        aspect-ratio: var(--ratio) !important;
+      }
+      .product-media-container img,
+      .product-media__image {
+        object-fit: contain !important;
       }
     {% else %}
+      /* Fixed mobile height, independent of desktop: crop to the chosen ratio. */
       :not(.dialog-zoomed-gallery) > .product-media-container,
       .product-media {
-        aspect-ratio: {{ aspect_ratio_mobile }};
+        aspect-ratio: {{ aspect_ratio_mobile }} !important;
+        max-height: none !important;
+      }
+      .product-media-container img,
+      .product-media__image {
+        object-fit: cover !important;
       }
     {% endif %}
   }
