@@ -61,6 +61,19 @@
     </div>
 
     <div class="wishlist-drawer__footer">
+      {%- if customer == blank -%}
+        <div class="wishlist-drawer__account">
+          <p class="wishlist-drawer__account-text">Log in or create an account to save your favourites across all your devices.</p>
+          <div class="wishlist-drawer__account-links">
+            <a class="wishlist-drawer__account-link" href="{{ routes.account_register_url }}">
+              <span>Create account</span>{{ 'icon-arrow.svg' | inline_asset_content }}
+            </a>
+            <a class="wishlist-drawer__account-link" href="{{ routes.account_login_url }}">
+              <span>Log in</span>{{ 'icon-arrow.svg' | inline_asset_content }}
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
       <div class="favorites-removal-toast" data-removal-toast role="status" aria-live="polite" aria-atomic="true">
         <div class="favorites-removal-toast__stack">
           <p class="favorites-removal-toast__text"></p>
@@ -140,6 +153,13 @@
   .favorite-card__price-compare { color: var(--color-foreground-muted, #999); margin-left: 4px; }
 
   .wishlist-drawer__footer { position: relative; }
+  /* Filippa K–style guest account prompt footer */
+  .wishlist-drawer__account { padding: 28px 20px 24px; }
+  .wishlist-drawer__account-text { margin: 0 0 16px; font-size: 0.875rem; line-height: 1.45; color: var(--color-foreground); }
+  .wishlist-drawer__account-links { display: flex; gap: 24px; }
+  .wishlist-drawer__account-link { display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; text-decoration: none; color: inherit; }
+  .wishlist-drawer__account-link svg { width: 13px; height: 13px; }
+  .wishlist-drawer__account-link:hover { text-decoration: underline; }
   .favorites-removal-toast {
     position: absolute; left: 0; right: 0; bottom: 0; transform: translateY(100%); opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;

@@ -353,7 +353,7 @@
     /* guest "log in to save" message */
     updateGuestMessage() {
       if (!this._open || this._removalActive) return;
-      var show = this.guestEnabled && !data.customerLoggedIn && read().length > 0;
+      var show = false; /* guest prompt is now a static footer (.wishlist-drawer__account) in favorites-drawer.liquid */
       if (show) this.showGuestMessage(); else this.hideGuestMessage();
     }
     showGuestMessage() {
