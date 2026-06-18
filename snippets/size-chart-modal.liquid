@@ -53,9 +53,13 @@
     color: var(--color-foreground);
     background: var(--color-background);
     border: 0;
-    /* Center the modal in the viewport. */
+    /* Center the modal in the viewport: fixed + inset:0 + margin:auto centers both
+       axes; fit-content height keeps it a centered box instead of stretching top-to-
+       bottom. (Without position:fixed, margin:auto only centered it horizontally.) */
+    position: fixed;
     inset: 0;
     margin: auto;
+    height: fit-content;
   }
 
   .size-chart-modal__content[open] {
