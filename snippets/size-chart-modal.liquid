@@ -66,6 +66,26 @@
     display: flex;
   }
 
+  /* Horizon's shared .dialog-modal slides in from the top via @keyframes
+     elementSlideInTop, which animates `margin-top: 0` (forwards) and so overrides
+     the `margin: auto` that centers this modal — pinning it to the top. Override
+     that animation with a centered fade. Higher specificity (dialog.<class>[open])
+     beats .dialog-modal[open]; .dialog-closing comes after [open] to win on close. */
+  dialog.size-chart-modal__content[open] {
+    animation: scm-fade-in 0.25s var(--animation-easing, ease) both;
+  }
+  dialog.size-chart-modal__content.dialog-closing {
+    animation: scm-fade-out 0.2s var(--animation-easing, ease) both;
+  }
+  @keyframes scm-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scm-fade-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(6px); }
+  }
+
   .size-chart-modal__header {
     display: flex;
     flex: 0 0 auto;
