@@ -17,16 +17,24 @@
   %}
 {% enddoc %}
 
+{%- capture drawer_tabs -%}
+  {%- if drawer_id == 'cart-drawer' -%}{%- render 'wishlist-cart-tabs', active: 'cart' -%}{%- endif -%}
+{%- endcapture -%}
 <div class="theme-drawer__header">
-  <h2
-    class="theme-drawer__title h4"
-    {% if heading_id %}
-      id="{{ heading_id }}"
-    {% endif %}
-  >
-    {{ title }}
-    {{ title_append }}
-  </h2>
+  {%- if drawer_tabs != blank -%}
+    {%- if heading_id %}<h2 id="{{ heading_id }}" class="visually-hidden">{{ title }}</h2>{% endif -%}
+    {{ drawer_tabs }}
+  {%- else -%}
+    <h2
+      class="theme-drawer__title h4"
+      {% if heading_id %}
+        id="{{ heading_id }}"
+      {% endif %}
+    >
+      {{ title }}
+      {{ title_append }}
+    </h2>
+  {%- endif -%}
 
   <button
     class="theme-drawer__close-button"

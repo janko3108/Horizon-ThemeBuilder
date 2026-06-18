@@ -1,0 +1,25 @@
+{% doc %}
+  Filippa K–style Cart / Wishlist tab switcher, shown in the cart-drawer and
+  wishlist-drawer headers when `settings.wishlist_show_cart_tabs` is enabled.
+
+  Switching reuses the real drawers (no cart rebuild): the inactive tab closes
+  the current drawer and opens the other one with the same slide animation —
+  via #cart-drawer/open|close (Horizon's theme-drawer) and data-wishlist-open|close
+  (wishlist.js global delegation).
+
+  Renders nothing unless the setting is on AND the cart is in drawer mode, so
+  callers can use it as a drop-in replacement for the drawer title.
+
+  @param {string} active - 'cart' or 'wishlist' (the current drawer)
+{% enddoc %}
+{%- if settings.wishlist_enabled != false and settings.wishlist_show_cart_tabs and settings.cart_type == 'drawer' -%}
+  <div class="drawer-tabs">
+    {%- if active == 'cart' -%}
+      <span class="drawer-tab is-active" aria-current="true">{{ 'content.cart_title' | t }}</span>
+      <button type="button" class="drawer-tab" data-wishlist-open on:click="#cart-drawer/close" aria-label="Open wishlist">Wishlist</button>
+    {%- else -%}
+      <button type="button" class="drawer-tab" data-wishlist-close on:click="#cart-drawer/open" aria-label="Open cart">{{ 'content.cart_title' | t }}</button>
+      <span class="drawer-tab is-active" aria-current="true">Wishlist</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

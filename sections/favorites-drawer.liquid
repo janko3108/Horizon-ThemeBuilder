@@ -25,7 +25,8 @@
   <div class="wishlist-drawer__overlay" data-wishlist-close></div>
   <div class="wishlist-drawer__panel color-{{ color_class }}" role="dialog" aria-modal="true" aria-label="Wishlist">
     <div class="wishlist-drawer__header">
-      <p class="wishlist-drawer__title">Wishlist</p>
+      {%- capture wl_tabs -%}{%- render 'wishlist-cart-tabs', active: 'wishlist' -%}{%- endcapture -%}
+      {%- if wl_tabs != blank -%}{{ wl_tabs }}{%- else -%}<p class="wishlist-drawer__title">Wishlist</p>{%- endif -%}
       <button type="button" class="wishlist-drawer__close" data-wishlist-close aria-label="Close wishlist">
         {{ 'icon-close.svg' | inline_asset_content }}
       </button>
@@ -131,6 +132,11 @@
     border-bottom: 1px solid rgb(var(--color-foreground-rgb, 0 0 0) / 0.1);
   }
   .wishlist-drawer__title { margin: 0; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; }
+  /* Filippa K–style Cart / Wishlist tabs (shared by the cart + wishlist drawer headers) */
+  .drawer-tabs { display: flex; align-items: center; gap: 24px; }
+  .drawer-tab { background: none; border: 0; margin: 0; padding: 0; font: inherit; font-size: 0.875rem; line-height: 1; color: rgb(var(--color-foreground-rgb, 0 0 0) / 0.45); text-decoration: none; cursor: pointer; transition: color 0.15s ease; }
+  .drawer-tab.is-active { color: var(--color-foreground); }
+  .drawer-tab:not(.is-active):hover { color: var(--color-foreground); }
   .wishlist-drawer__close { background: none; border: none; cursor: pointer; padding: 4px; color: inherit; display: inline-flex; }
   .wishlist-drawer__close svg { width: 18px; height: 18px; }
   .wishlist-drawer__body { flex: 1 1 auto; overflow-y: auto; }

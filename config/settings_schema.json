@@ -2014,6 +2014,19 @@
         ],
         "default": "heart",
         "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "Drawer",
+        "visible_if": "{{ settings.wishlist_enabled }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "wishlist_show_cart_tabs",
+        "label": "Cart / Wishlist tabs",
+        "info": "Adds Filippa K–style tabs in the cart & wishlist drawers to switch between them. Requires cart type = Drawer.",
+        "default": false,
+        "visible_if": "{{ settings.wishlist_enabled }}"
       }
     ]
   },

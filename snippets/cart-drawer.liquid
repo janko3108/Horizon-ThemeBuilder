@@ -65,6 +65,7 @@
         >
           {%- if cart.empty? -%}
             <div class="theme-drawer__header">
+              {%- render 'wishlist-cart-tabs', active: 'cart' -%}
               <button
                 on:click="#cart-drawer/close"
                 class="theme-drawer__close-button cart-drawer__close-button--empty"
