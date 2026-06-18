@@ -75,19 +75,48 @@
 </wishlist-drawer>
 
 {% stylesheet %}
-  .wishlist-drawer { position: fixed; inset: 0; z-index: 1000; visibility: hidden; pointer-events: none; background: transparent; }
-  .wishlist-drawer.is-open { visibility: visible; pointer-events: auto; }
-  .wishlist-drawer__overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); opacity: 0; transition: opacity 0.3s ease; }
+  /* ---- Filippa K–style wishlist drawer ----
+     Desktop (>=835px): right-side panel, max-width 40%, slides in from the right.
+     Mobile  (<835px): full-width panel, slides in from the left.
+     Flat white panel, subtle 16% dim backdrop, 0.35s cubic-bezier(0.35,0,0.15,1). */
+  .wishlist-drawer {
+    position: fixed; inset: 0; z-index: 1000;
+    visibility: hidden; pointer-events: none; background: transparent;
+    /* stay visible through the 0.35s slide-out, then hide (mirrors FK's delayed hide) */
+    transition: visibility 0s linear 0.35s;
+  }
+  .wishlist-drawer.is-open { visibility: visible; pointer-events: auto; transition: visibility 0s; }
+
+  .wishlist-drawer__overlay {
+    position: absolute; inset: 0;
+    background: rgba(0, 0, 0, 0.16);
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.35, 0, 0.15, 1);
+  }
   .wishlist-drawer.is-open .wishlist-drawer__overlay { opacity: 1; }
+
   .wishlist-drawer__panel {
-    position: absolute; top: 0; right: 0; height: 100%; width: 420px; max-width: 92vw;
+    position: absolute; top: 0; right: 0; height: 100%;
+    width: 100%; max-width: 100%;
     display: flex; flex-direction: column;
     background: var(--color-background, #fff); color: var(--color-foreground, #111);
-    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
-    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-100%); /* mobile: parked off-screen left */
+    transition: transform 0.35s cubic-bezier(0.35, 0, 0.15, 1);
   }
   .wishlist-drawer.is-open .wishlist-drawer__panel { transform: translateX(0); }
-  .wishlist-drawer__header { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--color-border, #e6e6e6); }
+
+  @media screen and (min-width: 835px) {
+    .wishlist-drawer__panel {
+      max-width: 40%;
+      transform: translateX(100%); /* desktop: parked off-screen right */
+    }
+  }
+
+  .wishlist-drawer__header {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 64px; padding: 16px 16px 14px;
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb, 0 0 0) / 0.1);
+  }
   .wishlist-drawer__title { margin: 0; font-size: 1rem; letter-spacing: 0.02em; text-transform: uppercase; }
   .wishlist-drawer__close { background: none; border: none; cursor: pointer; padding: 4px; color: inherit; display: inline-flex; }
   .wishlist-drawer__close svg { width: 18px; height: 18px; }
