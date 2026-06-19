@@ -1604,6 +1604,18 @@
         "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_show_payment_icons }}"
       },
       {
+        "type": "select",
+        "id": "cart_payment_icons_align",
+        "label": "Payment icons alignment",
+        "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ],
+        "default": "left",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_show_payment_icons }}"
+      },
+      {
         "type": "url",
         "id": "empty_cart_button_link",
         "label": "t:settings.empty_cart_button_link",

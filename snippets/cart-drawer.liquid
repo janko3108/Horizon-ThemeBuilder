@@ -131,9 +131,15 @@
                       else
                         assign cart_payment_icons = shop.enabled_payment_types
                       endif
+                      assign cart_payment_align = 'flex-start'
+                      if settings.cart_payment_icons_align == 'center'
+                        assign cart_payment_align = 'center'
+                      elsif settings.cart_payment_icons_align == 'right'
+                        assign cart_payment_align = 'flex-end'
+                      endif
                     -%}
                     {%- if cart_payment_icons.size > 0 -%}
-                      <div class="cart-fk-payments" aria-hidden="true">
+                      <div class="cart-fk-payments" aria-hidden="true" style="justify-content: {{ cart_payment_align }};">
                         {%- for type in cart_payment_icons -%}
                           {{ type | strip | payment_type_svg_tag: class: 'cart-fk-payment-icon' }}
                         {%- endfor -%}

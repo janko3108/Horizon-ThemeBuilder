@@ -51,6 +51,7 @@
     "cart_type": "drawer",
     "cart_show_payment_icons": true,
     "cart_payment_icons": "visa, master, american_express, klarna, apple_pay",
+    "cart_payment_icons_align": "left",
     "show_add_discount_code": false,
     "show_installments": false,
     "cart_thumbnail_border": "none",
