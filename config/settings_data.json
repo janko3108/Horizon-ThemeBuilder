@@ -9,7 +9,6 @@
  */
 {
   "current": {
-    "size_chart_page": "size-guide",
     "logo": "shopify://shop_images/mimoa-wordmark.svg",
     "logo_inverse": "shopify://shop_images/mimoa-wordmark-white.svg",
     "logo_height": 30,
@@ -64,6 +63,7 @@
     "quick_add_background": "#ffffff",
     "wishlist_card_icon_background": false,
     "wishlist_icon": "heart",
+    "wishlist_show_cart_tabs": true,
     "empty_state_collection": "frontpage",
     "product_corner_radius": 0,
     "card_corner_radius": 0,
