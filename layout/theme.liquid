@@ -123,6 +123,16 @@
         data-product-transition="{{ settings.transition_to_main_product }}"
         data-template="{{ template }}"
       >
+        {%- comment -%}
+          Breadcrumbs: collection pages have a solid (non-transparent) header with
+          clean space below, so render the FK-style trail here, above the title.
+          Product pages use a transparent header + full-bleed media, so their
+          breadcrumb is rendered inside the product info column instead
+          (blocks/_product-details.liquid).
+        {%- endcomment -%}
+        {%- if template.name == 'collection' -%}
+          {% render 'breadcrumbs' %}
+        {%- endif -%}
         {{ content_for_layout }}
       </main>
 
