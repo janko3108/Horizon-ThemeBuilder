@@ -21,7 +21,7 @@
       role="tab"
       aria-selected="{% if active == 'cart' %}true{% else %}false{% endif %}"
     >
-      {{ 'content.cart_title' | t }}
+      {{ 'content.cart_title' | t }}<span class="drawer-tab__count" data-cart-count>{% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}</span>
     </button>
     <button
       type="button"
@@ -30,7 +30,7 @@
       role="tab"
       aria-selected="{% if active == 'wishlist' %}true{% else %}false{% endif %}"
     >
-      Wishlist
+      Wishlist<span class="drawer-tab__count wishlist-count"></span>
     </button>
   </div>
 {%- endif -%}

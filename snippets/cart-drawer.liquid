@@ -338,6 +338,12 @@
     border-radius: 3px;
   }
 
+  /* FK-style count after the Cart/Wishlist tab label (e.g. "Cart (1)") */
+  .drawer-tab__count:not(:empty) {
+    margin-inline-start: 0.3ch;
+    font-variant-numeric: tabular-nums;
+  }
+
   /* FK-style solid black checkout button inside the drawer */
   .cart-drawer__summary .cart__checkout-button {
     background: var(--color-foreground);
