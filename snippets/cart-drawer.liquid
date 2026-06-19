@@ -122,12 +122,23 @@
                     <p class="cart-fk-shipping-note">{{ settings.cart_drawer_shipping_note }}</p>
                   {%- endif -%}
                   {% render 'cart-summary', section_id: 'cart-drawer-section' %}
-                  {%- if shop.enabled_payment_types.size > 0 -%}
-                    <div class="cart-fk-payments" aria-hidden="true">
-                      {%- for type in shop.enabled_payment_types -%}
-                        {{ type | payment_type_svg_tag: class: 'cart-fk-payment-icon' }}
-                      {%- endfor -%}
-                    </div>
+                  {%- if settings.cart_show_payment_icons -%}
+                    {%- liquid
+                      # Blank field => show the store's enabled payment methods automatically.
+                      # Otherwise use the merchant's comma-separated list to pick AND order them.
+                      if settings.cart_payment_icons != blank
+                        assign cart_payment_icons = settings.cart_payment_icons | split: ','
+                      else
+                        assign cart_payment_icons = shop.enabled_payment_types
+                      endif
+                    -%}
+                    {%- if cart_payment_icons.size > 0 -%}
+                      <div class="cart-fk-payments" aria-hidden="true">
+                        {%- for type in cart_payment_icons -%}
+                          {{ type | strip | payment_type_svg_tag: class: 'cart-fk-payment-icon' }}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
                   {%- endif -%}
                 </div>
               </scroll-hint>

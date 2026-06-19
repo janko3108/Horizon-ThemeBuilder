@@ -1585,6 +1585,25 @@
         "default": true
       },
       {
+        "type": "header",
+        "content": "Cart drawer payment icons"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_payment_icons",
+        "label": "Show payment icons under checkout",
+        "default": true,
+        "visible_if": "{{ settings.cart_type == 'drawer' }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_payment_icons",
+        "label": "Payment icons",
+        "default": "visa, master, american_express, klarna, apple_pay",
+        "info": "Comma-separated list — choose and order the icons shown under the checkout button (e.g. visa, master, american_express, paypal, klarna, apple_pay, google_pay). Clear the field to instead show your store's enabled payment methods automatically.",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_show_payment_icons }}"
+      },
+      {
         "type": "url",
         "id": "empty_cart_button_link",
         "label": "t:settings.empty_cart_button_link",
