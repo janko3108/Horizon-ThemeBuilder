@@ -279,41 +279,6 @@
     }
   }
 
-  /* Keep the header icons evenly spaced on mobile no matter how many items are in
-     the cart/wishlist. The cart bubble is already absolute; the wishlist count was
-     inline and widened its button (pushing the icons out of even spacing), so make
-     it an absolute superscript too. */
-  @media screen and (max-width: 749px) {
-    /* Equal-width tap targets for every icon so the gaps between them stay even
-       (the cart button was a few px wider than the others). */
-    #header-component header-actions > .header-actions__action {
-      flex: 0 0 var(--minimum-touch-target);
-      width: var(--minimum-touch-target);
-      min-width: var(--minimum-touch-target);
-      justify-content: center;
-      padding-inline: 0;
-    }
-
-    /* The wishlist count sits as a small badge at the icon's TOP-RIGHT. The heart is
-       centered in a 44px tap target, so anchor to the icon centre (50%/50% + a small
-       offset) — anchoring to the button top made it ride up above the icon and out
-       of the header. */
-    .wishlist-trigger {
-      position: relative;
-    }
-
-    .wishlist-trigger .wishlist-count {
-      position: absolute;
-      top: 50%;
-      inset-inline-start: 50%;
-      transform: translate(0.85rem, -0.55rem);
-      font-size: 0.625rem;
-      line-height: 1;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-  }
-
   @media screen and (min-width: 750px) {
     .header-actions--text {
       gap: var(--gap-xl);
