@@ -825,13 +825,19 @@
     margin: auto;
     width: var(--icon-size-md);
     height: var(--icon-size-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Match the header action icons (cart/search/wishlist) so all header icons
-     share the same box size across every mobile navigation style. */
+  /* The hamburger artwork fills its viewBox edge-to-edge (unlike the cart/heart/
+     search icons, which have padding inside theirs), so at the same box size it
+     reads noticeably larger. Render the glyph a touch smaller — centered in the
+     same box — so it visually matches the other header icons across every mobile
+     navigation style. */
   .header__icon--summary .header-drawer-icon > svg {
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    width: 18px;
+    height: 18px;
   }
 
   .menu-drawer__featured-content {
