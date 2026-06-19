@@ -485,6 +485,42 @@
         if (d) { d._open = false; d.setAttribute('aria-hidden', 'true'); }
       });
     }
+
+    // Shopify's Section Rendering / header "hydration" (and product-grid re-renders)
+    // can replace the server-EMPTY .wishlist-count span and the favorite buttons
+    // WITHOUT firing 'update-favorites' — which left the wishlist count blank even
+    // though items were saved (the cart count is server-rendered, so it's immune).
+    // Re-apply the saved-favorites state whenever a fresh count/toggle is inserted,
+    // so the wishlist count stays accurate like the cart. Debounced to one pass per
+    // frame.
+    var resyncQueued = false;
+    function scheduleResync() {
+      if (resyncQueued) return;
+      resyncQueued = true;
+      // setTimeout (not requestAnimationFrame): rAF is throttled/paused in
+      // background tabs and some embedded contexts, which would leave the count
+      // stale until the tab is focused. A 0ms timeout still coalesces a burst of
+      // mutations but always fires.
+      setTimeout(function () {
+        resyncQueued = false;
+        updateAcrossSite();
+      }, 0);
+    }
+    var SELECTOR = '.wishlist-count, [data-action="toggle-favorites"], .wishlist-trigger';
+    var observer = new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        var added = mutations[i].addedNodes;
+        for (var j = 0; j < added.length; j++) {
+          var n = added[j];
+          if (n.nodeType !== 1) continue;
+          if ((n.matches && n.matches(SELECTOR)) || (n.querySelector && n.querySelector(SELECTOR))) {
+            scheduleResync();
+            return;
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   if (document.readyState === 'loading') {
