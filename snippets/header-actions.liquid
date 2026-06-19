@@ -294,14 +294,19 @@
       padding-inline: 0;
     }
 
+    /* The wishlist count sits as a small badge at the icon's TOP-RIGHT. The heart is
+       centered in a 44px tap target, so anchor to the icon centre (50%/50% + a small
+       offset) — anchoring to the button top made it ride up above the icon and out
+       of the header. */
     .wishlist-trigger {
       position: relative;
     }
 
     .wishlist-trigger .wishlist-count {
       position: absolute;
-      top: 0.25rem;
-      inset-inline-start: calc(50% + 0.5rem);
+      top: 50%;
+      inset-inline-start: 50%;
+      transform: translate(0.85rem, -0.55rem);
       font-size: 0.625rem;
       line-height: 1;
       pointer-events: none;
