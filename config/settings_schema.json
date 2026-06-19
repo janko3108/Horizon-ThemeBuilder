@@ -1542,6 +1542,13 @@
         "visible_if": "{{ settings.cart_type == 'drawer' }}"
       },
       {
+        "type": "text",
+        "id": "cart_drawer_shipping_note",
+        "label": "Cart drawer shipping note",
+        "info": "Optional line shown above the total in the cart drawer (Filippa K style) — e.g. delivery time or a shipping message. Leave blank to hide.",
+        "visible_if": "{{ settings.cart_type == 'drawer' }}"
+      },
+      {
         "type": "header",
         "content": "t:content.cart_features"
       },

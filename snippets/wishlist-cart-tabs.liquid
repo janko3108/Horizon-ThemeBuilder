@@ -1,25 +1,36 @@
 {% doc %}
-  Filippa K–style Cart / Wishlist tab switcher, shown in the cart-drawer and
-  wishlist-drawer headers when `settings.wishlist_show_cart_tabs` is enabled.
+  Filippa K–style Cart / Wishlist tab switcher, shown in the cart drawer's cart
+  panel header and in the wishlist panel header (both live inside the single cart
+  drawer — see snippets/cart-drawer.liquid + snippets/wishlist-drawer-panel.liquid).
 
-  Switching reuses the real drawers (no cart rebuild): the inactive tab closes
-  the current drawer and opens the other one with the same slide animation —
-  via #cart-drawer/open|close (Horizon's theme-drawer) and data-wishlist-open|close
-  (wishlist.js global delegation).
+  Switching is IN PLACE: each tab carries `data-drawer-tab`, and wishlist.js sets
+  `data-active-tab` on the cart dialog to crossfade between the stacked cart and
+  wishlist panels. The drawer itself never closes or slides — exactly like FK.
 
   Renders nothing unless the setting is on AND the cart is in drawer mode, so
   callers can use it as a drop-in replacement for the drawer title.
 
-  @param {string} active - 'cart' or 'wishlist' (the current drawer)
+  @param {string} active - 'cart' or 'wishlist' (which panel this header belongs to)
 {% enddoc %}
 {%- if settings.wishlist_enabled != false and settings.wishlist_show_cart_tabs and settings.cart_type == 'drawer' -%}
-  <div class="drawer-tabs">
-    {%- if active == 'cart' -%}
-      <span class="drawer-tab is-active" aria-current="true">{{ 'content.cart_title' | t }}</span>
-      <button type="button" class="drawer-tab" data-wishlist-open on:click="#cart-drawer/close" aria-label="Open wishlist">Wishlist</button>
-    {%- else -%}
-      <button type="button" class="drawer-tab" data-wishlist-close on:click="#cart-drawer/open" aria-label="Open cart">{{ 'content.cart_title' | t }}</button>
-      <span class="drawer-tab is-active" aria-current="true">Wishlist</span>
-    {%- endif -%}
+  <div class="drawer-tabs" role="tablist">
+    <button
+      type="button"
+      class="drawer-tab{% if active == 'cart' %} is-active{% endif %}"
+      data-drawer-tab="cart"
+      role="tab"
+      aria-selected="{% if active == 'cart' %}true{% else %}false{% endif %}"
+    >
+      {{ 'content.cart_title' | t }}
+    </button>
+    <button
+      type="button"
+      class="drawer-tab{% if active == 'wishlist' %} is-active{% endif %}"
+      data-drawer-tab="wishlist"
+      role="tab"
+      aria-selected="{% if active == 'wishlist' %}true{% else %}false{% endif %}"
+    >
+      Wishlist
+    </button>
   </div>
 {%- endif -%}

@@ -15,78 +15,20 @@
   window.wishlistData.root = {{ routes.root_url | json }};
 </script>
 
-<wishlist-drawer
-  id="wishlist-drawer"
-  class="wishlist-drawer"
-  section-id="{{ section.id }}"
-  data-guest-message="{{ settings.favorites_show_guest_account_message | default: false }}"
-  aria-hidden="true"
->
-  <div class="wishlist-drawer__overlay" data-wishlist-close></div>
-  <div class="wishlist-drawer__panel color-{{ color_class }}" role="dialog" aria-modal="true" aria-label="Wishlist">
-    <div class="wishlist-drawer__header">
-      {%- capture wl_tabs -%}{%- render 'wishlist-cart-tabs', active: 'wishlist' -%}{%- endcapture -%}
-      {%- if wl_tabs != blank -%}{{ wl_tabs }}{%- else -%}<p class="wishlist-drawer__title">Wishlist</p>{%- endif -%}
-      <button type="button" class="wishlist-drawer__close" data-wishlist-close aria-label="Close wishlist">
-        {{ 'icon-close.svg' | inline_asset_content }}
-      </button>
-    </div>
-
-    <div class="wishlist-drawer__body">
-      <div class="wishlist-drawer__content js-favorites-drawer-content">
-        <div class="favorites-drawer__empty-state">
-          <p class="favorites-drawer__empty-text">Your wishlist is empty.</p>
-
-          {%- if settings.favorites_button_text != blank and settings.favorites_button_url != blank -%}
-            <a class="button wishlist-empty__button" href="{{ settings.favorites_button_url }}">
-              {{- settings.favorites_button_text -}}
-            </a>
-          {%- endif -%}
-
-          {%- if show_recommendations and rec_collection != blank and rec_collection.products.size > 0 -%}
-            <div class="favorites-drawer__recommendations">
-              {%- if settings.favorites_title != blank -%}
-                <p class="favorites-drawer__rec-title">{{ settings.favorites_title }}</p>
-              {%- endif -%}
-              <div class="favorites-rec-scroll">
-                {%- for product in rec_collection.products limit: 8 -%}
-                  <div class="favorites-rec-slide">
-                    {%- render 'favorite-card', product: product -%}
-                  </div>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endif -%}
-        </div>
-      </div>
-    </div>
-
-    <div class="wishlist-drawer__footer">
-      {%- if customer == blank -%}
-        <div class="wishlist-drawer__account">
-          <p class="wishlist-drawer__account-text">Log in or create an account to save your favourites across all your devices.</p>
-          <div class="wishlist-drawer__account-links">
-            <a class="wishlist-drawer__account-link" href="{{ routes.account_register_url }}">
-              <span>Create account</span>{{ 'icon-arrow.svg' | inline_asset_content }}
-            </a>
-            <a class="wishlist-drawer__account-link" href="{{ routes.account_login_url }}">
-              <span>Log in</span>{{ 'icon-arrow.svg' | inline_asset_content }}
-            </a>
-          </div>
-        </div>
-      {%- endif -%}
-      <div class="favorites-removal-toast" data-removal-toast role="status" aria-live="polite" aria-atomic="true">
-        <div class="favorites-removal-toast__stack">
-          <p class="favorites-removal-toast__text"></p>
-          <button type="button" class="favorites-removal-toast__undo" data-removal-undo hidden>Undo</button>
-        </div>
-        <div class="favorites-removal-toast__border" aria-hidden="true">
-          <span class="favorites-removal-toast__border-fill" data-removal-border></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</wishlist-drawer>
+{%- liquid
+  # Unified (Filippa K) drawer: when the cart is a drawer and the cart/wishlist tabs
+  # are enabled, the wishlist panel is rendered INSIDE the cart drawer (see
+  # snippets/cart-drawer.liquid) so the two switch in place. In that case this
+  # section renders no standalone drawer — only the shared wishlistData script +
+  # styles above/below. Otherwise, render the standalone sliding wishlist drawer.
+  assign wl_unified = false
+  if settings.cart_type == 'drawer' and settings.wishlist_enabled != false and settings.wishlist_show_cart_tabs
+    assign wl_unified = true
+  endif
+-%}
+{%- unless wl_unified -%}
+  {%- render 'wishlist-drawer-panel' -%}
+{%- endunless -%}
 
 {% stylesheet %}
   /* ---- Filippa K–style wishlist drawer ----

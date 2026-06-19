@@ -82,7 +82,7 @@
       method="post"
     >
       <div
-        class="cart-items spacing-style{% if block_settings.dividers %} cart-items--dividers{% endif %}"
+        class="cart-items spacing-style{% if block_settings.dividers %} cart-items--dividers{% endif %}{% if context == 'drawer' %} cart-items--fk{% endif %}"
         style="{%  render 'spacing-style', settings: block_settings %} --cart-items-gap:{{ block_settings.gap | append: "px" }};"
       >
         <table
@@ -226,7 +226,7 @@
                               <dt class="visually-hidden">{{ option.name }}:</dt>
                               <dd>
                                 {{- option.value -}}
-                                {%- if forloop.last != true %},&nbsp;{% endif -%}
+                                {%- if forloop.last != true and context != 'drawer' %},&nbsp;{% endif -%}
                               </dd>
                             </div>
                           {%- endfor -%}
@@ -309,6 +309,28 @@
                       {% endif %}
                     </div>
                   </div>
+
+                  {%- if context == 'drawer' -%}
+                    <div class="cart-items__fk-actions">
+                      <button
+                        type="button"
+                        class="cart-fk-link cart-items__move-fav"
+                        data-cart-move-to-favorites
+                        data-handle="{{ item.product.handle }}"
+                        data-title="{{ item.product.title | escape }}"
+                      >
+                        Move to favourites
+                      </button>
+                      <button
+                        type="button"
+                        class="cart-fk-link cart-fk-remove"
+                        data-cart-remove
+                        aria-label="{{ 'accessibility.remove_item' | t: title: item.title | escape }}"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  {%- endif -%}
                 </td>
                 <td
                   class="cart-items__quantity"
@@ -969,4 +991,96 @@
       opacity: 1;
     }
   }
+
+  /* ============================================================
+     Filippa K–style cart drawer line items.
+     Scoped to .cart-items--fk (drawer only) so the cart PAGE is
+     untouched. Mirrors the wishlist drawer styling so the
+     Cart / Wishlist tab switch has no visual jump. */
+  .cart-items--fk .cart-items__table-row,
+  .cart-items--fk .cart-items__table-row--full-width-variants {
+    grid-template-columns: clamp(72px, 26cqi, 104px) minmax(0, 1fr) auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'media details    price'
+      'media variants   variants'
+      'media unit_price unit_price'
+      'media actions    quantity'
+      'media error      error';
+    column-gap: 16px;
+    align-items: start;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* light grey image backing, like FK */
+  .cart-items--fk .cart-items__media-container {
+    background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.04);
+  }
+
+  .cart-items--fk .cart-items__title {
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    color: var(--color-foreground);
+  }
+
+  /* size / colour: subdued grey, stacked (comma removed in markup for drawer) */
+  .cart-items--fk .cart-items__variants-wrapper,
+  .cart-items--fk .cart-items__variants-wrapper * {
+    color: rgb(var(--color-foreground-rgb, 0 0 0) / 0.55);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  .cart-items--fk .cart-items__variant { display: block; }
+  .cart-items--fk .cart-items__variant dd { display: block; margin: 0; }
+
+  /* price: top-right, aligned with the title row */
+  .cart-items--fk .cart-items__price {
+    grid-area: price;
+    text-align: end;
+    align-self: start;
+    min-width: 0;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+  }
+
+  /* FK text-link actions (move to favourites / remove) */
+  .cart-items--fk .cart-items__fk-actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .cart-items--fk .cart-fk-link {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    width: auto;
+    box-shadow: none;
+    font: inherit;
+    font-size: 0.8125rem;
+    line-height: 1.1;
+    color: rgb(var(--color-foreground-rgb, 0 0 0) / 0.55);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .cart-items--fk .cart-fk-link:hover { color: var(--color-foreground); }
+
+  /* the original icon remove button is hidden; the text "Remove" link replaces it */
+  .cart-items--fk .cart-items__remove { display: none; }
+
+  /* quantity stepper: bottom-right, minimal */
+  .cart-items--fk .cart-items__quantity {
+    grid-area: quantity;
+    justify-self: end;
+    align-self: end;
+    margin-top: 12px;
+  }
+  .cart-items--fk .cart-items__quantity-controls { gap: 0; }
 {% endstylesheet %}

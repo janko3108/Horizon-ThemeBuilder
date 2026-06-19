@@ -139,6 +139,9 @@
 
     connectedCallback() {
       this.content = this.querySelector('.js-favorites-drawer-content');
+      // cache the server-rendered empty state so we can restore it without a
+      // section fetch (works regardless of where the panel is mounted)
+      this._emptyHTML = this.content ? this.content.innerHTML : '';
       this.sectionId = this.getAttribute('section-id') || 'favorites-drawer';
       this.guestEnabled = this.getAttribute('data-guest-message') === 'true';
 
@@ -163,8 +166,17 @@
 
     open() {
       this._open = true;
-      this.classList.add('is-open');
       this.setAttribute('aria-hidden', 'false');
+      if (this.classList.contains('wishlist-drawer--unified')) {
+        // unified: drive the cart drawer and switch to the wishlist tab in place
+        var cart = document.querySelector('#cart-drawer');
+        var dlg = cart && cart.querySelector('dialog');
+        if (dlg) dlg.setAttribute('data-active-tab', 'wishlist');
+        if (cart && dlg && !dlg.hasAttribute('open')) cart.open();
+        this.render();
+        return;
+      }
+      this.classList.add('is-open');
       document.documentElement.classList.add('wishlist-open');
       this.render();
       this.updateGuestMessage();
@@ -174,8 +186,16 @@
 
     close() {
       this._open = false;
-      this.classList.remove('is-open');
       this.setAttribute('aria-hidden', 'true');
+      if (this.classList.contains('wishlist-drawer--unified')) {
+        var cart = document.querySelector('#cart-drawer');
+        var dlg = cart && cart.querySelector('dialog');
+        if (cart && dlg && dlg.hasAttribute('open')) cart.close();
+        if (dlg) dlg.setAttribute('data-active-tab', 'cart');
+        this.hideRemovalToast(true);
+        return;
+      }
+      this.classList.remove('is-open');
       document.documentElement.classList.remove('wishlist-open');
       this.hideRemovalToast(true);
       this.hideGuestMessage();
@@ -219,6 +239,12 @@
     renderEmptyState() {
       if (!this.content) return;
       this.content.classList.remove('favorites-grid');
+      // Prefer the cached server-rendered empty state (no network, works inside
+      // the cart drawer). Fall back to a section fetch only if it isn't cached.
+      if (this._emptyHTML) {
+        this.content.innerHTML = this._emptyHTML;
+        return;
+      }
       fetch(root() + '?sections=' + encodeURIComponent(this.sectionId))
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (json) {
@@ -391,6 +417,21 @@
       if (d) d.open();
       return;
     }
+    /* Unified drawer tabs: switch the active panel IN PLACE (no close/reopen). */
+    var tabBtn = e.target.closest('[data-drawer-tab]');
+    if (tabBtn) {
+      e.preventDefault();
+      var which = tabBtn.getAttribute('data-drawer-tab');
+      var cartEl = document.querySelector('#cart-drawer');
+      var dlg = cartEl && cartEl.querySelector('dialog');
+      if (dlg) dlg.setAttribute('data-active-tab', which);
+      var dt = drawer();
+      if (dt) {
+        if (which === 'wishlist') { dt._open = true; dt.setAttribute('aria-hidden', 'false'); dt.render(); }
+        else { dt._open = false; dt.setAttribute('aria-hidden', 'true'); }
+      }
+      return;
+    }
     var toggle = e.target.closest('[data-action="toggle-favorites"]');
     if (toggle) {
       e.preventDefault();
@@ -398,6 +439,31 @@
       var d2 = drawer();
       if (d2) d2.toggleFavorite(toggle);
       else updateAcrossSite();
+      return;
+    }
+    /* Cart drawer: "Move to favourites" — add to wishlist (by handle, only if not
+       already saved so it never toggles off), then remove the line from the cart by
+       clicking the line's native (hidden) remove button. */
+    var mover = e.target.closest('[data-cart-move-to-favorites]');
+    if (mover) {
+      e.preventDefault();
+      e.stopPropagation();
+      var mh = mover.getAttribute('data-handle');
+      var dM = drawer();
+      if (dM && mh && read().indexOf(mh) === -1) dM.addFavorite(mh, mover);
+      var rowM = mover.closest('[data-key]') || mover.closest('.cart-items__table-row');
+      var rmM = rowM && rowM.querySelector('.cart-items__remove');
+      if (rmM) rmM.click();
+      return;
+    }
+    /* Cart drawer: text "Remove" link — proxy to the native remove button. */
+    var remover = e.target.closest('[data-cart-remove]');
+    if (remover) {
+      e.preventDefault();
+      e.stopPropagation();
+      var rowR = remover.closest('[data-key]') || remover.closest('.cart-items__table-row');
+      var rmR = rowR && rowR.querySelector('.cart-items__remove');
+      if (rmR) rmR.click();
       return;
     }
   }, true);
@@ -408,6 +474,17 @@
     // The header trigger is rendered server-side in header-actions.liquid
     // (so it follows the header Utilities settings). We just sync state here.
     updateAcrossSite();
+    // Unified drawer: when the cart dialog closes (Esc, backdrop, close button),
+    // reset to the cart tab so the next open shows the cart, not the wishlist.
+    var cartEl = document.querySelector('#cart-drawer');
+    var dlg = cartEl && cartEl.querySelector('dialog');
+    if (dlg) {
+      dlg.addEventListener('close', function () {
+        dlg.setAttribute('data-active-tab', 'cart');
+        var d = drawer();
+        if (d) { d._open = false; d.setAttribute('aria-hidden', 'true'); }
+      });
+    }
   }
 
   if (document.readyState === 'loading') {

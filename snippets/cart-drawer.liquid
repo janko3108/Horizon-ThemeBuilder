@@ -49,6 +49,7 @@
       class="theme-drawer__dialog color-custom-drawer"
       aria-labelledby="cart-drawer-heading"
       cart-summary-sticky="true"
+      data-active-tab="cart"
     >
       <cart-drawer-component
         {% if settings.auto_open_cart_drawer and template.name != 'cart' %}
@@ -117,7 +118,17 @@
                 </scroll-hint>
 
                 <div class="cart-drawer__summary">
+                  {%- if settings.cart_drawer_shipping_note != blank -%}
+                    <p class="cart-fk-shipping-note">{{ settings.cart_drawer_shipping_note }}</p>
+                  {%- endif -%}
                   {% render 'cart-summary', section_id: 'cart-drawer-section' %}
+                  {%- if shop.enabled_payment_types.size > 0 -%}
+                    <div class="cart-fk-payments" aria-hidden="true">
+                      {%- for type in shop.enabled_payment_types -%}
+                        {{ type | payment_type_svg_tag: class: 'cart-fk-payment-icon' }}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
                 </div>
               </scroll-hint>
             {%- endif -%}
@@ -129,6 +140,15 @@
           %}
         </div>
       </cart-drawer-component>
+
+      {%- comment -%}
+        Unified Filippa K drawer: the wishlist panel lives inside the cart dialog as
+        an absolute overlay. The Cart/Wishlist tabs crossfade between this and the
+        cart content via the dialog's data-active-tab — the drawer never closes.
+      {%- endcomment -%}
+      {%- if settings.wishlist_enabled != false and settings.wishlist_show_cart_tabs -%}
+        {%- render 'wishlist-drawer-panel', unified: true -%}
+      {%- endif -%}
     </dialog>
   </theme-drawer>
 
@@ -277,5 +297,80 @@
     .cart-drawer__content {
       background: transparent;
     }
+  }
+
+  /* ---- Filippa K–style cart drawer footer ---- */
+  .cart-fk-shipping-note {
+    margin: 0 0 var(--padding-lg);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+  }
+
+  .cart-fk-payments {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-block-start: var(--padding-lg);
+  }
+
+  .cart-fk-payment-icon {
+    width: 34px;
+    height: 22px;
+    border-radius: 3px;
+  }
+
+  /* FK-style solid black checkout button inside the drawer */
+  .cart-drawer__summary .cart__checkout-button {
+    background: var(--color-foreground);
+    color: var(--color-background);
+    border: 0;
+  }
+
+  .cart-drawer__summary .cart__checkout-button:hover {
+    opacity: 0.9;
+  }
+
+  /* =========================================================================
+     Unified Filippa K drawer: the wishlist panel is an absolute overlay stacked
+     on top of the cart content inside the SAME cart dialog. The Cart/Wishlist
+     tabs flip `data-active-tab` on the dialog, which crossfades between the two
+     panels — the drawer never slides or closes. Overrides the standalone
+     (fixed, sliding) .wishlist-drawer styles from sections/favorites-drawer. */
+  .theme-drawer__dialog cart-drawer-component {
+    transition: opacity 0.25s var(--animation-easing, ease);
+  }
+  .theme-drawer__dialog[data-active-tab='wishlist'] cart-drawer-component {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .theme-drawer__dialog .wishlist-drawer--unified {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s var(--animation-easing, ease), visibility 0.25s;
+  }
+  .theme-drawer__dialog[data-active-tab='wishlist'] .wishlist-drawer--unified {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .wishlist-drawer--unified .wishlist-drawer__overlay {
+    display: none;
+  }
+  .wishlist-drawer--unified .wishlist-drawer__panel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    transform: none;
+    transition: none;
   }
 {% endstylesheet %}
