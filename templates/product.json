@@ -298,6 +298,9 @@
                   "settings": {
                     "stacking": false,
                     "text_color": "",
+                    "wishlist_button_background": "{{ settings.color_palette.background }}",
+                    "wishlist_button_border": "{{ settings.color_palette.foreground }}",
+                    "wishlist_button_icon_color": "{{ settings.color_palette.foreground }}",
                     "show_pickup_availability": false,
                     "gift_card_form": true,
                     "recipient_button_style": "default",
@@ -338,7 +341,7 @@
                       "type": "add-to-cart",
                       "static": true,
                       "settings": {
-                        "style_class": "button-secondary",
+                        "style_class": "button",
                         "custom_button_background": "#000000",
                         "custom_button_text": "#ffffff",
                         "custom_button_border": "#ffffff"
