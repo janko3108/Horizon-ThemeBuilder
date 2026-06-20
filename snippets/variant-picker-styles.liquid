@@ -127,6 +127,14 @@
     font-weight: 600;
   }
 
+  /* Group the option name + its selected value so they read as one unit
+     ("Size XS", like "Color Black"), and stay together on the left of the size
+     legend's space-between row (the size-chart link sits on the right). */
+  .variant-option__label-group {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
   /* Placeholder size-chart link (no behaviour yet — wired up later). */
   .variant-option__size-chart {
     flex: 0 0 auto;

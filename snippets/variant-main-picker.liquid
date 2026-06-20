@@ -123,10 +123,16 @@
             {{ option_id_attribute }}
           >
             <legend class="variant-option__legend">
-              <span class="variant-option__name">{{ product_option.name | escape }}</span>
-              {%- if variant_style == 'swatch' -%}
+              {%- comment -%}
+                Group name + selected value so they read together ("Size XS", like
+                "Color Black"). For the size option the legend is flex/space-between
+                with the size-chart link, so the group keeps them on the left as one
+                unit. Shown for swatch AND button options now (was swatch-only).
+              {%- endcomment -%}
+              <span class="variant-option__label-group">
+                <span class="variant-option__name">{{ product_option.name | escape }}</span>
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
-              {%- endif %}
+              </span>
               {%- if is_size_option and has_size_chart -%}
                 <button
                   type="button"
