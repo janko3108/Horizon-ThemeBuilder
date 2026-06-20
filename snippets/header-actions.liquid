@@ -472,18 +472,34 @@
     margin-inline-start: 0;
   }
 
-  /* Mobile: a small number raised like a superscript, pulled in tight to the
-     icon (the compact "exponent" look). */
+  /* Mobile: render the count as a true superscript badge that takes NO horizontal
+     space, so every header icon is spaced identically whether or not it shows a
+     count. (Inline counts widened the cart/wishlist buttons, which — with no uniform
+     gap on mobile — made the gap next to a counted icon look bigger than the others.)
+     The icon button's overflow is opened so the raised number isn't clipped, the count
+     box is collapsed to zero width (it overflows visibly), and a transform pins it to
+     its icon's top-right corner. */
   @media screen and (max-width: 749px) {
-    .wishlist-count,
-    .header-actions__cart-icon .cart-bubble {
-      margin-inline-start: -0.5rem;
+    .wishlist-trigger,
+    .header-actions__action,
+    .header-actions__cart-icon {
+      overflow: visible;
+    }
+
+    .wishlist-count:not(:empty),
+    .header-actions__cart-icon .cart-bubble,
+    .header-actions__cart-icon .cart-bubble[data-maintain-ratio] {
+      display: inline-block;
+      width: 0;
+      margin-inline: 0;
+      overflow: visible;
+      white-space: nowrap;
     }
 
     .wishlist-count,
     .header-actions__cart-icon .cart-bubble__text {
       font-size: 0.65rem;
-      transform: translateY(-0.4em);
+      transform: translate(-0.5em, -0.5em);
     }
   }
 
