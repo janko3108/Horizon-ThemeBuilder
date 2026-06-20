@@ -500,6 +500,22 @@
     // Re-apply the saved-favorites state whenever a fresh count/toggle is inserted,
     // so the wishlist count stays accurate like the cart. Debounced to one pass per
     // frame.
+    // The cart count is server-rendered into BOTH drawer tab copies (the cart panel's
+    // header and the wishlist panel's header). Only the cart panel's copy re-renders
+    // on a cart change; the wishlist panel's is rendered once and goes stale (so the
+    // Cart tab shows no count while you're on the Wishlist tab). Mirror the cart
+    // panel's live count into every copy so it's correct on either tab.
+    function syncDrawerCartCounts() {
+      var dlg = document.querySelector('#cart-drawer dialog');
+      if (!dlg) return;
+      var src = dlg.querySelector('cart-drawer-component [data-cart-count]');
+      if (!src) return;
+      var val = src.textContent;
+      var all = dlg.querySelectorAll('[data-cart-count]');
+      for (var i = 0; i < all.length; i++) {
+        if (all[i] !== src && all[i].textContent !== val) all[i].textContent = val;
+      }
+    }
     var resyncQueued = false;
     function scheduleResync() {
       if (resyncQueued) return;
@@ -511,6 +527,7 @@
       setTimeout(function () {
         resyncQueued = false;
         updateAcrossSite();
+        syncDrawerCartCounts();
       }, 0);
     }
     var SELECTOR = '.wishlist-count, [data-action="toggle-favorites"], .wishlist-trigger';
