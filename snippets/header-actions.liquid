@@ -480,6 +480,14 @@
      box is collapsed to zero width (it overflows visibly), and a transform pins it to
      its icon's top-right corner. */
   @media screen and (max-width: 749px) {
+    /* Tighten the spacing between the header icons on mobile (the 44px touch
+       targets sit edge-to-edge, which looked too spread out). A small negative
+       inline margin pulls them together evenly — including the account icon —
+       without shrinking the tappable area. */
+    header-actions > * {
+      margin-inline: -4px;
+    }
+
     .wishlist-trigger,
     .header-actions__action,
     .header-actions__cart-icon {
@@ -499,7 +507,9 @@
     .wishlist-count,
     .header-actions__cart-icon .cart-bubble__text {
       font-size: 0.65rem;
-      transform: translate(-0.5em, -0.5em);
+      /* Pulled tight onto the icon's top-right corner so the badge doesn't reach
+         into the (now narrower) gap toward the next icon. */
+      transform: translate(-0.9em, -0.5em);
     }
   }
 
