@@ -128,8 +128,12 @@
       display: none;
     }
     .breadcrumbs--details {
-      padding-block: 0 var(--padding-sm, 0.75rem);
+      padding-block: 0;
       padding-inline: 0;
+      /* The details group is a flex column (20px gap) and the vendor block adds its
+         own top spacing (~40px total). Pull the vendor/title up so the breadcrumb
+         sits tight to it. */
+      margin-bottom: -28px;
     }
   }
 
