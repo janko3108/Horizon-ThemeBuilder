@@ -117,6 +117,54 @@
       },
       {
         "type": "header",
+        "content": "Custom fonts"
+      },
+      {
+        "type": "paragraph",
+        "content": "Optional — use your own font for any role. Host the .woff2 file (upload it under Settings → Files, or add it to the theme's assets), copy its URL, paste it below, and enter a family name. Leave a name blank to keep the Shopify font selected above. A variable .woff2 is recommended so every weight renders correctly."
+      },
+      {
+        "type": "text",
+        "id": "custom_body_font_family",
+        "label": "Body — custom font name"
+      },
+      {
+        "type": "text",
+        "id": "custom_body_font_url",
+        "label": "Body — custom font .woff2 URL"
+      },
+      {
+        "type": "text",
+        "id": "custom_subheading_font_family",
+        "label": "Subheading — custom font name"
+      },
+      {
+        "type": "text",
+        "id": "custom_subheading_font_url",
+        "label": "Subheading — custom font .woff2 URL"
+      },
+      {
+        "type": "text",
+        "id": "custom_heading_font_family",
+        "label": "Heading — custom font name"
+      },
+      {
+        "type": "text",
+        "id": "custom_heading_font_url",
+        "label": "Heading — custom font .woff2 URL"
+      },
+      {
+        "type": "text",
+        "id": "custom_accent_font_family",
+        "label": "Accent — custom font name"
+      },
+      {
+        "type": "text",
+        "id": "custom_accent_font_url",
+        "label": "Accent — custom font .woff2 URL"
+      },
+      {
+        "type": "header",
         "content": "t:content.text_presets"
       },
       {
