@@ -52,6 +52,20 @@ export class ThemeDrawer extends Component {
     return this.hasAttribute('open');
   }
 
+  /**
+   * Whether the drawer should open as a modal overlay (backdrop on top of the
+   * page) rather than the desktop squeeze-sidebar that pushes page content.
+   *
+   * True on narrow viewports, OR always when the drawer opts in with the
+   * `overlay` attribute. The cart/wishlist drawer uses `overlay` so it sits on
+   * top of the store like the search modal instead of squeezing the page.
+   *
+   * @returns {boolean}
+   */
+  #isModalMode() {
+    return this.hasAttribute('overlay') || this.#modalQuery.matches;
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this.#modalQuery.addEventListener('change', this.#onModalBreakpointChange);
@@ -84,7 +98,7 @@ export class ThemeDrawer extends Component {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    if (this.isOpen && this.#modalQuery.matches && !document.querySelector('theme-drawer[open]')) {
+    if (this.isOpen && this.#isModalMode() && !document.querySelector('theme-drawer[open]')) {
       document.documentElement.removeAttribute('scroll-lock');
     }
     this.#modalQuery.removeEventListener('change', this.#onModalBreakpointChange);
@@ -122,7 +136,7 @@ export class ThemeDrawer extends Component {
     panel.close();
     removeTrapFocus();
 
-    if (this.#modalQuery.matches) {
+    if (this.#isModalMode()) {
       document.documentElement.setAttribute('scroll-lock', '');
       panel.showModal();
     } else {
@@ -188,7 +202,7 @@ export class ThemeDrawer extends Component {
 
     this.#previouslyFocused = /** @type {HTMLElement | null} */ (document.activeElement);
 
-    if (this.#modalQuery.matches) {
+    if (this.#isModalMode()) {
       document.documentElement.setAttribute('scroll-lock', '');
       panel.showModal();
     } else {
@@ -224,7 +238,7 @@ export class ThemeDrawer extends Component {
     // In modal mode, dialogs live in the browser's top layer where z-index
     // is ignored — stacking follows showModal() call order. Re-calling
     // showModal() moves this dialog to the top of the stack.
-    if (this.#modalQuery.matches && panel.open) {
+    if (this.#isModalMode() && panel.open) {
       panel.close();
       panel.showModal();
     }
