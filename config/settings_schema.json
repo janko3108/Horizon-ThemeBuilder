@@ -1125,6 +1125,17 @@
           }
         ],
         "default": "narrow"
+      },
+      {
+        "type": "header",
+        "content": "Breadcrumbs"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_breadcrumbs",
+        "label": "Show breadcrumbs",
+        "info": "Shows a breadcrumb trail (Home / collection / product) on collection and product pages.",
+        "default": true
       }
     ]
   },

@@ -13,15 +13,17 @@
 
 {%- liquid
   assign show = false
-  if template.name == 'collection' and collection != blank
-    assign show = true
-  elsif template.name == 'product' and product != blank
-    assign show = true
+  if settings.show_breadcrumbs != false
+    if template.name == 'collection' and collection != blank
+      assign show = true
+    elsif template.name == 'product' and product != blank
+      assign show = true
+    endif
   endif
 -%}
 
 {%- if show -%}
-  <nav class="breadcrumbs" aria-label="Breadcrumb">
+  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}" aria-label="Breadcrumb">
     <ol class="breadcrumbs__list" role="list">
       <li class="breadcrumbs__item">
         <a class="breadcrumbs__link" href="{{ routes.root_url }}">Home</a>
@@ -110,6 +112,39 @@
     .breadcrumbs__item--current span {
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+  }
+
+  /* ---- PDP overlay variant ----
+     Rendered inside .product-information__media (overlay: true) so it sits on the
+     media's top-left, under the header — like Filippa K. */
+  .product-information__media {
+    position: relative;
+  }
+
+  .breadcrumbs--overlay {
+    position: absolute;
+    z-index: 2;
+    inset-inline-start: var(--page-margin, 2.5rem);
+    padding-block: 0;
+    padding-inline: 0;
+    max-width: calc(100% - 2 * var(--page-margin, 2.5rem));
+  }
+
+  /* Desktop: the media is pulled full-bleed up under the transparent header, so
+     drop the breadcrumb down past the header group. */
+  @media screen and (min-width: 750px) {
+    .breadcrumbs--overlay {
+      top: calc(var(--header-group-height, 88px) + 0.5rem);
+    }
+  }
+
+  /* Mobile: the media already sits below the header — flush to the left edge. */
+  @media screen and (max-width: 749px) {
+    .breadcrumbs--overlay {
+      top: 0.6rem;
+      inset-inline-start: 1rem;
+      max-width: calc(100% - 2rem);
     }
   }
 {% endstylesheet %}

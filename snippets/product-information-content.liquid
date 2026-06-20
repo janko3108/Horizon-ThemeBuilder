@@ -107,6 +107,7 @@
         class="product-information__media"
         data-testid="product-information-media"
       >
+        {% render 'breadcrumbs', overlay: true %}
         {{ media_gallery }}
       </div>
     {% endcapture %}
