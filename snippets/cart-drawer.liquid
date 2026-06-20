@@ -362,7 +362,12 @@
      panels — the drawer never slides or closes. Overrides the standalone
      (fixed, sliding) .wishlist-drawer styles from sections/favorites-drawer. */
   .theme-drawer__dialog cart-drawer-component {
-    transition: opacity 0.25s var(--animation-easing, ease);
+    /* Match the wishlist panel's transition EXACTLY (incl. visibility) so the
+       crossfade is symmetric. Without the visibility transition the cart panel
+       hid instantly on cart->wishlist (visibility:hidden isn't animated), which
+       read as a flicker; transitioning visibility keeps it shown until the fade
+       completes, like the wishlist panel does going the other way. */
+    transition: opacity 0.25s var(--animation-easing, ease), visibility 0.25s;
   }
   .theme-drawer__dialog[data-active-tab='wishlist'] cart-drawer-component {
     opacity: 0;
