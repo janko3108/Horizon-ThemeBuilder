@@ -511,6 +511,14 @@
          into the (now narrower) gap toward the next icon. */
       transform: translate(-0.9em, -0.5em);
     }
+
+    /* The cart count sits in a centered flex container, which made its badge
+       straddle the icon's edge (half over the bag) instead of sitting to the
+       upper-right like the wishlist count. Left-align it so both match. */
+    .header-actions__cart-icon .cart-bubble__text {
+      justify-content: flex-start;
+      text-align: left;
+    }
   }
 
   /* Desktop: an inline, baseline-aligned count in parentheses sitting next to
