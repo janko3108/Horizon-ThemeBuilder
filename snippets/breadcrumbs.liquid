@@ -23,7 +23,7 @@
 -%}
 
 {%- if show -%}
-  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}" aria-label="Breadcrumb" style="--breadcrumbs-font-size: {{ settings.breadcrumbs_font_size | default: 13 }}px;">
+  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}{% if in_details %} breadcrumbs--details{% endif %}" aria-label="Breadcrumb" style="--breadcrumbs-font-size: {{ settings.breadcrumbs_font_size | default: 13 }}px;">
     <ol class="breadcrumbs__list" role="list">
       <li class="breadcrumbs__item">
         <a class="breadcrumbs__link" href="{{ routes.root_url }}">Home</a>
@@ -120,20 +120,28 @@
      - Mobile: in normal flow -> sits below the gallery, above the details group.
      - Desktop: absolutely positioned to overlay the media's top-left, under the
        header (Filippa K placement). */
+  /* Mobile: use the in-details copy (sits in the product details group, above the
+     title, so it scrolls with the details and isn't overlapped by the sticky
+     gallery). Hide the media-overlay copy. */
   @media screen and (max-width: 749px) {
     .breadcrumbs--overlay {
-      position: static;
-      padding-block: var(--padding-md, 1rem) var(--padding-sm, 0.75rem);
-      padding-inline: 1rem;
+      display: none;
+    }
+    .breadcrumbs--details {
+      padding-block: 0 var(--padding-sm, 0.75rem);
+      padding-inline: 0;
     }
   }
 
+  /* Desktop: overlay the media's top-left, under the header. Hide the in-details
+     copy. */
   @media screen and (min-width: 750px) {
+    .breadcrumbs--details {
+      display: none;
+    }
     .product-information__media {
       position: relative;
     }
-    /* The media is pulled full-bleed up under the transparent header, so drop the
-       overlay down past the header group. */
     .breadcrumbs--overlay {
       position: absolute;
       z-index: 2;

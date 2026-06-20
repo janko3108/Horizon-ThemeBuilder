@@ -15,6 +15,10 @@
   {% endif %}
 >
   {% capture children %}
+    {%- comment -%} Mobile breadcrumb: part of the details group, above the vendor/
+      title, so it scrolls with the details (not the gallery). Hidden on desktop,
+      where the media overlay copy is used instead. {%- endcomment -%}
+    {% render 'breadcrumbs', in_details: true %}
     <div class="view-product-title">
       <a
         href="{{ closest.product.selected_or_first_available_variant.url }}"
