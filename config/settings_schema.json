@@ -1136,6 +1136,17 @@
         "label": "Show breadcrumbs",
         "info": "Shows a breadcrumb trail (Home / collection / product) on collection and product pages.",
         "default": true
+      },
+      {
+        "type": "range",
+        "id": "breadcrumbs_font_size",
+        "label": "Breadcrumbs text size",
+        "min": 10,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 13,
+        "visible_if": "{{ settings.show_breadcrumbs != false }}"
       }
     ]
   },

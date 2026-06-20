@@ -107,8 +107,12 @@
         class="product-information__media"
         data-testid="product-information-media"
       >
-        {% render 'breadcrumbs', overlay: true %}
         {{ media_gallery }}
+        {%- comment -%}
+          Breadcrumb: desktop overlays the media top-left (absolute); mobile sits in
+          normal flow here — i.e. below the gallery, above the details group.
+        {%- endcomment -%}
+        {% render 'breadcrumbs', overlay: true %}
       </div>
     {% endcapture %}
 

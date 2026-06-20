@@ -23,7 +23,7 @@
 -%}
 
 {%- if show -%}
-  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}" aria-label="Breadcrumb">
+  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}" aria-label="Breadcrumb" style="--breadcrumbs-font-size: {{ settings.breadcrumbs_font_size | default: 13 }}px;">
     <ol class="breadcrumbs__list" role="list">
       <li class="breadcrumbs__item">
         <a class="breadcrumbs__link" href="{{ routes.root_url }}">Home</a>
@@ -58,7 +58,7 @@
 
 {% stylesheet %}
   .breadcrumbs {
-    font-size: 0.8125rem;
+    font-size: var(--breadcrumbs-font-size, 0.8125rem);
     line-height: 1.2;
     padding-block: var(--padding-sm, 12px);
     padding-inline: var(--page-margin, var(--sidebar-padding, 20px));
@@ -115,36 +115,32 @@
     }
   }
 
-  /* ---- PDP overlay variant ----
-     Rendered inside .product-information__media (overlay: true) so it sits on the
-     media's top-left, under the header — like Filippa K. */
-  .product-information__media {
-    position: relative;
-  }
-
-  .breadcrumbs--overlay {
-    position: absolute;
-    z-index: 2;
-    inset-inline-start: var(--page-margin, 2.5rem);
-    padding-block: 0;
-    padding-inline: 0;
-    max-width: calc(100% - 2 * var(--page-margin, 2.5rem));
-  }
-
-  /* Desktop: the media is pulled full-bleed up under the transparent header, so
-     drop the breadcrumb down past the header group. */
-  @media screen and (min-width: 750px) {
+  /* ---- PDP variant ----
+     Rendered as the LAST child of .product-information__media so it can be:
+     - Mobile: in normal flow -> sits below the gallery, above the details group.
+     - Desktop: absolutely positioned to overlay the media's top-left, under the
+       header (Filippa K placement). */
+  @media screen and (max-width: 749px) {
     .breadcrumbs--overlay {
-      top: calc(var(--header-group-height, 88px) + 0.5rem);
+      position: static;
+      padding-block: var(--padding-md, 1rem) var(--padding-sm, 0.75rem);
+      padding-inline: 1rem;
     }
   }
 
-  /* Mobile: the media already sits below the header — flush to the left edge. */
-  @media screen and (max-width: 749px) {
+  @media screen and (min-width: 750px) {
+    .product-information__media {
+      position: relative;
+    }
+    /* The media is pulled full-bleed up under the transparent header, so drop the
+       overlay down past the header group. */
     .breadcrumbs--overlay {
-      top: 0.6rem;
-      inset-inline-start: 1rem;
-      max-width: calc(100% - 2rem);
+      position: absolute;
+      z-index: 2;
+      top: calc(var(--header-group-height, 88px) + 0.5rem);
+      inset-inline-start: var(--page-margin, 2.5rem);
+      padding: 0;
+      max-width: calc(100% - 2 * var(--page-margin, 2.5rem));
     }
   }
 {% endstylesheet %}
