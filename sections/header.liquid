@@ -1194,6 +1194,14 @@
       display: none;
     }
 
+    /* Keep cart + wishlist off the right edge. The header runs edge-to-edge, and
+       with the tightened icon spacing (plus the wishlist count badge) the rightmost
+       icon was overflowing past the viewport. Inset the actions cluster so it sits
+       comfortably in from the edge. */
+    #header-component[data-mobile-nav='account_in_drawer'] header-actions {
+      margin-inline-end: var(--padding-lg);
+    }
+
     /* Option B — logo on the left next to the hamburger, all icons on the right */
     #header-component[data-mobile-nav='logo_left'] .header__columns {
       display: flex;
