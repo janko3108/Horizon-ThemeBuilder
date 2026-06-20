@@ -356,8 +356,26 @@
             "card-gallery",
             "product_card_group_m7Ufgk"
           ]
+        },
+        "grid_image_editorial": {
+          "type": "_grid-image",
+          "settings": {
+            "size": "2_2",
+            "position": 5,
+            "position_mobile_enabled": true,
+            "position_mobile": 3,
+            "mobile_size": "full",
+            "overlay_color": "#000000",
+            "overlay_opacity": 25,
+            "content_position": "bottom-left",
+            "text_color": "#ffffff",
+            "subheading": "Editorial",
+            "heading": "New Arrivals",
+            "heading_size": "h3"
+          }
         }
       },
+      "block_order": ["grid_image_editorial"],
       "settings": {
         "layout_type": "grid",
         "product_card_size": "large",
