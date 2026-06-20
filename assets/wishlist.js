@@ -118,8 +118,11 @@
       btn.setAttribute('aria-label', active ? STR.remove : STR.add);
     });
 
+    var wishlistCountText = handles.length > 0 ? '(' + handles.length + ')' : '';
     document.querySelectorAll('.wishlist-count').forEach(function (el) {
-      el.textContent = handles.length > 0 ? '(' + handles.length + ')' : '';
+      // Only write when it actually changed, so a characterData observer watching the
+      // drawer (see init) can re-fill the count without looping on its own writes.
+      if (el.textContent !== wishlistCountText) el.textContent = wishlistCountText;
     });
     document.querySelectorAll('.wishlist-trigger').forEach(function (el) {
       el.classList.toggle('has-favorites', hasFavorites);
@@ -563,6 +566,22 @@
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
+
+    // The body observer above only catches ADDED count nodes. A cart re-render that
+    // patches the existing count's text in place, or that lands after an async view
+    // transition (empty<->refill), can blank the drawer's Cart/Wishlist tab counts
+    // without adding a node — so it's missed, and the count stays blank until you
+    // toggle tabs. Watch the cart drawer for ANY content change (text included) and
+    // re-fill via the same debounced resync. The conditional writes in
+    // updateAcrossSite/syncDrawerCartCounts make this loop-safe.
+    var cartDialogEl = document.querySelector('#cart-drawer dialog');
+    if (cartDialogEl) {
+      new MutationObserver(scheduleResync).observe(cartDialogEl, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
