@@ -27,13 +27,35 @@
 >
   <div class="wishlist-drawer__overlay" data-wishlist-close></div>
   <div class="wishlist-drawer__panel color-{{ color_class }}" role="dialog" aria-modal="true" aria-label="Wishlist">
-    <div class="wishlist-drawer__header">
-      {%- capture wl_tabs -%}{%- render 'wishlist-cart-tabs', active: 'wishlist' -%}{%- endcapture -%}
-      {%- if wl_tabs != blank -%}{{ wl_tabs }}{%- else -%}<p class="wishlist-drawer__title">Wishlist</p>{%- endif -%}
-      <button type="button" class="wishlist-drawer__close" data-wishlist-close aria-label="Close wishlist">
-        {{ 'icon-close.svg' | inline_asset_content }}
-      </button>
-    </div>
+    {%- if unified -%}
+      {%- comment -%}
+        Unified (in-cart-drawer) mode: render the SAME header as the cart panel —
+        identical .theme-drawer__header container + .theme-drawer__close-button and
+        the same Cart/Wishlist tabs. Because the two panels crossfade, an identical
+        header reads as static: only the active-tab highlight and the content below
+        change when switching, exactly like Filippa K. The close button closes the
+        shared cart dialog (which resets the active tab back to cart).
+      {%- endcomment -%}
+      <div class="theme-drawer__header">
+        {%- render 'wishlist-cart-tabs', active: 'wishlist' -%}
+        <button
+          type="button"
+          class="theme-drawer__close-button"
+          on:click="#cart-drawer/close"
+          aria-label="{{ 'actions.close' | t }}"
+        >
+          <span class="svg-wrapper">{{ 'icon-close.svg' | inline_asset_content }}</span>
+        </button>
+      </div>
+    {%- else -%}
+      <div class="wishlist-drawer__header">
+        {%- capture wl_tabs -%}{%- render 'wishlist-cart-tabs', active: 'wishlist' -%}{%- endcapture -%}
+        {%- if wl_tabs != blank -%}{{ wl_tabs }}{%- else -%}<p class="wishlist-drawer__title">Wishlist</p>{%- endif -%}
+        <button type="button" class="wishlist-drawer__close" data-wishlist-close aria-label="Close wishlist">
+          {{ 'icon-close.svg' | inline_asset_content }}
+        </button>
+      </div>
+    {%- endif -%}
 
     <div class="wishlist-drawer__body">
       <div class="wishlist-drawer__content js-favorites-drawer-content">

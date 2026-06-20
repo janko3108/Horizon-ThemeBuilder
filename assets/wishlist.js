@@ -482,7 +482,14 @@
       dlg.addEventListener('close', function () {
         dlg.setAttribute('data-active-tab', 'cart');
         var d = drawer();
-        if (d) { d._open = false; d.setAttribute('aria-hidden', 'true'); }
+        if (d) {
+          d._open = false;
+          d.setAttribute('aria-hidden', 'true');
+          // The unified close button closes the dialog directly (so its header is
+          // identical to the cart panel's), bypassing wishlist close() — hide the
+          // removal/undo toast here so it doesn't linger on the next open.
+          if (d.hideRemovalToast) d.hideRemovalToast(true);
+        }
       });
     }
 
