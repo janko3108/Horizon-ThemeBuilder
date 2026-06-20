@@ -1346,6 +1346,31 @@
     "settings": [
       {
         "type": "header",
+        "content": "Size"
+      },
+      {
+        "type": "range",
+        "id": "button_padding_block",
+        "min": 4,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "label": "Button height",
+        "info": "Top & bottom padding — higher makes buttons taller.",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "button_padding_inline",
+        "min": 8,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "label": "Button side padding",
+        "default": 24
+      },
+      {
+        "type": "header",
         "content": "t:options.button_primary"
       },
       {
