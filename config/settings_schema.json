@@ -1168,6 +1168,28 @@
         "unit": "px",
         "default": 13,
         "visible_if": "{{ settings.show_breadcrumbs != false }}"
+      },
+      {
+        "type": "range",
+        "id": "breadcrumbs_padding_block_start",
+        "label": "Breadcrumbs top padding",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "default": 12,
+        "visible_if": "{{ settings.show_breadcrumbs != false }}"
+      },
+      {
+        "type": "range",
+        "id": "breadcrumbs_padding_block_end",
+        "label": "Breadcrumbs bottom padding",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "default": 12,
+        "visible_if": "{{ settings.show_breadcrumbs != false }}"
       }
     ]
   },

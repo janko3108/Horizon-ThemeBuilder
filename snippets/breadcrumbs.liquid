@@ -23,7 +23,7 @@
 -%}
 
 {%- if show -%}
-  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}{% if in_details %} breadcrumbs--details{% endif %}" aria-label="Breadcrumb" style="--breadcrumbs-font-size: {{ settings.breadcrumbs_font_size | default: 13 }}px;">
+  <nav class="breadcrumbs{% if overlay %} breadcrumbs--overlay{% endif %}{% if in_details %} breadcrumbs--details{% endif %}" aria-label="Breadcrumb" style="--breadcrumbs-font-size: {{ settings.breadcrumbs_font_size | default: 13 }}px; --breadcrumbs-padding-block-start: {{ settings.breadcrumbs_padding_block_start | default: 12 }}px; --breadcrumbs-padding-block-end: {{ settings.breadcrumbs_padding_block_end | default: 12 }}px;">
     <ol class="breadcrumbs__list" role="list">
       <li class="breadcrumbs__item">
         <a class="breadcrumbs__link" href="{{ routes.root_url }}">Home</a>
@@ -60,7 +60,7 @@
   .breadcrumbs {
     font-size: var(--breadcrumbs-font-size, 0.8125rem);
     line-height: 1.2;
-    padding-block: var(--padding-sm, 12px);
+    padding-block: var(--breadcrumbs-padding-block-start, 0.7rem) var(--breadcrumbs-padding-block-end, 0.7rem);
     padding-inline: var(--page-margin, var(--sidebar-padding, 20px));
   }
 
