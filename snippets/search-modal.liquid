@@ -533,37 +533,74 @@
   }
 
   /* ============================================================
-     Filippa K–style full-screen search overlay.
-     Replaces the centered popover with a full-viewport white panel:
-     a "Search" title + close, an underlined input with Clear + submit
-     arrow, then section headings + our product cards in a grid, and a
-     sticky "View all results" button. Reuses the predictive backend.
+     Filippa K–style search DRAWER. Opens as the same right-side panel
+     as the cart/wishlist drawer (same width + slide-in animation),
+     containing a "Search" title + close, an underlined input with Clear
+     + submit arrow, then section headings + our product cards in a grid,
+     and a sticky "View all results" button. Reuses the predictive backend.
      ============================================================ */
 
-  /* Full-viewport dialog on both breakpoints */
+  /* Right-side drawer matching the cart/wishlist theme-drawer size */
   .search-modal__content {
-    --modal-width: 100dvw;
+    --search-drawer-width: var(--theme-drawer-width, var(--sidebar-width));
 
-    width: 100dvw;
-    max-width: 100dvw;
+    position: fixed;
+    inset: unset;
+    top: 0;
+    right: 0;
+    width: var(--search-drawer-width);
+    max-width: 100%;
     height: 100dvh;
     max-height: 100dvh;
     margin: 0;
     border: 0;
+    border-left: var(--style-border-drawer);
     border-radius: 0;
+    background-color: var(--color-background);
   }
 
   @media screen and (min-width: 750px) {
     .search-modal__content {
-      width: 100dvw;
+      width: var(--search-drawer-width);
       margin-block-start: 0;
       overflow: hidden;
     }
   }
 
+  /* Slide in/out from the right, like the cart/wishlist drawer */
   .dialog-modal[open].search-modal__content {
     border-radius: 0;
     box-shadow: none;
+    transform-origin: right center;
+    animation: search-drawer-slide-in var(--animation-speed) var(--animation-timing-fade-in);
+  }
+
+  .dialog-modal.search-modal__content.dialog-closing {
+    animation: search-drawer-slide-out var(--animation-speed) var(--animation-timing-fade-out) forwards;
+  }
+
+  @keyframes search-drawer-slide-in {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes search-drawer-slide-out {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  .search-modal__content::backdrop {
+    background: rgb(var(--backdrop-color-rgb) / var(--backdrop-opacity));
   }
 
   /* Column layout filling the panel; results flow under the header
@@ -710,10 +747,46 @@
     margin-block: var(--margin-xl) var(--margin-sm);
   }
 
-  @media screen and (min-width: 750px) {
-    .search-modal .dialog-modal .predictive-search-results__wrapper-products {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  /* Narrow side drawer -> keep a 2-column product grid at all sizes (like FK). */
+  .search-modal .dialog-modal .predictive-search-results__wrapper-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---- Settable suggestions: FK-style list rows with a chevron ---- */
+  .search-modal .dialog-modal .predictive-search-suggestions {
+    padding-inline: var(--padding-xl);
+    margin-block-end: var(--margin-lg);
+  }
+
+  .search-modal .dialog-modal .predictive-search-suggestions__list {
+    margin: 0;
+  }
+
+  .search-modal .dialog-modal .predictive-search-suggestions__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+    padding-block: var(--padding-sm);
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-size: var(--font-size--md);
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .search-modal .dialog-modal .predictive-search-suggestions__link:hover {
+    opacity: 0.6;
+  }
+
+  .search-modal .dialog-modal .predictive-search-suggestions__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: rgb(var(--color-foreground-rgb) / 0.5);
+  }
+
+  .search-modal .dialog-modal .predictive-search-suggestions__icon svg {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
   }
 
   /* ---- Sticky "View all results" CTA ---- */

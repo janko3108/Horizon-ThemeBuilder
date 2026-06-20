@@ -70,6 +70,7 @@
     "wishlist_card_icon_background": false,
     "wishlist_icon": "heart",
     "empty_state_collection": "frontpage",
+    "search_suggestions": "Showcase, Hoodies, Shorts",
     "product_corner_radius": 0,
     "card_corner_radius": 0,
     "show_variant_image": false,

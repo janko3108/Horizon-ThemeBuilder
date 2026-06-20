@@ -18,6 +18,35 @@
 >
   {% if load_empty_state %}
     <div class="predictive-search-results__inner">
+      {%- comment -%}
+        Filippa K–style settable suggestions: merchant-defined terms (Theme settings
+        → Search → Suggested searches) shown before any query is typed. Each links to
+        a search for that term.
+      {%- endcomment -%}
+      {%- assign suggestion_terms = settings.search_suggestions | split: ',' -%}
+      {%- if suggestion_terms.size > 0 -%}
+        <div class="predictive-search-suggestions">
+          <h4 class="predictive-search-results__title">Suggestions</h4>
+          <ul class="predictive-search-suggestions__list list-unstyled">
+            {%- for term in suggestion_terms -%}
+              {%- assign suggestion = term | strip -%}
+              {%- if suggestion != blank -%}
+                <li class="predictive-search-suggestions__item">
+                  <a
+                    class="predictive-search-suggestions__link"
+                    href="{{ routes.search_url }}?q={{ suggestion | url_encode }}&options[prefix]=last"
+                  >
+                    <span>{{ suggestion }}</span>
+                    <span class="svg-wrapper predictive-search-suggestions__icon">
+                      {{- 'icon-arrow.svg' | inline_asset_content -}}
+                    </span>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
       {% liquid
         assign collection = settings.empty_state_collection | default: collections.all
         assign default_title = 'content.search_results_resource_products' | t

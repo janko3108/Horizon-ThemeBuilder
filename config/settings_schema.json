@@ -2101,6 +2101,16 @@
       },
       {
         "type": "header",
+        "content": "Search suggestions"
+      },
+      {
+        "type": "text",
+        "id": "search_suggestions",
+        "label": "Suggested searches",
+        "info": "Comma-separated terms shown in the search drawer before any query is typed (e.g. Linen, Shirt, Trousers). Each links to a search for that term."
+      },
+      {
+        "type": "header",
         "content": "t:names.predictive_search"
       },
       {
