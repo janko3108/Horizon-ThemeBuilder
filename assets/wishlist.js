@@ -446,8 +446,10 @@
       var cartEl = document.querySelector('#cart-drawer');
       var dlg = cartEl && cartEl.querySelector('dialog');
       if (dlg) dlg.setAttribute('data-active-tab', which);
-      // Refresh the cart count for the panel we're switching to (it may have gone
-      // stale while hidden, e.g. after emptying then re-filling the cart).
+      // Refresh BOTH counts for the panel we're switching to: either can be stale
+      // while hidden — the wishlist count blanks when the cart panel header re-renders
+      // (e.g. adding an item), and the cart count lags the empty/refill transition.
+      updateAcrossSite();
       syncDrawerCartCounts();
       var dt = drawer();
       if (dt) {
@@ -536,9 +538,14 @@
         resyncQueued = false;
         updateAcrossSite();
         syncDrawerCartCounts();
-        // Re-mirror after the empty-cart view transition settles (emptying then
-        // re-filling updates the cart panel count asynchronously, after the 0ms pass).
-        setTimeout(syncDrawerCartCounts, 400);
+        // Re-run BOTH after the empty-cart view transition settles: it re-renders the
+        // cart panel header asynchronously (after the 0ms pass), with a fresh, blank
+        // .wishlist-count and a stale [data-cart-count] — so re-fill the wishlist count
+        // and re-mirror the cart count once the new header is in place.
+        setTimeout(function () {
+          updateAcrossSite();
+          syncDrawerCartCounts();
+        }, 400);
       }, 0);
     }
     var SELECTOR = '.wishlist-count, [data-action="toggle-favorites"], .wishlist-trigger';
