@@ -60,13 +60,31 @@
 
       {% paginate collection.products by products_per_page %}
         {% capture children %}
-          {% for product in collection.products %}
+          {%- comment -%}
+            Merchant image blocks are rendered (with their settings resolved) via
+            content_for 'blocks' and injected here on the first page only. Each
+            block positions itself with the CSS `order` property; when blocks are
+            present, products are given matching order values so the images land
+            at the requested grid position on desktop and mobile. Collections
+            without image blocks render exactly as before (no order applied).
+          {%- endcomment -%}
+          {%- capture rendered_blocks -%}
+            {%- if paginate.current_page == 1 -%}{% content_for 'blocks' %}{%- endif -%}
+          {%- endcapture -%}
+          {%- assign has_grid_blocks = false -%}
+          {%- assign rendered_blocks_stripped = rendered_blocks | strip -%}
+          {%- if rendered_blocks_stripped != blank -%}
+            {%- assign has_grid_blocks = true -%}
+          {%- endif -%}
+          {{ rendered_blocks }}
+          {%- for product in collection.products -%}
             <li
               id="{{ section.id }}-{{ product.id }}"
               class="product-grid__item product-grid__item--{{ forloop.index0 }}"
               data-page="{{ paginate.current_page }}"
               data-product-id="{{ product.id }}"
               ref="cards[]"
+              {%- if has_grid_blocks %} style="order: {{ paginate.current_offset | plus: forloop.index | times: 10 }};"{% endif %}
             >
               {% content_for 'block',
                 type: '_product-card',
@@ -75,7 +93,7 @@
                 product_view_context: 'collection'
               %}
             </li>
-          {% endfor %}
+          {%- endfor -%}
         {% endcapture %}
 
         {% render 'product-grid',
@@ -268,6 +286,8 @@
       "default": 8
     }
   ],
+  "blocks": [{ "type": "_grid-image" }],
+  "max_blocks": 6,
   "presets": []
 }
 {% endschema %}

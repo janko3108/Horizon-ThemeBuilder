@@ -1,0 +1,274 @@
+{%- doc -%}
+  Renders a single merchant image block as an item inside the product grid.
+  Rendered from blocks/_grid-image.liquid (via content_for 'blocks'); the
+  captured output is injected into the grid by sections/main-collection.liquid.
+
+  The block positions itself within the grid using the CSS `order` property,
+  computed from its desktop / mobile position settings. Product cards are given
+  matching `order` values by the section so the image lands at the requested
+  spot on each breakpoint. Size settings control the column / row span.
+
+  @param {object} block - The image block (settings resolved via content_for)
+{%- enddoc -%}
+
+{%- liquid
+  assign image = block.settings.image
+  assign mobile_image = block.settings.mobile_image
+  assign size = block.settings.size | default: '2_2'
+  assign mobile_size = block.settings.mobile_size | default: 'full'
+  assign content_position = block.settings.content_position | default: 'bottom-left'
+
+  assign pos_d = block.settings.position | default: 5
+  if block.settings.position_mobile_enabled
+    assign pos_m = block.settings.position_mobile | default: pos_d
+  else
+    assign pos_m = pos_d
+  endif
+  # Order = (position * 10) - 5 so the image sits just before the Nth product,
+  # which the section orders at (index * 10).
+  assign order_d = pos_d | times: 10 | minus: 5
+  assign order_m = pos_m | times: 10 | minus: 5
+
+  assign cp_parts = content_position | split: '-'
+  assign cp_v = cp_parts[0]
+  assign cp_h = cp_parts[1]
+
+  assign has_content = false
+  if block.settings.subheading != blank or block.settings.heading != blank or block.settings.text != blank or block.settings.button_label != blank
+    assign has_content = true
+  endif
+
+  assign heading_size = block.settings.heading_size | default: 'h3'
+  assign button_class = 'button'
+  if block.settings.button_style == 'secondary'
+    assign button_class = 'button button-secondary'
+  endif
+-%}
+
+<li
+  class="collection-grid-image collection-grid-image--{{ size }} collection-grid-image--m-{{ mobile_size }}"
+  style="--ci-order-d: {{ order_d }}; --ci-order-m: {{ order_m }};"
+  {{ block.shopify_attributes }}
+>
+  {%- capture inner -%}
+    <div class="collection-grid-image__media">
+      {%- if image != blank -%}
+        {%- if mobile_image != blank -%}
+          <picture>
+            <source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 1000 }}">
+            <img
+              src="{{ image | image_url: width: 1600 }}"
+              alt="{{ image.alt | escape }}"
+              loading="lazy"
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+            >
+          </picture>
+        {%- else -%}
+          {{
+            image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '300, 450, 600, 750, 900, 1100, 1300, 1600',
+              sizes: '(min-width: 750px) 50vw, 100vw',
+              alt: image.alt
+          }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'collection-apparel-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+    </div>
+
+    {%- if block.settings.overlay_opacity > 0 -%}
+      <div
+        class="collection-grid-image__overlay"
+        style="background-color: {{ block.settings.overlay_color }}; opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};"
+      ></div>
+    {%- endif -%}
+
+    {%- if has_content -%}
+      <div
+        class="collection-grid-image__content collection-grid-image__content--v-{{ cp_v }} collection-grid-image__content--h-{{ cp_h }}"
+        style="--ci-text-color: {{ block.settings.text_color | default: '#ffffff' }};"
+      >
+        {%- if block.settings.subheading != blank -%}
+          <p class="collection-grid-image__subheading">{{ block.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if block.settings.heading != blank -%}
+          <p class="collection-grid-image__heading {{ heading_size }}">{{ block.settings.heading }}</p>
+        {%- endif -%}
+        {%- if block.settings.text != blank -%}
+          <div class="collection-grid-image__text">{{ block.settings.text }}</div>
+        {%- endif -%}
+        {%- if block.settings.button_label != blank -%}
+          <span class="{{ button_class }} collection-grid-image__button">{{ block.settings.button_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if block.settings.link != blank -%}
+    <a
+      class="collection-grid-image__inner"
+      href="{{ block.settings.link }}"
+      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+      {% if block.settings.heading != blank %}aria-label="{{ block.settings.heading | strip_html | escape }}"{% endif %}
+    >
+      {{ inner }}
+    </a>
+  {%- else -%}
+    <div class="collection-grid-image__inner">
+      {{ inner }}
+    </div>
+  {%- endif -%}
+</li>
+
+{%- stylesheet -%}
+  .collection-grid-image {
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    border-radius: var(--product-corner-radius, 0);
+    order: var(--ci-order-m, 0);
+    grid-column: span 2;
+  }
+
+  /* Mobile (< 750px) spans */
+  .collection-grid-image--m-half {
+    grid-column: span 1;
+  }
+  .collection-grid-image--m-full {
+    grid-column: span 2;
+  }
+  .collection-grid-image--2_2.collection-grid-image--m-full {
+    grid-row: span 2;
+  }
+
+  /* Intrinsic height fallback so the item is visible even when no product
+     card shares its row(s) to stretch it. */
+  .collection-grid-image::before {
+    content: "";
+    display: block;
+    grid-area: 1 / 1;
+  }
+  .collection-grid-image--m-half::before {
+    padding-top: 130%;
+  }
+  .collection-grid-image--m-full::before {
+    padding-top: 65%;
+  }
+  .collection-grid-image--2_2.collection-grid-image--m-full::before {
+    padding-top: 125%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-grid-image {
+      order: var(--ci-order-d, 0);
+    }
+    .collection-grid-image--1_1 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+    .collection-grid-image--2_1 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+    .collection-grid-image--2_2 {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .collection-grid-image--1_1::before {
+      padding-top: 130%;
+    }
+    .collection-grid-image--2_1::before {
+      padding-top: 60%;
+    }
+    .collection-grid-image--2_2::before {
+      padding-top: 125%;
+    }
+  }
+
+  .collection-grid-image__inner {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .collection-grid-image__media,
+  .collection-grid-image__media img,
+  .collection-grid-image__media svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collection-grid-image__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .collection-grid-image__content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: clamp(16px, 4cqi, 32px);
+    color: var(--ci-text-color, #ffffff);
+  }
+
+  .collection-grid-image__content--v-top {
+    justify-content: flex-start;
+  }
+  .collection-grid-image__content--v-middle {
+    justify-content: center;
+  }
+  .collection-grid-image__content--v-bottom {
+    justify-content: flex-end;
+  }
+  .collection-grid-image__content--h-left {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .collection-grid-image__content--h-center {
+    align-items: center;
+    text-align: center;
+  }
+  .collection-grid-image__content--h-right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .collection-grid-image__subheading {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .collection-grid-image__heading {
+    margin: 0;
+    color: inherit;
+  }
+  .collection-grid-image__text {
+    margin: 0;
+    max-width: 40ch;
+  }
+  .collection-grid-image__text > * {
+    margin: 0;
+  }
+  .collection-grid-image__button {
+    margin-top: 4px;
+    cursor: pointer;
+  }
+{%- endstylesheet -%}

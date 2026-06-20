@@ -1,0 +1,185 @@
+{%- doc -%}
+  Promotional image block for the collection product grid.
+
+  This block holds the settings only. The actual markup is rendered by
+  sections/main-collection.liquid, which reads section.blocks and places each
+  image into the product grid at its configured desktop / mobile position
+  (via snippets/collection-grid-image.liquid). Rendering it here as well keeps
+  the block valid if it is ever output through content_for directly.
+{%- enddoc -%}
+
+{% render 'collection-grid-image', block: block %}
+
+{% schema %}
+{
+  "name": "Image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Adds a promotional image inside the product grid. Tip: use the dynamic-source icon on the image field to connect a collection or product metafield."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "info": "Optional. Falls back to the image above."
+    },
+    {
+      "type": "header",
+      "content": "Position & size"
+    },
+    {
+      "type": "range",
+      "id": "position",
+      "label": "Grid position (desktop)",
+      "min": 1,
+      "max": 36,
+      "step": 1,
+      "default": 5,
+      "info": "Appears just before this product number in the grid."
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Desktop size",
+      "options": [
+        { "value": "1_1", "label": "1×1" },
+        { "value": "2_1", "label": "2×1 (wide)" },
+        { "value": "2_2", "label": "2×2 (large)" }
+      ],
+      "default": "2_2"
+    },
+    {
+      "type": "checkbox",
+      "id": "position_mobile_enabled",
+      "label": "Use a different position on mobile",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "position_mobile",
+      "label": "Grid position (mobile)",
+      "min": 1,
+      "max": 36,
+      "step": 1,
+      "default": 3,
+      "visible_if": "{{ block.settings.position_mobile_enabled }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_size",
+      "label": "Mobile size",
+      "options": [
+        { "value": "half", "label": "Half width" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "h2", "label": "Large" },
+        { "value": "h3", "label": "Medium" },
+        { "value": "h4", "label": "Small" }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "Open link in new tab",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
