@@ -56,6 +56,24 @@
         <div
           class="predictive-search-form__header"
         >
+          {%- comment -%}
+            Filippa K–style title row: "Search" on the left, close on the right,
+            above the search field (which becomes a single underlined input).
+          {%- endcomment -%}
+          <div class="predictive-search-form__titlebar">
+            <span class="predictive-search-form__title">{{ 'content.search' | t }}</span>
+            <button
+              type="button"
+              class="button predictive-search__close-modal-button"
+              aria-label="{{ 'accessibility.close_dialog' | t }}"
+              on:click="dialog-component/closeDialog"
+              ref="closeModalButton"
+            >
+              <span class="svg-wrapper">
+                {{ 'icon-close.svg' | inline_asset_content }}
+              </span>
+            </button>
+          </div>
           <div class="predictive-search-form__header-inner">
             <label
               for="{{ 'cmdk-input' | default: 'Search' }}"
@@ -97,18 +115,16 @@
             >
               {{ 'actions.clear' | t }}
             </button>
+            <button
+              type="submit"
+              class="button-unstyled predictive-search__submit-button"
+              aria-label="{{ 'content.search' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{ 'icon-arrow.svg' | inline_asset_content }}
+              </span>
+            </button>
           </div>
-          <button
-            type="button"
-            class="button predictive-search__close-modal-button"
-            aria-label="{{ 'accessibility.close_dialog' | t }}"
-            on:click="dialog-component/closeDialog"
-            ref="closeModalButton"
-          >
-            <span class="svg-wrapper">
-              {{ 'icon-close.svg' | inline_asset_content }}
-            </span>
-          </button>
         </div>
 
         <div class="predictive-search-form__content-wrapper">
@@ -514,5 +530,208 @@
   .predictive-search__close-modal-button:hover {
     --button-color: var(--color-foreground);
     --button-background-color: transparent;
+  }
+
+  /* ============================================================
+     Filippa K–style full-screen search overlay.
+     Replaces the centered popover with a full-viewport white panel:
+     a "Search" title + close, an underlined input with Clear + submit
+     arrow, then section headings + our product cards in a grid, and a
+     sticky "View all results" button. Reuses the predictive backend.
+     ============================================================ */
+
+  /* Full-viewport dialog on both breakpoints */
+  .search-modal__content {
+    --modal-width: 100dvw;
+
+    width: 100dvw;
+    max-width: 100dvw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .search-modal__content {
+      width: 100dvw;
+      margin-block-start: 0;
+      overflow: hidden;
+    }
+  }
+
+  .dialog-modal[open].search-modal__content {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Column layout filling the panel; results flow under the header
+     instead of as an absolute dropdown. */
+  .search-modal .dialog-modal predictive-search-component {
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+    margin-inline: 0;
+  }
+
+  .search-modal .dialog-modal .predictive-search-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-self: stretch;
+  }
+
+  .search-modal .dialog-modal .predictive-search-form__content-wrapper {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    width: 100%;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: none;
+  }
+
+  .search-modal .dialog-modal .predictive-search-form__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .search-modal
+    .dialog-modal
+    .predictive-search-form__content-wrapper:has([data-search-results])
+    > .predictive-search-form__content {
+    padding-block-end: var(--padding-md);
+  }
+
+  /* ---- Header: title row + underlined input ---- */
+  .search-modal .dialog-modal .predictive-search-form__header {
+    position: static;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--padding-md);
+    border: 0;
+    border-radius: 0;
+    background-color: var(--color-background);
+    padding: var(--padding-lg) var(--padding-xl) var(--padding-sm);
+    box-shadow: none;
+  }
+
+  /* remove the popover's vertical divider pseudo-element */
+  .search-modal
+    .dialog-modal
+    .predictive-search-form__header:has(.predictive-search__reset-button:not([hidden]))::before {
+    content: none;
+  }
+
+  .search-modal .dialog-modal .predictive-search-form__titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .search-modal .dialog-modal .predictive-search-form__title {
+    font-size: var(--font-size--lg);
+    line-height: 1;
+    color: var(--color-foreground);
+  }
+
+  .search-modal .dialog-modal .predictive-search-form__header-inner {
+    border: 0;
+    border-bottom: var(--style-border-width, 1px) solid var(--color-foreground);
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .search-modal .dialog-modal .predictive-search-form__header-inner:focus-within {
+    outline: none;
+  }
+
+  /* FK input: no left icon, placeholder + Clear + arrow on the right */
+  .search-modal .dialog-modal .predictive-search__icon {
+    display: none;
+  }
+
+  .search-modal .dialog-modal input.search-input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    padding-inline: 0;
+    padding-block: var(--padding-sm);
+    font-size: var(--font-size--lg);
+  }
+
+  .search-modal .dialog-modal .predictive-search__reset-button {
+    width: auto;
+    min-width: 0;
+    margin-inline-end: var(--margin-sm);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .search-modal .dialog-modal .predictive-search__reset-button-text {
+    display: inline;
+  }
+
+  .search-modal .dialog-modal .predictive-search__reset-button-icon {
+    display: none;
+  }
+
+  .search-modal .dialog-modal .predictive-search__submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .search-modal .dialog-modal .predictive-search__submit-button svg {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
+
+  /* ---- Section headings + product grid ---- */
+  .search-modal .dialog-modal .predictive-search-results__inner {
+    padding-block: var(--padding-sm) 0;
+  }
+
+  .search-modal .dialog-modal .predictive-search-results__title {
+    font-size: var(--font-size--md);
+    font-weight: 600;
+    padding-inline: var(--padding-xl);
+    margin-block: var(--margin-xl) var(--margin-sm);
+  }
+
+  @media screen and (min-width: 750px) {
+    .search-modal .dialog-modal .predictive-search-results__wrapper-products {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* ---- Sticky "View all results" CTA ---- */
+  .search-modal .dialog-modal .predictive-search-form__footer {
+    position: static;
+    flex: 0 0 auto;
+    padding: var(--padding-md) var(--padding-xl) var(--padding-lg);
+    background-image: none;
+    background-color: var(--color-background);
+    border-top: var(--style-border-width, 1px) solid var(--color-border);
+  }
+
+  .search-modal .dialog-modal .predictive-search__search-button {
+    width: 100%;
+    margin: 0;
+    background: var(--color-foreground);
+    color: var(--color-background);
+    border: 0;
+    border-radius: 0;
   }
 {% endstylesheet %}
