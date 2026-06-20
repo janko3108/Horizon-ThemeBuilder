@@ -98,10 +98,21 @@
         "label": "t:options.body"
       },
       {
+        "type": "text",
+        "id": "custom_body_font_url",
+        "label": "Custom font URL (.woff2)",
+        "info": "Optional — paste a .woff2 file link from Settings → Files to use your own font here instead of the selector above. A variable .woff2 covers all weights best."
+      },
+      {
         "type": "font_picker",
         "id": "type_subheading_font",
         "default": "work_sans_n5",
         "label": "t:options.subheading"
+      },
+      {
+        "type": "text",
+        "id": "custom_subheading_font_url",
+        "label": "Custom font URL (.woff2)"
       },
       {
         "type": "font_picker",
@@ -110,58 +121,20 @@
         "label": "t:options.heading"
       },
       {
+        "type": "text",
+        "id": "custom_heading_font_url",
+        "label": "Custom font URL (.woff2)"
+      },
+      {
         "type": "font_picker",
         "id": "type_accent_font",
         "default": "anonymous_pro_n4",
         "label": "t:options.accent"
       },
       {
-        "type": "header",
-        "content": "Custom fonts"
-      },
-      {
-        "type": "paragraph",
-        "content": "Optional — use your own font for any role. Host the .woff2 file (upload it under Settings → Files, or add it to the theme's assets), copy its URL, paste it below, and enter a family name. Leave a name blank to keep the Shopify font selected above. A variable .woff2 is recommended so every weight renders correctly."
-      },
-      {
-        "type": "text",
-        "id": "custom_body_font_family",
-        "label": "Body — custom font name"
-      },
-      {
-        "type": "text",
-        "id": "custom_body_font_url",
-        "label": "Body — custom font .woff2 URL"
-      },
-      {
-        "type": "text",
-        "id": "custom_subheading_font_family",
-        "label": "Subheading — custom font name"
-      },
-      {
-        "type": "text",
-        "id": "custom_subheading_font_url",
-        "label": "Subheading — custom font .woff2 URL"
-      },
-      {
-        "type": "text",
-        "id": "custom_heading_font_family",
-        "label": "Heading — custom font name"
-      },
-      {
-        "type": "text",
-        "id": "custom_heading_font_url",
-        "label": "Heading — custom font .woff2 URL"
-      },
-      {
-        "type": "text",
-        "id": "custom_accent_font_family",
-        "label": "Accent — custom font name"
-      },
-      {
         "type": "text",
         "id": "custom_accent_font_url",
-        "label": "Accent — custom font .woff2 URL"
+        "label": "Custom font URL (.woff2)"
       },
       {
         "type": "header",

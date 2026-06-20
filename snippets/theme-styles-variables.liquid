@@ -122,39 +122,39 @@
       assign rendered_fonts = rendered_fonts | append: accent_font_bold_italic_face_id
     endunless
 
-    # Custom fonts: when a role has both a family name and a .woff2 URL set, use that
-    # family (keeping the Shopify font + its fallbacks behind it) and emit an
-    # @font-face for it below. Otherwise fall back to the Shopify font as before.
+    # Custom fonts: when a role has a .woff2 URL set, use a generated family for it
+    # (keeping the Shopify font + its fallbacks behind it) and emit an @font-face for
+    # that URL below. Otherwise fall back to the Shopify font as before.
     assign body_family = settings.type_body_font.family | append: ', ' | append: settings.type_body_font.fallback_families
-    if settings.custom_body_font_family != blank and settings.custom_body_font_url != blank
-      assign body_family = '"' | append: settings.custom_body_font_family | append: '", ' | append: body_family
+    if settings.custom_body_font_url != blank
+      assign body_family = '"custom-body", ' | append: body_family
     endif
     assign subheading_family = settings.type_subheading_font.family | append: ', ' | append: settings.type_subheading_font.fallback_families
-    if settings.custom_subheading_font_family != blank and settings.custom_subheading_font_url != blank
-      assign subheading_family = '"' | append: settings.custom_subheading_font_family | append: '", ' | append: subheading_family
+    if settings.custom_subheading_font_url != blank
+      assign subheading_family = '"custom-subheading", ' | append: subheading_family
     endif
     assign heading_family = settings.type_heading_font.family | append: ', ' | append: settings.type_heading_font.fallback_families
-    if settings.custom_heading_font_family != blank and settings.custom_heading_font_url != blank
-      assign heading_family = '"' | append: settings.custom_heading_font_family | append: '", ' | append: heading_family
+    if settings.custom_heading_font_url != blank
+      assign heading_family = '"custom-heading", ' | append: heading_family
     endif
     assign accent_family = settings.type_accent_font.family | append: ', ' | append: settings.type_accent_font.fallback_families
-    if settings.custom_accent_font_family != blank and settings.custom_accent_font_url != blank
-      assign accent_family = '"' | append: settings.custom_accent_font_family | append: '", ' | append: accent_family
+    if settings.custom_accent_font_url != blank
+      assign accent_family = '"custom-accent", ' | append: accent_family
     endif
   %}
 
-  {%- comment -%} Custom-font @font-face rules — emitted only for roles with a name + URL. {%- endcomment -%}
-  {%- if settings.custom_body_font_family != blank and settings.custom_body_font_url != blank -%}
-    @font-face { font-family: "{{ settings.custom_body_font_family }}"; src: url("{{ settings.custom_body_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+  {%- comment -%} Custom-font @font-face rules — emitted only for roles with a .woff2 URL. {%- endcomment -%}
+  {%- if settings.custom_body_font_url != blank -%}
+    @font-face { font-family: "custom-body"; src: url("{{ settings.custom_body_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
   {%- endif -%}
-  {%- if settings.custom_subheading_font_family != blank and settings.custom_subheading_font_url != blank -%}
-    @font-face { font-family: "{{ settings.custom_subheading_font_family }}"; src: url("{{ settings.custom_subheading_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+  {%- if settings.custom_subheading_font_url != blank -%}
+    @font-face { font-family: "custom-subheading"; src: url("{{ settings.custom_subheading_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
   {%- endif -%}
-  {%- if settings.custom_heading_font_family != blank and settings.custom_heading_font_url != blank -%}
-    @font-face { font-family: "{{ settings.custom_heading_font_family }}"; src: url("{{ settings.custom_heading_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+  {%- if settings.custom_heading_font_url != blank -%}
+    @font-face { font-family: "custom-heading"; src: url("{{ settings.custom_heading_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
   {%- endif -%}
-  {%- if settings.custom_accent_font_family != blank and settings.custom_accent_font_url != blank -%}
-    @font-face { font-family: "{{ settings.custom_accent_font_family }}"; src: url("{{ settings.custom_accent_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+  {%- if settings.custom_accent_font_url != blank -%}
+    @font-face { font-family: "custom-accent"; src: url("{{ settings.custom_accent_font_url }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
   {%- endif -%}
 
   :root {
