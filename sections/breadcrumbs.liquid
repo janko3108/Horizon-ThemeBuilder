@@ -1,0 +1,30 @@
+{%- comment -%}
+  Breadcrumb trail as a movable section for collection (PLP) pages.
+
+  Renders the shared 'breadcrumbs' snippet (Home / collection). Because it is a
+  section, it can be repositioned or removed in the theme editor. Product pages
+  keep their own overlay breadcrumb (rendered inside the product info column),
+  so this section is enabled on collection templates only.
+{%- endcomment -%}
+
+{% render 'breadcrumbs' %}
+
+{% schema %}
+{
+  "name": "Breadcrumbs",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the Home / collection trail. Text size and padding are in Theme settings → Breadcrumbs. Drag to reposition."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Breadcrumbs"
+    }
+  ]
+}
+{% endschema %}

@@ -124,15 +124,11 @@
         data-template="{{ template }}"
       >
         {%- comment -%}
-          Breadcrumbs: collection pages have a solid (non-transparent) header with
-          clean space below, so render the FK-style trail here, above the title.
-          Product pages use a transparent header + full-bleed media, so their
-          breadcrumb is rendered inside the product info column instead
-          (blocks/_product-details.liquid).
+          Collection (PLP) breadcrumbs are now a movable section
+          (sections/breadcrumbs.liquid) placed in the collection template, so they
+          can be repositioned in the editor. Product pages keep their own overlay
+          breadcrumb (rendered inside the product info column).
         {%- endcomment -%}
-        {%- if template.name == 'collection' -%}
-          {% render 'breadcrumbs' %}
-        {%- endif -%}
         {{ content_for_layout }}
       </main>
 
