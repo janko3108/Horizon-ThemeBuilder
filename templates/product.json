@@ -28,7 +28,7 @@
             "thumbnail_radius": 0,
             "aspect_ratio": "adapt",
             "aspect_ratio_mobile": "adapt",
-            "constrain_to_viewport": true,
+            "constrain_to_viewport": false,
             "media_fit": "cover",
             "media_radius": 0,
             "extend_media": false,
