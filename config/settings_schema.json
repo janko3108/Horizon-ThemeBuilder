@@ -1261,7 +1261,7 @@
             "label": "t:options.top_right"
           }
         ],
-        "default": "top-left",
+        "default": "bottom-left",
         "label": "t:settings.badge_position"
       },
       {
