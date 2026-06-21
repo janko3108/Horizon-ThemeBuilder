@@ -162,7 +162,8 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "media_type_1": "video",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/76fc295e4f9c864c3e00b88d9ddccaa29882c350-4098x1920.jpg",
         "video_1": "shopify://files/videos/MIMOA_CAMPAIGN_MAIN_HERO_V08_Seb_16x9 (1).mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
@@ -632,7 +633,189 @@
         "gap": 30,
         "background_color": "",
         "padding-block-start": 30,
-        "padding-block-end": 30
+        "padding-block-end": 0
+      }
+    },
+    "section_PnPM9j": {
+      "type": "section",
+      "blocks": {
+        "text_UDeRXt": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h3>Listen to our customers</h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_UDeRXt"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": false,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "section_height_mobile": "same",
+        "section_height_custom_mobile": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 30,
+        "padding-block-end": 10
+      }
+    },
+    "reviews_aCDVyr": {
+      "type": "Reviews",
+      "blocks": {
+        "review_qmkiXk": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Köpte kaffe i slutet av förra året",
+            "body": "Köpte kaffe i slutet av förra året den kom relativt snabbt men allt fanns inte med i...",
+            "author": "Antonio",
+            "date": "16 maj"
+          }
+        },
+        "review_UadYgD": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Lovely coffee",
+            "body": "Lovely coffee, so convenient getting the coffee right to my...",
+            "author": "Emilia Rentorp",
+            "date": "15 maj"
+          }
+        },
+        "review_TpVfGK": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "5/5 kundservice",
+            "body": "Gott kaffe till ett mycket konkurrenskraftigt pris. Väldigt...",
+            "author": "Alexander Lindstrøm",
+            "date": "28 april"
+          }
+        },
+        "review_Ce3wA6": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Väldigt god kaffe",
+            "body": "Väldigt god kaffe, ser väldigt fram emot nästa dryck! Stort...",
+            "author": "Saafiyah",
+            "date": "20 april"
+          }
+        },
+        "review_waU7HK": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Kaffe",
+            "body": "utmärkt kaffe",
+            "author": "ka",
+            "date": "20 april"
+          }
+        },
+        "review_qhHDN6": {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "title": "Bra kundservice",
+            "body": "Svårt att få adapter till Vertuo att fungera till 100%. Då jag...",
+            "author": "Filip Hansson",
+            "date": "26 januari"
+          }
+        }
+      },
+      "block_order": [
+        "review_qmkiXk",
+        "review_UadYgD",
+        "review_TpVfGK",
+        "review_Ce3wA6",
+        "review_waU7HK",
+        "review_qhHDN6"
+      ],
+      "name": "Review Carousel",
+      "settings": {
+        "heading_font": "instrument_sans_n4",
+        "body_font": "instrument_sans_n4",
+        "title_size": 14,
+        "body_size": 14,
+        "meta_size": 12,
+        "heading": "",
+        "heading_size": 28,
+        "max_width": 1600,
+        "show_arrows": true,
+        "cards_desktop": 5,
+        "cards_tablet": 2,
+        "cards_mobile": 1,
+        "card_gap": 10,
+        "clamp_lines": 3,
+        "star_size": 18,
+        "star_color": "#00b67a",
+        "star_empty_color": "#dcdce6",
+        "provider_name": "Trustpilot",
+        "provider_url": "",
+        "logo_height": 24,
+        "summary_text": "<p>Rated <strong>4.4</strong> / 5 based on <strong>1,209 reviews</strong>. Showing our 4 & 5 star reviews.</p>",
+        "section_bg": "#ffffff",
+        "card_bg": "#f7f7f9",
+        "card_border": "#ececf0",
+        "card_radius": 0,
+        "title_color": "#000000",
+        "text_color": "#2b2b2b",
+        "muted_color": "#6b6b76",
+        "link_color": "#191919",
+        "arrow_size": 24,
+        "arrow_icon_size": 10,
+        "arrow_stroke": 4,
+        "arrow_radius": 30,
+        "arrow_border_width": 1,
+        "arrow_color": "#000000",
+        "arrow_border_color": "#000000",
+        "arrow_bg_transparent": true,
+        "arrow_bg": "#ffffff",
+        "arrow_bg_hover": "#f0f0f0",
+        "padding_top": 0,
+        "padding_bottom": 32
       }
     },
     "section_fijpmw": {
@@ -1096,7 +1279,7 @@
         "vertical_alignment_flex_direction_column": "center",
         "gap": 0,
         "section_width": "full-width",
-        "section_height": "large",
+        "section_height": "full-screen",
         "section_height_custom": 50,
         "section_height_mobile": "full-screen",
         "section_height_custom_mobile": 100,
@@ -1115,188 +1298,6 @@
         "border_radius": 0,
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
-    },
-    "section_pjCfhU": {
-      "type": "section",
-      "blocks": {
-        "text_FbnFVx": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<h3>Listen to our customers</h3>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_FbnFVx"
-      ],
-      "name": "t:names.rich_text_section",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": false,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 25,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "section_height_mobile": "same",
-        "section_height_custom_mobile": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 30,
-        "padding-block-end": 10
-      }
-    },
-    "reviews_aCDVyr": {
-      "type": "Reviews",
-      "blocks": {
-        "review_qmkiXk": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "title": "Köpte kaffe i slutet av förra året",
-            "body": "Köpte kaffe i slutet av förra året den kom relativt snabbt men allt fanns inte med i...",
-            "author": "Antonio",
-            "date": "16 maj"
-          }
-        },
-        "review_UadYgD": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "title": "Lovely coffee",
-            "body": "Lovely coffee, so convenient getting the coffee right to my...",
-            "author": "Emilia Rentorp",
-            "date": "15 maj"
-          }
-        },
-        "review_TpVfGK": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "title": "5/5 kundservice",
-            "body": "Gott kaffe till ett mycket konkurrenskraftigt pris. Väldigt...",
-            "author": "Alexander Lindstrøm",
-            "date": "28 april"
-          }
-        },
-        "review_Ce3wA6": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "title": "Väldigt god kaffe",
-            "body": "Väldigt god kaffe, ser väldigt fram emot nästa dryck! Stort...",
-            "author": "Saafiyah",
-            "date": "20 april"
-          }
-        },
-        "review_waU7HK": {
-          "type": "review",
-          "settings": {
-            "stars": 5,
-            "title": "Kaffe",
-            "body": "utmärkt kaffe",
-            "author": "ka",
-            "date": "20 april"
-          }
-        },
-        "review_qhHDN6": {
-          "type": "review",
-          "settings": {
-            "stars": 4,
-            "title": "Bra kundservice",
-            "body": "Svårt att få adapter till Vertuo att fungera till 100%. Då jag...",
-            "author": "Filip Hansson",
-            "date": "26 januari"
-          }
-        }
-      },
-      "block_order": [
-        "review_qmkiXk",
-        "review_UadYgD",
-        "review_TpVfGK",
-        "review_Ce3wA6",
-        "review_waU7HK",
-        "review_qhHDN6"
-      ],
-      "name": "Review Carousel",
-      "settings": {
-        "heading_font": "instrument_sans_n4",
-        "body_font": "instrument_sans_n4",
-        "title_size": 14,
-        "body_size": 14,
-        "meta_size": 12,
-        "heading": "",
-        "heading_size": 28,
-        "max_width": 1600,
-        "show_arrows": true,
-        "cards_desktop": 5,
-        "cards_tablet": 2,
-        "cards_mobile": 1,
-        "card_gap": 10,
-        "clamp_lines": 3,
-        "star_size": 18,
-        "star_color": "#00b67a",
-        "star_empty_color": "#dcdce6",
-        "provider_name": "Trustpilot",
-        "provider_url": "",
-        "logo_height": 24,
-        "summary_text": "<p>Rated <strong>4.4</strong> / 5 based on <strong>1,209 reviews</strong>. Showing our 4 & 5 star reviews.</p>",
-        "section_bg": "#ffffff",
-        "card_bg": "#f7f7f9",
-        "card_border": "#ececf0",
-        "card_radius": 0,
-        "title_color": "#000000",
-        "text_color": "#2b2b2b",
-        "muted_color": "#6b6b76",
-        "link_color": "#191919",
-        "arrow_size": 24,
-        "arrow_icon_size": 10,
-        "arrow_stroke": 4,
-        "arrow_radius": 30,
-        "arrow_border_width": 1,
-        "arrow_color": "#000000",
-        "arrow_border_color": "#000000",
-        "arrow_bg_transparent": true,
-        "arrow_bg": "#ffffff",
-        "arrow_bg_hover": "#f0f0f0",
-        "padding_top": 0,
-        "padding_bottom": 0
       }
     },
     "product_list_ni7wTF": {
@@ -1549,163 +1550,50 @@
         "padding-block-end": 30
       }
     },
-    "section_FjaV4J": {
+    "section_pjCfhU": {
       "type": "section",
       "blocks": {
-        "image_YmFaUA": {
-          "type": "image",
+        "text_FbnFVx": {
+          "type": "text",
+          "name": "t:names.heading",
           "settings": {
-            "image": "shopify://shop_images/76fc295e4f9c864c3e00b88d9ddccaa29882c350-4098x1920.jpg",
-            "link": "",
-            "image_ratio": "square",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
+            "text": "<h3>Seen in</h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "group_AnaajD": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "custom",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 10,
-            "padding-block-end": 10,
-            "padding-inline-start": 10,
-            "padding-inline-end": 10
-          },
-          "blocks": {
-            "text_d9wMdt": {
-              "type": "text",
-              "name": "t:names.heading",
-              "settings": {
-                "text": "<h2>About</h2>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_jGJHXm": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Made with care and unconditionally loved by our customers, this signature bestseller exceeds all expectations.</p>",
-                "width": "fit-content",
-                "max_width": "narrow",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_GqUhYg": {
-              "type": "button",
-              "settings": {
-                "label": "Explore",
-                "link": "shopify://pages/about",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "custom_button_background": "#000000",
-                "custom_button_text": "#ffffff",
-                "custom_button_border": "#ffffff",
-                "link_text_color": "",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_d9wMdt",
-            "text_jGJHXm",
-            "button_GqUhYg"
-          ]
         }
       },
       "block_order": [
-        "image_YmFaUA",
-        "group_AnaajD"
+        "text_FbnFVx"
       ],
-      "name": "t:names.image_with_text",
+      "name": "t:names.rich_text_section",
       "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
+        "content_direction": "column",
+        "vertical_on_mobile": false,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "section_width": "full-width",
+        "gap": 25,
+        "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
         "section_height_mobile": "same",
@@ -1723,6 +1611,264 @@
         "border_opacity": 100,
         "border_color": "",
         "border_radius": 0,
+        "padding-block-start": 30,
+        "padding-block-end": 20
+      }
+    },
+    "marquee_GCGkph": {
+      "type": "marquee",
+      "blocks": {
+        "icon_McP6xW": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/ELLE_Magazine_Logo.avif",
+            "width": 70,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        },
+        "icon_HaFbLE": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/mimoa-wordmark.svg",
+            "width": 100,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        },
+        "icon_64bhBK": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/logo-header.avif",
+            "width": 60,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        },
+        "icon_9NbU3w": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Vanity-fair-logo.avif",
+            "width": 100,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "icon_McP6xW",
+        "icon_HaFbLE",
+        "icon_64bhBK",
+        "icon_9NbU3w"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "reverse",
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 0,
+        "padding-block-end": 30,
+        "gap_between_elements": 80
+      }
+    },
+    "media_with_content_KVKbUT": {
+      "type": "media-with-content",
+      "blocks": {
+        "media": {
+          "type": "_media-without-appearance",
+          "static": true,
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/76fc295e4f9c864c3e00b88d9ddccaa29882c350-4098x1920.jpg",
+            "link": "",
+            "video_loop": true,
+            "video_autoplay": false,
+            "image_position": "cover",
+            "video_position": "cover"
+          },
+          "blocks": {}
+        },
+        "content": {
+          "type": "_content-without-appearance",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 24
+          },
+          "blocks": {
+            "text_pfXJ84": {
+              "type": "text",
+              "name": "t:names.caption",
+              "disabled": true,
+              "settings": {
+                "text": "<p>About</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": true,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "group_MibKQi": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_xpHfWL": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h2>Our signature product</h2>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "text_j6CKCA": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Made with care and unconditionally loved by our customers, this signature bestseller exceeds all expectations.</p>",
+                    "width": "fit-content",
+                    "max_width": "narrow",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xpHfWL",
+                "text_j6CKCA"
+              ]
+            },
+            "button_rdHGcK": {
+              "type": "button",
+              "settings": {
+                "label": "Shop now",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button-secondary",
+                "custom_button_background": "#000000",
+                "custom_button_text": "#ffffff",
+                "custom_button_border": "#ffffff",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_pfXJ84",
+            "group_MibKQi",
+            "button_rdHGcK"
+          ]
+        }
+      },
+      "name": "t:names.editorial",
+      "settings": {
+        "media_position": "left",
+        "media_width": "medium",
+        "media_height": "60svh",
+        "section_width": "full-width",
+        "extend_media": true,
+        "background_color": "",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -1735,7 +1881,7 @@
           "name": "t:names.title",
           "static": true,
           "settings": {
-            "text": "<h3>The journal</h3>",
+            "text": "<h3>Journal</h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -1793,7 +1939,7 @@
               "name": "t:names.title",
               "static": true,
               "settings": {
-                "type_preset": "h6",
+                "type_preset": "h5",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -1807,7 +1953,7 @@
                 "text_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
+                "padding-inline-start": 10,
                 "padding-inline-end": 0
               },
               "blocks": {}
@@ -1844,10 +1990,10 @@
                 "case": "none",
                 "wrap": "pretty",
                 "text_color": "",
-                "padding-block-start": 8,
+                "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 10,
+                "padding-inline-end": 10
               },
               "blocks": {}
             }
@@ -1855,7 +2001,6 @@
           "block_order": []
         }
       },
-      "disabled": true,
       "name": "t:names.blog_posts_carousel",
       "settings": {
         "blog": "news",
@@ -1870,7 +2015,7 @@
         "icons_style": "arrow",
         "icons_shape": "circle",
         "section_width": "full-width",
-        "gap": 12,
+        "gap": 30,
         "background_color": "",
         "padding-block-start": 30,
         "padding-block-end": 30
@@ -1881,11 +2026,13 @@
     "hero_iLBwPd",
     "collection_list_kUK3fy",
     "product_list_EDUBdR",
-    "section_fijpmw",
-    "section_pjCfhU",
+    "section_PnPM9j",
     "reviews_aCDVyr",
+    "section_fijpmw",
     "product_list_ni7wTF",
-    "section_FjaV4J",
+    "section_pjCfhU",
+    "marquee_GCGkph",
+    "media_with_content_KVKbUT",
     "featured_blog_posts_q66GHX"
   ]
 }
