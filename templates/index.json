@@ -162,7 +162,8 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "media_type_1": "video",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/76fc295e4f9c864c3e00b88d9ddccaa29882c350-4098x1920.jpg",
         "video_1": "shopify://files/videos/MIMOA_CAMPAIGN_MAIN_HERO_V08_Seb_16x9 (1).mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
