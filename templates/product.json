@@ -22,13 +22,13 @@
             "large_first_image": false,
             "icons_style": "arrow",
             "slideshow_controls_style": "dots",
-            "slideshow_mobile_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "dots",
             "thumbnail_position": "bottom",
             "thumbnail_width": 72,
             "thumbnail_radius": 0,
             "aspect_ratio": "adapt",
             "aspect_ratio_mobile": "adapt",
-            "constrain_to_viewport": false,
+            "constrain_to_viewport": true,
             "media_fit": "cover",
             "media_radius": 0,
             "extend_media": false,
@@ -79,7 +79,7 @@
                 "custom_mobile_size": true,
                 "size_mobile": "percent",
                 "percent_size_mobile": 0,
-                "pixel_size_mobile": 120
+                "pixel_size_mobile": 368
               },
               "blocks": {}
             },
