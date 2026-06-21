@@ -208,7 +208,9 @@
   .product-card__quick-add {
     position: absolute;
     inset-inline: 0;
-    bottom: 0;
+    /* Offset by the card group's bottom padding so the button's bottom lines up
+       with the bottom of the price, not the card's bottom edge. */
+    bottom: 10px;
     z-index: 3;
     display: flex;
     justify-content: flex-end;
