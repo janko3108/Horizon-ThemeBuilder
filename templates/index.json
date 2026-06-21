@@ -1953,7 +1953,7 @@
                 "text_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
+                "padding-inline-start": 10,
                 "padding-inline-end": 0
               },
               "blocks": {}
@@ -1990,10 +1990,10 @@
                 "case": "none",
                 "wrap": "pretty",
                 "text_color": "",
-                "padding-block-start": 8,
+                "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 10,
+                "padding-inline-end": 10
               },
               "blocks": {}
             }
@@ -2015,7 +2015,7 @@
         "icons_style": "arrow",
         "icons_shape": "circle",
         "section_width": "full-width",
-        "gap": 12,
+        "gap": 30,
         "background_color": "",
         "padding-block-start": 30,
         "padding-block-end": 30
