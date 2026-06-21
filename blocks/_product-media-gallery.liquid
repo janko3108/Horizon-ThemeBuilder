@@ -100,6 +100,14 @@
       "visible_if": "{{ block.settings.media_presentation == 'carousel' }}"
     },
     {
+      "type": "checkbox",
+      "id": "show_arrows_on_mobile",
+      "label": "Show arrows on mobile",
+      "info": "Show the carousel prev/next arrows on mobile too (always shown on desktop).",
+      "default": true,
+      "visible_if": "{{ block.settings.media_presentation == 'carousel' }}"
+    },
+    {
       "type": "select",
       "id": "slideshow_controls_style",
       "label": "t:settings.desktop_pagination",

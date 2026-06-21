@@ -485,8 +485,15 @@
 
     {% if render_slideshow_arrows %}
       {% capture slideshow_arrows %}
-        {% comment %} Arrows show on mobile too (not just desktop): no mobile:hidden. {% endcomment %}
-        {% render 'slideshow-arrows', icon_style: block_settings.icons_style %}
+        {% comment %}
+          Arrows always show on desktop. On mobile they show too unless the
+          "Show arrows on mobile" setting is turned off (then add mobile:hidden).
+        {% endcomment %}
+        {% if block_settings.show_arrows_on_mobile == false %}
+          {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: block_settings.icons_style %}
+        {% else %}
+          {% render 'slideshow-arrows', icon_style: block_settings.icons_style %}
+        {% endif %}
       {% endcapture %}
     {% endif %}
 
