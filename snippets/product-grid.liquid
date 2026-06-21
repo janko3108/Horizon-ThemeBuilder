@@ -79,6 +79,20 @@
     }
   }
 {% endstyle %}
+
+{% style %}
+  /* Filippa K-style fixed products-per-row (grid layout): explicit column count
+     for desktop and mobile, overriding the card-size auto-fill. */
+  .product-grid--grid.product-grid--{{ section.id }} {
+    grid-template-columns: repeat({{ section.settings.columns_mobile | default: 2 }}, minmax(0, 1fr));
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-grid--grid.product-grid--{{ section.id }} {
+      grid-template-columns: repeat({{ section.settings.columns_desktop | default: 4 }}, minmax(0, 1fr));
+    }
+  }
+{% endstyle %}
 <div
   id="ResultsList"
   class="

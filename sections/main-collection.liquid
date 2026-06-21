@@ -158,6 +158,19 @@
     },
     {
       "type": "select",
+      "id": "columns_desktop",
+      "label": "Products per row (desktop)",
+      "info": "Fixed number of products per row on desktop.",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "6", "label": "6" }
+      ],
+      "default": "4",
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
+    },
+    {
+      "type": "select",
       "id": "mobile_product_card_size",
       "label": "t:settings.mobile_card_size",
       "options": [
@@ -171,6 +184,18 @@
         }
       ],
       "default": "small"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Products per row (mobile)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2",
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
     },
     {
       "type": "checkbox",
