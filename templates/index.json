@@ -378,7 +378,7 @@
         "rows_gap": 8,
         "max_collections": 4,
         "icons_style": "arrow",
-        "icons_shape": "none",
+        "icons_shape": "square",
         "section_width": "full-width",
         "gap": 12,
         "background_color": "",
@@ -627,7 +627,7 @@
         "columns_gap": 2,
         "rows_gap": 12,
         "icons_style": "arrow",
-        "icons_shape": "circle",
+        "icons_shape": "square",
         "section_width": "full-width",
         "horizontal_alignment": "flex-start",
         "gap": 30,
@@ -698,7 +698,7 @@
         "border_color": "",
         "border_radius": 0,
         "padding-block-start": 30,
-        "padding-block-end": 10
+        "padding-block-end": 30
       }
     },
     "reviews_aCDVyr": {
@@ -1541,13 +1541,13 @@
         "columns_gap": 2,
         "rows_gap": 12,
         "icons_style": "arrow",
-        "icons_shape": "circle",
+        "icons_shape": "square",
         "section_width": "full-width",
         "horizontal_alignment": "flex-start",
         "gap": 30,
         "background_color": "",
         "padding-block-start": 30,
-        "padding-block-end": 30
+        "padding-block-end": 0
       }
     },
     "section_pjCfhU": {
@@ -1612,7 +1612,7 @@
         "border_color": "",
         "border_radius": 0,
         "padding-block-start": 30,
-        "padding-block-end": 20
+        "padding-block-end": 30
       }
     },
     "marquee_GCGkph": {
@@ -2013,7 +2013,7 @@
         "columns_gap": 2,
         "rows_gap": 16,
         "icons_style": "arrow",
-        "icons_shape": "circle",
+        "icons_shape": "square",
         "section_width": "full-width",
         "gap": 30,
         "background_color": "",
