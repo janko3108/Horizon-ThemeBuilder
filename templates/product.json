@@ -21,6 +21,7 @@
             "image_gap": 2,
             "large_first_image": false,
             "icons_style": "arrow",
+            "show_arrows_on_mobile": true,
             "slideshow_controls_style": "dots",
             "slideshow_mobile_controls_style": "thumbnails",
             "thumbnail_position": "bottom",
@@ -573,7 +574,6 @@
           "block_order": []
         }
       },
-      "disabled": true,
       "name": "t:names.featured_product",
       "settings": {
         "product": "showcase-1",
