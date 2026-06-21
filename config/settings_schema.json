@@ -2030,6 +2030,17 @@
         "visible_if": "{{ settings.product_card_show_swatches }}"
       },
       {
+        "type": "range",
+        "id": "product_card_overlay_inset",
+        "label": "Badge & wishlist icon inset",
+        "info": "Distance the corner badge and the wishlist heart sit from the card edge (keeps them aligned).",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 8
+      },
+      {
         "type": "header",
         "content": "Quick add"
       },
