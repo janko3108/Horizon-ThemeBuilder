@@ -92,6 +92,7 @@
     "variant_button_radius": 100,
     "variant_button_width": "default-width-buttons",
     "size_chart_page": "size-guide",
+    "loading_appearance": "once",
     "loading_image": "shopify://shop_images/mimoa-wordmark.svg",
     "sections": {
       "favorites-drawer": {
