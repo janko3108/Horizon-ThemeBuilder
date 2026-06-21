@@ -1873,6 +1873,17 @@
         "padding-block-end": 0
       }
     },
+    "custom_liquid_6w3gq4": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "{%- comment -%}\n  ============================================================\n  INSTAGRAM-STYLE FEED  —  paste this into a Custom Liquid block\n  ============================================================\n  Layout: 6 columns on desktop, 2 columns on mobile, 2px gap.\n\n  HOW TO EDIT THE IMAGES:\n  1. In Shopify admin go to  Content > Files  and upload your images.\n  2. Copy each file's URL and paste it into the \"images\" list below,\n     separated by commas (keep them in the order you want).\n  3. (Optional) Put a matching Instagram post link in the \"links\" list,\n     in the same order. Any item without a link falls back to the profile.\n\n  TIP: add 12 images for two full rows on desktop (6 x 2).\n  NOTE: The default URLs below are the temporary Instagram preview\n        images from the app and WILL expire — replace them with your\n        own uploaded file URLs.\n{%- endcomment -%}\n\n{%- liquid\n  assign ig_handle  = '@ninepine on Instagram'\n  assign ig_profile = 'https://www.instagram.com/ninepine/'\n\n  assign images = 'https://scontent.cdninstagram.com/v/t51.82787-15/726645272_18447371233141024_8383160697956688769_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D47B8|https://scontent.cdninstagram.com/v/t51.82787-15/722637685_18447252847141024_963027298358670983_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D71E9|https://scontent.cdninstagram.com/v/t51.82787-15/726839673_18447037582141024_5522237104381728466_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D56DB|https://scontent.cdninstagram.com/v/t51.82787-15/726827472_18446856487141024_2197327837170022481_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D714D|https://scontent.cdninstagram.com/v/t51.82787-15/722313882_18446715961141024_8264185754491111160_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D4F3D|https://scontent.cdninstagram.com/v/t51.82787-15/723099988_18446551567141024_3036737211585924382_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D44F3' | split: '|'\n\n  assign links = '' | split: '|'\n\n  comment\n    Grid columns — change these two numbers if you want a different layout.\n  endcomment\n  assign cols_desktop = 6\n  assign cols_mobile  = 2\n-%}\n\n<style>\n  .ig-feed {\n    margin: 16px 0 0;\n    text-align: center;\n  }\n  .ig-feed__title {\n    font-size: 14px;\n    font-weight: 400;\n    margin: 0 0 16px;\n    letter-spacing: .02em;\n  }\n  .ig-feed__title a {\n    color: inherit;\n    text-decoration: none;\n  }\n  .ig-feed__grid {\n    display: grid;\n    grid-template-columns: repeat({{ cols_desktop }}, 1fr);\n    gap: 2px;\n  }\n  .ig-feed__item {\n    display: block;\n    position: relative;\n    aspect-ratio: 4 / 5;       /* portrait, matches the reference */\n    overflow: hidden;\n    background: #f4f4f4;\n  }\n  .ig-feed__item img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    display: block;\n    transition: transform .4s ease;\n  }\n  .ig-feed__item:hover img {\n    transform: scale(1.03);\n  }\n  @media (max-width: 749px) {\n    .ig-feed__grid {\n      grid-template-columns: repeat({{ cols_mobile }}, 1fr);\n    }\n  }\n</style>\n\n<div class=\"ig-feed\">\n  <h2 class=\"ig-feed__title\">\n    <a href=\"{{ ig_profile }}\" target=\"_blank\" rel=\"noopener\">{{ ig_handle }}</a>\n  </h2>\n\n  <div class=\"ig-feed__grid\">\n    {%- for image in images -%}\n      {%- assign i = forloop.index0 -%}\n      {%- assign link = links[i] | default: ig_profile -%}\n      <a class=\"ig-feed__item\" href=\"{{ link }}\" target=\"_blank\" rel=\"noopener\">\n        <img src=\"{{ image }}\" loading=\"lazy\" alt=\"Instagram post by ninepine\">\n      </a>\n    {%- endfor -%}\n  </div>\n</div>",
+        "background_color": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "featured_blog_posts_q66GHX": {
       "type": "featured-blog-posts",
       "blocks": {
@@ -2020,17 +2031,6 @@
         "padding-block-start": 30,
         "padding-block-end": 30
       }
-    },
-    "custom_liquid_6w3gq4": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
-      "settings": {
-        "custom_liquid": "{%- comment -%}\n  ============================================================\n  INSTAGRAM-STYLE FEED  —  paste this into a Custom Liquid block\n  ============================================================\n  Layout: 6 columns on desktop, 2 columns on mobile, 2px gap.\n\n  HOW TO EDIT THE IMAGES:\n  1. In Shopify admin go to  Content > Files  and upload your images.\n  2. Copy each file's URL and paste it into the \"images\" list below,\n     separated by commas (keep them in the order you want).\n  3. (Optional) Put a matching Instagram post link in the \"links\" list,\n     in the same order. Any item without a link falls back to the profile.\n\n  TIP: add 12 images for two full rows on desktop (6 x 2).\n  NOTE: The default URLs below are the temporary Instagram preview\n        images from the app and WILL expire — replace them with your\n        own uploaded file URLs.\n{%- endcomment -%}\n\n{%- liquid\n  assign ig_handle  = '@ninepine on Instagram'\n  assign ig_profile = 'https://www.instagram.com/ninepine/'\n\n  assign images = 'https://scontent.cdninstagram.com/v/t51.82787-15/726645272_18447371233141024_8383160697956688769_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D47B8|https://scontent.cdninstagram.com/v/t51.82787-15/722637685_18447252847141024_963027298358670983_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D71E9|https://scontent.cdninstagram.com/v/t51.82787-15/726839673_18447037582141024_5522237104381728466_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D56DB|https://scontent.cdninstagram.com/v/t51.82787-15/726827472_18446856487141024_2197327837170022481_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D714D|https://scontent.cdninstagram.com/v/t51.82787-15/722313882_18446715961141024_8264185754491111160_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D4F3D|https://scontent.cdninstagram.com/v/t51.82787-15/723099988_18446551567141024_3036737211585924382_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&_nc_zt=23&oe=6A3D44F3' | split: '|'\n\n  assign links = '' | split: '|'\n\n  comment\n    Grid columns — change these two numbers if you want a different layout.\n  endcomment\n  assign cols_desktop = 6\n  assign cols_mobile  = 2\n-%}\n\n<style>\n  .ig-feed {\n    margin: 16px 0 0;\n    text-align: center;\n  }\n  .ig-feed__title {\n    font-size: 14px;\n    font-weight: 400;\n    margin: 0 0 16px;\n    letter-spacing: .02em;\n  }\n  .ig-feed__title a {\n    color: inherit;\n    text-decoration: none;\n  }\n  .ig-feed__grid {\n    display: grid;\n    grid-template-columns: repeat({{ cols_desktop }}, 1fr);\n    gap: 2px;\n  }\n  .ig-feed__item {\n    display: block;\n    position: relative;\n    aspect-ratio: 4 / 5;       /* portrait, matches the reference */\n    overflow: hidden;\n    background: #f4f4f4;\n  }\n  .ig-feed__item img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    display: block;\n    transition: transform .4s ease;\n  }\n  .ig-feed__item:hover img {\n    transform: scale(1.03);\n  }\n  @media (max-width: 749px) {\n    .ig-feed__grid {\n      grid-template-columns: repeat({{ cols_mobile }}, 1fr);\n    }\n  }\n</style>\n\n<div class=\"ig-feed\">\n  <h2 class=\"ig-feed__title\">\n    <a href=\"{{ ig_profile }}\" target=\"_blank\" rel=\"noopener\">{{ ig_handle }}</a>\n  </h2>\n\n  <div class=\"ig-feed__grid\">\n    {%- for image in images -%}\n      {%- assign i = forloop.index0 -%}\n      {%- assign link = links[i] | default: ig_profile -%}\n      <a class=\"ig-feed__item\" href=\"{{ link }}\" target=\"_blank\" rel=\"noopener\">\n        <img src=\"{{ image }}\" loading=\"lazy\" alt=\"Instagram post by ninepine\">\n      </a>\n    {%- endfor -%}\n  </div>\n</div>",
-        "background_color": "",
-        "section_width": "full-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
     }
   },
   "order": [
@@ -2044,7 +2044,7 @@
     "section_pjCfhU",
     "marquee_GCGkph",
     "media_with_content_KVKbUT",
-    "featured_blog_posts_q66GHX",
-    "custom_liquid_6w3gq4"
+    "custom_liquid_6w3gq4",
+    "featured_blog_posts_q66GHX"
   ]
 }
