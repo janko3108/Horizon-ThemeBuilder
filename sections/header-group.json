@@ -134,7 +134,7 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "divider_color": "",
-        "border_width": 1,
+        "border_width": 0,
         "bottom_border_color": "#E5E5E5",
         "actions_display_style": "text",
         "actions_font_size": "0.875rem",
