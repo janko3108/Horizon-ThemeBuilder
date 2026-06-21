@@ -1260,6 +1260,82 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "section_VjjNJ3": {
+      "type": "section",
+      "blocks": {
+        "text_qgBYzF": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h5>@Showcase on instagram</h5>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_qgBYzF"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": false,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "section_height_mobile": "same",
+        "section_height_custom_mobile": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 30,
+        "padding-block-end": 30
+      }
+    },
+    "custom_liquid_a8r8ht": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "{%- comment -%}\n  ============================================================\n  INSTAGRAM-STYLE FEED  —  paste this into a Custom Liquid block\n  ============================================================\n  Layout: 6 columns x 2 rows (12 images) on desktop.\n          2 columns x 3 rows (6 images) on mobile.\n          2px gap between images.\n\n  HOW TO EDIT THE IMAGES:\n  1. In Shopify admin go to  Content > Files  and upload your images.\n  2. Copy each file's URL and paste it into the \"images\" list below,\n     separated by  |  (keep them in the order you want, 12 total).\n  3. (Optional) Put a matching link in the \"links\" list, same order.\n     Any item without a link falls back to the profile URL.\n\n  NOTE: the first 6 images show on mobile; images 7-12 are hidden on mobile.\n{%- endcomment -%}\n\n{%- liquid\n  assign ig_profile = 'https://www.instagram.com/ninepine/'\n\n  assign placeholder = 'https://cdn.shopify.com/s/files/1/1027/1211/5540/files/BT-SHO-11291W-CBM-GA-SKIMS-LOUNGEWEAR_0008-FR_1a0d63eb-910b-4fe0-b160-7dde9b25fab8_2.avif?v=1781451017'\n\n  assign images = ''\n  for n in (1..12)\n    assign images = images | append: placeholder\n    unless forloop.last\n      assign images = images | append: '|'\n    endunless\n  endfor\n  assign images = images | split: '|'\n\n  assign links = '' | split: '|'\n\n  comment\n    Grid columns — change these two numbers if you want a different layout.\n  endcomment\n  assign cols_desktop = 6\n  assign cols_mobile  = 2\n-%}\n\n<style>\n  .ig-feed {\n    margin: 0;\n    padding: 0;\n  }\n  .ig-feed__grid {\n    display: grid;\n    grid-template-columns: repeat({{ cols_desktop }}, 1fr);\n    gap: 2px;\n  }\n  .ig-feed__item {\n    display: block;\n    position: relative;\n    aspect-ratio: 4 / 5;       /* portrait, matches the reference */\n    overflow: hidden;\n    background: #f4f4f4;\n  }\n  .ig-feed__item img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    display: block;\n    transition: transform .4s ease;\n  }\n  .ig-feed__item:hover img {\n    transform: scale(1.03);\n  }\n  @media (max-width: 749px) {\n    .ig-feed__grid {\n      grid-template-columns: repeat({{ cols_mobile }}, 1fr);\n    }\n    /* show only the first 6 images on mobile */\n    .ig-feed__item:nth-child(n+7) {\n      display: none;\n    }\n  }\n</style>\n\n<div class=\"ig-feed\">\n  <div class=\"ig-feed__grid\">\n    {%- for image in images -%}\n      {%- assign i = forloop.index0 -%}\n      {%- assign link = links[i] | default: ig_profile -%}\n      <a class=\"ig-feed__item\" href=\"{{ link }}\" target=\"_blank\" rel=\"noopener\">\n        <img src=\"{{ image }}\" loading=\"lazy\" alt=\"Instagram post\">\n      </a>\n    {%- endfor -%}\n  </div>\n</div>",
+        "background_color": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -1268,6 +1344,8 @@
     "product_recommendations_tgVXNd",
     "section_JYMJJa",
     "reviews_ULDemX",
-    "section_Ep8dcB"
+    "section_Ep8dcB",
+    "section_VjjNJ3",
+    "custom_liquid_a8r8ht"
   ]
 }
