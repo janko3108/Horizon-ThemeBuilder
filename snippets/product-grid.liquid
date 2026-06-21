@@ -80,19 +80,33 @@
   }
 {% endstyle %}
 
+{% if section.settings.columns_desktop != blank %}
 {% style %}
-  /* Filippa K-style fixed products-per-row (grid layout): explicit column count
-     for desktop and mobile, overriding the card-size auto-fill. */
+  /* Filippa K-style products-per-row. The section settings are the default;
+     the customer can override per viewport via the column picker, which sets
+     product-grid-view="cols-N" on the grid (persisted in sessionStorage). */
   .product-grid--grid.product-grid--{{ section.id }} {
     grid-template-columns: repeat({{ section.settings.columns_mobile | default: 2 }}, minmax(0, 1fr));
   }
-
   @media screen and (min-width: 750px) {
     .product-grid--grid.product-grid--{{ section.id }} {
       grid-template-columns: repeat({{ section.settings.columns_desktop | default: 4 }}, minmax(0, 1fr));
     }
   }
+
+  /* Customer column-picker selections (override the defaults above). */
+  @media screen and (max-width: 749px) {
+    .product-grid--grid.product-grid--{{ section.id }}[product-grid-view='cols-1'] { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .product-grid--grid.product-grid--{{ section.id }}[product-grid-view='cols-2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .product-grid--grid.product-grid--{{ section.id }}[product-grid-view='cols-3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media screen and (min-width: 750px) {
+    .product-grid--grid.product-grid--{{ section.id }}[product-grid-view='cols-3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .product-grid--grid.product-grid--{{ section.id }}[product-grid-view='cols-4'] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .product-grid--grid.product-grid--{{ section.id }}[product-grid-view='cols-6'] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  }
 {% endstyle %}
+{% endif %}
 <div
   id="ResultsList"
   class="

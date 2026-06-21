@@ -140,7 +140,7 @@
       {% endif %}
 
       {% if block_settings.enable_grid_density %}
-        {% render 'grid-density-controls', viewport: 'desktop' %}
+        {% render 'grid-density-controls', viewport: 'desktop', default_cols: section.settings.columns_desktop %}
       {% endif %}
     </div>
   {% endif %}
@@ -302,7 +302,7 @@
               {% endif %}
 
               {% if block_settings.enable_grid_density %}
-                {% render 'grid-density-controls', viewport: 'desktop' %}
+                {% render 'grid-density-controls', viewport: 'desktop', default_cols: section.settings.columns_desktop %}
               {% endif %}
             {% endif %}
           {% endif %}
@@ -395,7 +395,7 @@
         </facets-form-component>
       {% endif %}
       {% if block_settings.enable_grid_density %}
-        {% render 'grid-density-controls', viewport: 'mobile' %}
+        {% render 'grid-density-controls', viewport: 'mobile', default_cols: section.settings.columns_mobile %}
       {% endif %}
     </div>
   </div>
