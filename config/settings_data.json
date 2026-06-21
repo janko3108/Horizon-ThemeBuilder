@@ -79,7 +79,7 @@
     "wishlist_icon": "bookmark",
     "wishlist_show_cart_tabs": true,
     "empty_state_collection": "frontpage",
-    "search_suggestions": "Showcase, Hoodies, Shorts",
+    "search_suggestions": "",
     "product_corner_radius": 0,
     "card_corner_radius": 0,
     "show_variant_image": false,
