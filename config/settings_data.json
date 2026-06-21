@@ -53,6 +53,7 @@
     "pills_border_radius": 0,
     "cart_type": "drawer",
     "auto_open_cart_drawer": true,
+    "cart_drawer_shipping_note": "Fri frakt för medlemmar. Leverans inom 1-3 dagar.",
     "show_add_discount_code": false,
     "show_installments": false,
     "cart_show_payment_icons": true,
