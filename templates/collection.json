@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "breadcrumbs": {
-      "type": "breadcrumbs",
-      "settings": {}
-    },
     "divider_4wcBVx": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -27,6 +23,10 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {}
     },
     "main": {
       "type": "main-collection",
