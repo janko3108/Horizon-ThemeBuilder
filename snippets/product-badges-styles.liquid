@@ -38,6 +38,28 @@
     right: calc(var(--badge-inset) + var(--padding-inline-start));
   }
 
+  /* Mobile full-bleed images pull the card image edge-to-edge with a negative
+     inline margin (see base.css: .collection-wrapper--full-width(-on-mobile)
+     .card-gallery). Badges are positioned inside that bled box, so on the
+     screen-edge column they'd sit flush against the screen/card border. Add the
+     same bleed amount back on mobile so badges keep the clean inset they have on
+     desktop. */
+  @media screen and (max-width: 749px) {
+    :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile) .product-badges--bottom-left,
+    :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile) .product-badges--top-left {
+      left: calc(
+        var(--badge-inset) + var(--padding-inline-start) +
+          max(var(--padding-xs), var(--padding-inline-start))
+      );
+    }
+    :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile) .product-badges--top-right {
+      right: calc(
+        var(--badge-inset) + var(--padding-inline-start) +
+          max(var(--padding-xs), var(--padding-inline-end))
+      );
+    }
+  }
+
   .product-badges__badge {
     --badge-font-size: var(--font-size--xs);
 

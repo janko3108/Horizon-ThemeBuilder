@@ -67,6 +67,19 @@
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
   }
+  /* Mobile full-bleed images bleed the card image past the card box with a
+     negative inline margin (base.css). The heart is positioned inside that bled
+     box, so on the right-most column it would touch the screen edge. Add the
+     bleed back on mobile so it keeps the same clean inset as on desktop. */
+  @media screen and (max-width: 749px) {
+    :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile) .card-gallery .favorite-toggle:not(.favorite-toggle--buy-buttons) {
+      right: calc(
+        var(--product-card-overlay-inset, 8px) +
+          max(var(--padding-xs), var(--padding-inline-end))
+      );
+    }
+  }
+
   .favorite-toggle:hover { background: var(--color-background, #fff); transform: scale(1.06); }
   .favorite-toggle__icon { display: none; line-height: 0; }
   .favorite-toggle .favorite-toggle__icon--empty { display: inline-flex; }
