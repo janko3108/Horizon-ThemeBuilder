@@ -138,8 +138,11 @@
   .collection-grid-image--m-half {
     grid-column: span 1;
   }
+  /* Full width = span every column, whatever the mobile column count is
+     (1/2/3). Using 1 / -1 instead of span 2 avoids forcing an extra implicit
+     column when the shopper picks 1 product per row. */
   .collection-grid-image--m-full {
-    grid-column: span 2;
+    grid-column: 1 / -1;
   }
   .collection-grid-image--2_2.collection-grid-image--m-full {
     grid-row: span 2;
