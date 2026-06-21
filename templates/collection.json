@@ -172,6 +172,21 @@
         "padding-block-end": 32
       }
     },
+    "divider_4wcBVx": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "background_color": "",
+        "divider_color": "#E5E5E5",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -405,6 +420,7 @@
   },
   "order": [
     "section",
+    "divider_4wcBVx",
     "main"
   ]
 }
