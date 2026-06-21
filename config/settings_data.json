@@ -33,6 +33,7 @@
     "type_case_h6": "none",
     "page_width": "wide",
     "show_breadcrumbs": true,
+    "breadcrumbs_font_size": 14,
     "card_hover_effect": "none",
     "badge_corner_radius": 0,
     "badge_custom_background_color": "{{ settings.color_palette.background }}",
