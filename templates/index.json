@@ -1572,13 +1572,14 @@
           "static": true,
           "settings": {
             "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "space-between",
+            "vertical_alignment_flex_direction_column": "center",
             "gap": 24
           },
           "blocks": {
             "text_pfXJ84": {
               "type": "text",
               "name": "t:names.caption",
+              "disabled": true,
               "settings": {
                 "text": "<p>About</p>",
                 "width": "fit-content",
@@ -1592,7 +1593,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "text_color": "",
-                "background": false,
+                "background": true,
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 0,
