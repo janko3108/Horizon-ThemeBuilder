@@ -36,9 +36,10 @@
         </div>
       {%- endif -%}
     </div>
-    {%  if settings.quick_add or settings.mobile_quick_add %}
-      {% render 'quick-add', product: product, section_id: section.id %}
-    {% endif %}
+    {%- comment -%}
+      Quick add is rendered at card level (under the price, Adanola-style) by
+      snippets/product-card.liquid — not overlaid on the image here.
+    {%- endcomment -%}
   {% endunless %}
 {% endcapture %}
 

@@ -157,6 +157,26 @@
         </product-swatches>
       {%- endif -%}
     {%- endif -%}
+
+    {%- comment -%}
+      Card-level Quick Add (Adanola): a static button under the price instead of
+      a hover overlay on the image. Rendered here (not in the gallery) so it sits
+      with the title/price. Gated on section_id so it only appears where the
+      caller provides one (product card / recommendations grid).
+    {%- endcomment -%}
+    {%- liquid
+      assign show_card_quick_add = false
+      if section_id != blank and onboarding != true and product != blank
+        if settings.quick_add or settings.mobile_quick_add
+          assign show_card_quick_add = true
+        endif
+      endif
+    -%}
+    {%- if show_card_quick_add -%}
+      <div class="product-card__quick-add">
+        {% render 'quick-add', product: product, section_id: section_id, block: block %}
+      </div>
+    {%- endif -%}
   </div>
 </product-card>
 
@@ -174,6 +194,77 @@
   }
   .product-card__content > .product-card__swatches {
     order: 2;
+  }
+  .product-card__content > .product-card__quick-add {
+    order: 4;
+  }
+
+  /* Card-level Quick Add (Adanola): a static, always-visible, full-width button
+     under the price instead of the circular hover overlay on the image.
+     Overrides the absolute / hover / text-reveal styles from
+     quick-add-styles.liquid (which assume the on-image overlay context). */
+  .product-card__quick-add {
+    width: 100%;
+    margin-top: var(--padding-2xs, 6px);
+  }
+  .product-card__quick-add .quick-add {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    width: 100%;
+    pointer-events: auto;
+  }
+  .product-card__quick-add .quick-add__product-form-component {
+    width: 100%;
+    height: auto;
+  }
+  .product-card__quick-add .shopify-product-form {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+  .product-card__quick-add .quick-add__button {
+    position: static;
+    opacity: 1;
+    width: 100%;
+    min-height: var(--button-size-md);
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding-inline: var(--padding-md);
+    border-radius: var(--product-corner-radius, 0);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.2);
+    backdrop-filter: none;
+  }
+  .product-card__quick-add .quick-add__button .add-to-cart-text {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 0;
+  }
+  /* Always show the button label (no hover-to-reveal animation). */
+  .product-card__quick-add .quick-add__button .add-to-cart-text__content {
+    grid-template-columns: 1fr;
+  }
+  .product-card__quick-add .quick-add__button .add-to-cart-text__content > span {
+    min-width: 0;
+  }
+  .product-card__quick-add .quick-add__button .add-to-cart-text__content > span span {
+    opacity: 1;
+    filter: none;
+    translate: none;
+    padding: 0;
+  }
+  .product-card__quick-add .quick-add__button .add-to-cart-icon {
+    width: auto;
+    height: auto;
+    flex: none;
   }
 
   /* Universal colour swatches — mirror the Swatches block's card styling so the
