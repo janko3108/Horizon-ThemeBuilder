@@ -124,6 +124,14 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "custom_liquid_7nLPht": {
+                  "type": "custom-liquid",
+                  "name": "t:names.custom_liquid",
+                  "settings": {
+                    "custom_liquid": "<style>\n  .rating {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    font-family: inherit;\n  }\n\n  .rating .stars {\n    --rating: 4.5;                /* 0–5, supports halves e.g. 4.5 */\n    --percent: calc(var(--rating) / 5 * 100%);\n    display: inline-block;\n    font-size: 18px;\n    line-height: 1;\n    font-family: Times, serif;    /* gives a full ★ glyph */\n  }\n\n  .rating .stars::before {\n    content: \"★★★★★\";\n    letter-spacing: 2px;\n    background: linear-gradient(90deg, #000 var(--percent), #d9d9d9 var(--percent));\n    -webkit-background-clip: text;\n    background-clip: text;\n    -webkit-text-fill-color: transparent;\n  }\n\n  .rating .rating__count {\n    font-size: 14px;\n    color: #000;\n  }\n</style>\n\n<div class=\"rating\">\n  <span class=\"stars\" style=\"--rating: 4.5;\"></span>\n  <span class=\"rating__count\">(152)</span>\n</div>"
+                  },
+                  "blocks": {}
+                },
                 "text_DaNfrN": {
                   "type": "text",
                   "name": "t:names.title",
@@ -174,6 +182,7 @@
                 }
               },
               "block_order": [
+                "custom_liquid_7nLPht",
                 "text_DaNfrN",
                 "price_G6dKqx"
               ]
