@@ -133,7 +133,7 @@
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h1",
+            "type_preset": "h3",
             "font": "var(--font-primary--family)",
             "font_size": "",
             "line_height": "normal",
@@ -253,6 +253,7 @@
         "text_tqQTNE",
         "group_KwyQPe"
       ],
+      "disabled": true,
       "name": "Collection heading",
       "settings": {
         "content_direction": "row",
@@ -281,8 +282,8 @@
         "border_opacity": 100,
         "border_color": "",
         "border_radius": 0,
-        "padding-block-start": 32,
-        "padding-block-end": 32
+        "padding-block-start": 10,
+        "padding-block-end": 10
       }
     },
     "divider_4wcBVx": {
