@@ -223,7 +223,7 @@
             "filter_width": "centered",
             "text_label_case": "default",
             "show_swatch_label": true,
-            "show_filter_label": false,
+            "show_filter_label": true,
             "enable_sorting": true,
             "enable_grid_density": true,
             "background_color": "",
