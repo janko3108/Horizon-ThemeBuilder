@@ -64,6 +64,13 @@
     padding-inline: var(--page-margin, var(--sidebar-padding, 20px));
   }
 
+  /* The quick-add modal loads the product's PDP content, which includes the
+     breadcrumb. Breadcrumbs only belong on the real product/collection page,
+     not in the quick-add popup, so hide them there. */
+  .quick-add-modal .breadcrumbs {
+    display: none;
+  }
+
   .breadcrumbs__list {
     display: flex;
     flex-wrap: wrap;
