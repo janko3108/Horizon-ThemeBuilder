@@ -37,6 +37,8 @@
     "badge_corner_radius": 0,
     "badge_custom_background_color": "{{ settings.color_palette.background }}",
     "badge_custom_text_color": "{{ settings.color_palette.foreground }}",
+    "button_padding_block": 10,
+    "button_padding_inline": 20,
     "palette_primary_button_background": "#000000",
     "palette_primary_button_text": "{{ settings.color_palette.background }}",
     "palette_primary_button_border": "#000000",
