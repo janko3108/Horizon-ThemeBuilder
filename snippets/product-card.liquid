@@ -161,6 +161,21 @@
 </product-card>
 
 {% stylesheet %}
+  /* Adanola-style card hierarchy: colour swatches sit directly under the product
+     image, above the title/price. The card content is a flex column, so we
+     reorder: gallery first, swatches second, everything else (title, price,
+     custom text, etc.) after. Robust to block configuration because all other
+     children fall back to a later order. */
+  .product-card__content > * {
+    order: 3;
+  }
+  .product-card__content > .card-gallery {
+    order: 1;
+  }
+  .product-card__content > .product-card__swatches {
+    order: 2;
+  }
+
   /* Universal colour swatches — mirror the Swatches block's card styling so the
      setting-driven swatches align and space exactly like the block version
      (these rules normally live on the block; duplicated here so they apply even
