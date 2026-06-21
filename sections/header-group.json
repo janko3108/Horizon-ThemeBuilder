@@ -140,7 +140,7 @@
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
-        "mobile_navigation_style": "account_in_drawer",
+        "mobile_navigation_style": "logo_left",
         "background_color_top": "",
         "text_color_top": "",
         "background_color_bottom": "",
