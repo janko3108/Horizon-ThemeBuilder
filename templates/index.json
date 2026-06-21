@@ -883,6 +883,77 @@
         "padding-block-end": 10
       }
     },
+    "marquee_GCGkph": {
+      "type": "marquee",
+      "blocks": {
+        "icon_McP6xW": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/ELLE_Magazine_Logo.avif",
+            "width": 70,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        },
+        "icon_HaFbLE": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/mimoa-wordmark.svg",
+            "width": 100,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        },
+        "icon_64bhBK": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/logo-header.avif",
+            "width": 60,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        },
+        "icon_9NbU3w": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/Vanity-fair-logo.avif",
+            "width": 100,
+            "link": "",
+            "open_in_new_tab": false,
+            "icon_color": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "icon_McP6xW",
+        "icon_HaFbLE",
+        "icon_64bhBK",
+        "icon_9NbU3w"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "reverse",
+        "background_color": "",
+        "padding-block-start": 0,
+        "padding-block-end": 30,
+        "gap_between_elements": 80
+      }
+    },
     "section_fijpmw": {
       "type": "section",
       "blocks": {
@@ -1949,77 +2020,6 @@
         "padding-block-start": 30,
         "padding-block-end": 30
       }
-    },
-    "marquee_GCGkph": {
-      "type": "marquee",
-      "blocks": {
-        "icon_McP6xW": {
-          "type": "icon",
-          "name": "t:names.icon",
-          "settings": {
-            "icon": "price_tag",
-            "image_upload": "shopify://shop_images/ELLE_Magazine_Logo.avif",
-            "width": 70,
-            "link": "",
-            "open_in_new_tab": false,
-            "icon_color": ""
-          },
-          "blocks": {}
-        },
-        "icon_HaFbLE": {
-          "type": "icon",
-          "name": "t:names.icon",
-          "settings": {
-            "icon": "price_tag",
-            "image_upload": "shopify://shop_images/mimoa-wordmark.svg",
-            "width": 100,
-            "link": "",
-            "open_in_new_tab": false,
-            "icon_color": ""
-          },
-          "blocks": {}
-        },
-        "icon_64bhBK": {
-          "type": "icon",
-          "name": "t:names.icon",
-          "settings": {
-            "icon": "price_tag",
-            "image_upload": "shopify://shop_images/logo-header.avif",
-            "width": 70,
-            "link": "",
-            "open_in_new_tab": false,
-            "icon_color": ""
-          },
-          "blocks": {}
-        },
-        "icon_9NbU3w": {
-          "type": "icon",
-          "name": "t:names.icon",
-          "settings": {
-            "icon": "price_tag",
-            "image_upload": "shopify://shop_images/Vanity-fair-logo.avif",
-            "width": 100,
-            "link": "",
-            "open_in_new_tab": false,
-            "icon_color": ""
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "icon_McP6xW",
-        "icon_HaFbLE",
-        "icon_64bhBK",
-        "icon_9NbU3w"
-      ],
-      "name": "t:names.marquee_section",
-      "settings": {
-        "movement_direction": "reverse",
-        "background_color": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 60
-      }
     }
   },
   "order": [
@@ -2028,10 +2028,10 @@
     "product_list_EDUBdR",
     "section_PnPM9j",
     "reviews_aCDVyr",
-    "section_pjCfhU",
-    "marquee_GCGkph",
     "section_fijpmw",
     "product_list_ni7wTF",
+    "section_pjCfhU",
+    "marquee_GCGkph",
     "media_with_content_KVKbUT",
     "featured_blog_posts_q66GHX"
   ]
