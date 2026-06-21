@@ -485,7 +485,8 @@
 
     {% if render_slideshow_arrows %}
       {% capture slideshow_arrows %}
-        {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: block_settings.icons_style %}
+        {% comment %} Arrows show on mobile too (not just desktop): no mobile:hidden. {% endcomment %}
+        {% render 'slideshow-arrows', icon_style: block_settings.icons_style %}
       {% endcapture %}
     {% endif %}
 
