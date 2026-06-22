@@ -530,6 +530,7 @@
                 "text_krB44E": {
                   "type": "text",
                   "name": "t:names.text",
+                  "disabled": true,
                   "settings": {
                     "text": "<p>Your flow</p>",
                     "width": "fit-content",
