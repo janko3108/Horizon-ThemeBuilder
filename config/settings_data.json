@@ -73,6 +73,7 @@
     "product_card_image_ratio": "portrait",
     "product_card_show_swatches": true,
     "product_card_swatch_inline_padding": 10,
+    "product_card_overlay_inset": 0,
     "mobile_quick_add": true,
     "quick_add_background": "#ffffff",
     "wishlist_card_icon_background": false,
