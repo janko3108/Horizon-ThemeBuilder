@@ -9,11 +9,7 @@
  */
 {
   "sections": {
-    "breadcrumbs": {
-      "type": "breadcrumbs",
-      "settings": {}
-    },
-    "divider_4wcBVx": {
+    "divider_tHUyAN": {
       "type": "divider",
       "name": "t:names.divider_section",
       "settings": {
@@ -28,7 +24,11 @@
         "padding-block-end": 0
       }
     },
-    "divider_tHUyAN": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
+    "divider_4wcBVx": {
       "type": "divider",
       "name": "t:names.divider_section",
       "settings": {
@@ -85,7 +85,7 @@
             "background_color": "",
             "text_color": "",
             "padding-block-start": 8,
-            "padding-block-end": 8,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
             "facets_margin_bottom": 8,
