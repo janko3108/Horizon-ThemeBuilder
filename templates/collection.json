@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
     "divider_4wcBVx": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -24,9 +28,20 @@
         "padding-block-end": 0
       }
     },
-    "breadcrumbs": {
-      "type": "breadcrumbs",
-      "settings": {}
+    "divider_tHUyAN": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "background_color": "",
+        "divider_color": "#e5e5e5",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     },
     "main": {
       "type": "main-collection",
@@ -244,7 +259,9 @@
       "settings": {
         "layout_type": "grid",
         "product_card_size": "large",
+        "columns_desktop": "4",
         "mobile_product_card_size": "small",
+        "columns_mobile": "2",
         "enable_infinite_scroll": true,
         "products_per_page": 24,
         "product_grid_width": "full-width",
@@ -260,6 +277,7 @@
     }
   },
   "order": [
+    "divider_tHUyAN",
     "breadcrumbs",
     "divider_4wcBVx",
     "main"
