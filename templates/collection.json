@@ -57,7 +57,7 @@
             "mobile_size": "full",
             "overlay_color": "#000000",
             "overlay_opacity": 0,
-            "content_position": "bottom-left",
+            "content_position": "top-left",
             "text_color": "#ffffff",
             "subheading": "Editorial",
             "heading": "New Arrivals",
