@@ -1895,7 +1895,7 @@
           "name": "t:names.blog_card",
           "static": true,
           "settings": {
-            "alignment": "left",
+            "alignment": "center",
             "gap": 8,
             "background_color": "",
             "border": "none",
@@ -1927,7 +1927,7 @@
               "name": "t:names.title",
               "static": true,
               "settings": {
-                "type_preset": "h5",
+                "type_preset": "h6",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -1968,6 +1968,7 @@
             "blog-post-description": {
               "type": "_blog-post-description",
               "name": "t:names.excerpt",
+              "disabled": true,
               "static": true,
               "settings": {
                 "type_preset": "rte",
