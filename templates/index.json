@@ -808,7 +808,7 @@
         "arrow_size": 24,
         "arrow_icon_size": 10,
         "arrow_stroke": 4,
-        "arrow_radius": 30,
+        "arrow_radius": 0,
         "arrow_border_width": 1,
         "arrow_color": "#000000",
         "arrow_border_color": "#000000",
