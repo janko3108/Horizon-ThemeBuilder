@@ -1225,8 +1225,13 @@
       justify-self: start;
       margin-inline-end: auto;
     }
-    #header-component[data-mobile-nav='logo_left'] .search-action { order: 2; }
     #header-component[data-mobile-nav='logo_left'] header-actions { order: 3; }
+
+    /* Right cluster order inside header-actions: cart → wishlist (saved) → search
+       (search and saved items swapped per request). */
+    #header-component[data-mobile-nav='logo_left'] header-actions > :has(cart-icon) { order: 1; }
+    #header-component[data-mobile-nav='logo_left'] header-actions > .wishlist-trigger { order: 2; }
+    #header-component[data-mobile-nav='logo_left'] header-actions > .header-actions__search { order: 3; }
 
     /* Scale up a text/wordmark logo so it matches the enlarged hamburger.
        (Image logos are sized by the theme's mobile logo-height setting and are
@@ -1243,10 +1248,17 @@
       padding-inline: var(--padding-sm) 0;
     }
 
+    /* Optical alignment: the short hamburger glyph is geometrically centred but
+       reads a touch high beside the tall serif wordmark — nudge just the glyph
+       down so it lines up with the logo's visual centre. */
+    #header-component[data-mobile-nav='logo_left'] .header__icon--summary .header-drawer-icon {
+      transform: translateY(2px);
+    }
+
     /* (Hamburger size is unified with the other header icons in
        header-drawer.liquid, so all header icons match across nav styles.) */
 
-    /* Option C — logo far left, then search → wishlist → cart, with the
+    /* Option C — logo far left, then search → cart → wishlist (saved), with the
        hamburger on the far right (Filippa K reference). */
     #header-component[data-mobile-nav='logo_left_menu_right'] .header__columns {
       display: flex;
@@ -1264,10 +1276,11 @@
     #header-component[data-mobile-nav='logo_left_menu_right'] header-actions { order: 1; }
     #header-component[data-mobile-nav='logo_left_menu_right'] .header__drawer { order: 2; }
 
-    /* Right cluster order inside header-actions: search → wishlist → cart. */
+    /* Right cluster order inside header-actions: search → cart → wishlist (saved)
+       (cart and saved items swapped per request). */
     #header-component[data-mobile-nav='logo_left_menu_right'] header-actions > .header-actions__search { order: 1; }
-    #header-component[data-mobile-nav='logo_left_menu_right'] header-actions > .wishlist-trigger { order: 2; }
-    #header-component[data-mobile-nav='logo_left_menu_right'] header-actions > :has(cart-icon) { order: 3; }
+    #header-component[data-mobile-nav='logo_left_menu_right'] header-actions > :has(cart-icon) { order: 2; }
+    #header-component[data-mobile-nav='logo_left_menu_right'] header-actions > .wishlist-trigger { order: 3; }
 
     /* Account moves into the hamburger drawer (off the bar), matching the reference. */
     #header-component[data-mobile-nav='logo_left_menu_right'] header-actions .account-button {
