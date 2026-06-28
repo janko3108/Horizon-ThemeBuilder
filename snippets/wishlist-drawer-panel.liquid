@@ -59,14 +59,32 @@
 
     <div class="wishlist-drawer__body">
       <div class="wishlist-drawer__content js-favorites-drawer-content">
+        {%- comment -%}
+          Empty state mirrors the empty cart drawer exactly: a big, vertically
+          centred heading (.theme-drawer__title.h4), an optional guest prompt and
+          a centred button — reusing the cart's .cart-items__wrapper--drawer-empty
+          and .cart-items__empty-button classes so the styling is identical.
+        {%- endcomment -%}
         <div class="favorites-drawer__empty-state">
-          <p class="favorites-drawer__empty-text">Your wishlist is empty.</p>
+          <h2 class="theme-drawer__title h4 favorites-drawer__empty-title">Your wishlist is empty</h2>
 
-          {%- if settings.favorites_button_text != blank and settings.favorites_button_url != blank -%}
-            <a class="button wishlist-empty__button" href="{{ settings.favorites_button_url }}">
-              {{- settings.favorites_button_text -}}
-            </a>
-          {%- endif -%}
+          <div class="cart-items__wrapper cart-items__wrapper--drawer-empty">
+            {%- if customer == blank -%}
+              <p class="favorites-drawer__empty-text">
+                <a href="{{ routes.account_login_url }}">Log in</a> or <a href="{{ routes.account_register_url }}">create an account</a> to save your favourites across all your devices.
+              </p>
+            {%- endif -%}
+
+            {%- if settings.favorites_button_text != blank and settings.favorites_button_url != blank -%}
+              <a class="button cart-items__empty-button" href="{{ settings.favorites_button_url }}">
+                <span class="button-text">{{ settings.favorites_button_text }}</span>
+              </a>
+            {%- else -%}
+              <a class="button cart-items__empty-button" href="{{ routes.all_products_collection_url }}">
+                <span class="button-text">{{ 'actions.continue_shopping' | t }}</span>
+              </a>
+            {%- endif -%}
+          </div>
 
           {%- if show_recommendations and rec_collection != blank and rec_collection.products.size > 0 -%}
             <div class="favorites-drawer__recommendations">
@@ -112,3 +130,61 @@
     </div>
   </div>
 </wishlist-drawer>
+
+{% stylesheet %}
+  /* Empty wishlist drawer: match the empty cart drawer exactly — content
+     vertically centred in the body, big heading, centred button. Reuses the
+     cart's .theme-drawer__title.h4 + .cart-items__empty-button styling. */
+  .wishlist-drawer__body:has(.favorites-drawer__empty-state) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wishlist-drawer__content:has(.favorites-drawer__empty-state) {
+    flex: 1 1 auto;
+    display: flex;
+    padding-block: 0;
+  }
+
+  .wishlist-drawer__content .favorites-drawer__empty-state {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    text-align: center;
+    padding-block: var(--padding-xl);
+  }
+
+  .favorites-drawer__empty-title {
+    justify-content: center;
+  }
+
+  .favorites-drawer__empty-state .favorites-drawer__empty-text {
+    max-width: 32ch;
+    margin: var(--margin-xs) 0 0;
+    color: var(--color-foreground);
+  }
+
+  .favorites-drawer__empty-state .favorites-drawer__empty-text a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Mirror the cart's .cart-items__empty-button spacing so the button is
+     identical even in standalone mode (where cart-drawer CSS may not load). */
+  .favorites-drawer__empty-state .cart-items__empty-button {
+    margin-top: var(--margin-md);
+    margin-inline: auto;
+    padding-inline: var(--padding-4xl);
+    padding-block: var(--padding-lg);
+  }
+
+  /* The persistent guest account prompt in the footer is shown centred above
+     when empty (like the cart), so hide the footer copy to avoid duplication. */
+  .wishlist-drawer__panel:has(.favorites-drawer__empty-state) .wishlist-drawer__account {
+    display: none;
+  }
+{% endstylesheet %}

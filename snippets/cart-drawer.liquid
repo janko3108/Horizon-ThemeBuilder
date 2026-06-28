@@ -27,15 +27,20 @@
       class="cart-drawer__content"
       aria-label="{{ 'accessibility.cart' | t }}"
     >
-      <h2
-        class="theme-drawer__title h4"
-        id="cart-drawer-heading"
-      >
-        {{ 'content.your_cart_is_empty' | t }}
-      </h2>
+      {%- if settings.cart_rewards_enabled and settings.cart_rewards_show_when_empty -%}
+        {% render 'cart-rewards-bar' %}
+      {%- endif -%}
+      <div class="cart-drawer__empty-inner">
+        <h2
+          class="theme-drawer__title h4"
+          id="cart-drawer-heading"
+        >
+          {{ 'content.your_cart_is_empty' | t }}
+        </h2>
 
-      <div class="cart-drawer__items">
-        {% render 'cart-products', force_empty: true, context: 'drawer' %}
+        <div class="cart-drawer__items">
+          {% render 'cart-products', force_empty: true, context: 'drawer' %}
+        </div>
       </div>
     </div>
     {% endcapture %}
@@ -58,6 +63,7 @@
           auto-open
         {% endif %}
       >
+        {% render 'cart-rewards-config' %}
         <template id="empty-cart-template">
           {{ empty_cart_drawer_content }}
         </template>
@@ -115,6 +121,7 @@
                 aria-label="{{ 'accessibility.cart' | t }}"
                 style="--header-height: 60px;"
               >
+                {% render 'cart-rewards-bar' %}
                 <scroll-hint class="cart-drawer__items">
                   {% render 'cart-products', context: 'drawer' %}
                 </scroll-hint>

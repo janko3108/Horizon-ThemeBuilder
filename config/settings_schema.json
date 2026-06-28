@@ -1713,6 +1713,201 @@
       },
       {
         "type": "header",
+        "content": "Rewards bar"
+      },
+      {
+        "type": "paragraph",
+        "content": "A progress bar at the top of the cart drawer showing how far the shopper is from free shipping and/or free gifts. Updates automatically as the cart changes."
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_rewards_enabled",
+        "label": "Enable rewards bar",
+        "default": false,
+        "visible_if": "{{ settings.cart_type == 'drawer' }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_rewards_show_when_empty",
+        "label": "Show even when cart is empty",
+        "info": "Displays the bar (with the full goal still to go) on the empty cart, to encourage shoppers to start adding items.",
+        "default": true,
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_rewards_progress_text",
+        "label": "Progress message",
+        "info": "Shown while a reward is still locked. Use [amount] for the remaining spend and [reward] for the next reward's name.",
+        "default": "You're [amount] away from [reward]",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_rewards_success_text",
+        "label": "All-unlocked message",
+        "info": "Shown once every reward has been unlocked.",
+        "default": "You've unlocked all rewards!",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "Tier 1 (lowest)"
+      },
+      {
+        "type": "number",
+        "id": "cart_reward_1_amount",
+        "label": "Spend amount",
+        "info": "In your store's currency. Set to 0 to disable this tier.",
+        "default": 500,
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_reward_1_label",
+        "label": "Reward name",
+        "default": "Free shipping",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "product",
+        "id": "cart_reward_1_product",
+        "label": "Free gift product (optional)",
+        "info": "When this tier is reached, this product is added to the cart automatically. To make it $0 you also need a matching Shopify automatic discount — see the setup note."
+      },
+      {
+        "type": "select",
+        "id": "cart_reward_1_icon",
+        "label": "Icon",
+        "options": [
+          { "value": "truck", "label": "Shipping truck" },
+          { "value": "gift", "label": "Gift" },
+          { "value": "star", "label": "Star" },
+          { "value": "heart", "label": "Heart" },
+          { "value": "percent", "label": "Percent" }
+        ],
+        "default": "truck",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "Tier 2"
+      },
+      {
+        "type": "number",
+        "id": "cart_reward_2_amount",
+        "label": "Spend amount",
+        "info": "In your store's currency. Set to 0 to disable this tier.",
+        "default": 0,
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_reward_2_label",
+        "label": "Reward name",
+        "default": "Free gift",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "product",
+        "id": "cart_reward_2_product",
+        "label": "Free gift product (optional)",
+        "info": "When this tier is reached, this product is added to the cart automatically. To make it $0 you also need a matching Shopify automatic discount — see the setup note."
+      },
+      {
+        "type": "select",
+        "id": "cart_reward_2_icon",
+        "label": "Icon",
+        "options": [
+          { "value": "truck", "label": "Shipping truck" },
+          { "value": "gift", "label": "Gift" },
+          { "value": "star", "label": "Star" },
+          { "value": "heart", "label": "Heart" },
+          { "value": "percent", "label": "Percent" }
+        ],
+        "default": "gift",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "Tier 3"
+      },
+      {
+        "type": "number",
+        "id": "cart_reward_3_amount",
+        "label": "Spend amount",
+        "info": "In your store's currency. Set to 0 to disable this tier.",
+        "default": 0,
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cart_reward_3_label",
+        "label": "Reward name",
+        "default": "Free gift",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "product",
+        "id": "cart_reward_3_product",
+        "label": "Free gift product (optional)",
+        "info": "When this tier is reached, this product is added to the cart automatically. To make it $0 you also need a matching Shopify automatic discount — see the setup note."
+      },
+      {
+        "type": "select",
+        "id": "cart_reward_3_icon",
+        "label": "Icon",
+        "options": [
+          { "value": "truck", "label": "Shipping truck" },
+          { "value": "gift", "label": "Gift" },
+          { "value": "star", "label": "Star" },
+          { "value": "heart", "label": "Heart" },
+          { "value": "percent", "label": "Percent" }
+        ],
+        "default": "gift",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "Rewards bar colors"
+      },
+      {
+        "type": "color",
+        "id": "cart_rewards_bar_fill",
+        "label": "Progress fill",
+        "default": "#1a1a1a",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "cart_rewards_bar_track",
+        "label": "Track (unfilled)",
+        "default": "#e7e7e7",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "cart_rewards_text_color",
+        "label": "Text",
+        "default": "#1a1a1a",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "cart_rewards_icon_on_color",
+        "label": "Reached icon",
+        "default": "#ffffff",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "cart_rewards_icon_off_color",
+        "label": "Locked icon",
+        "default": "#9b9b9b",
+        "visible_if": "{{ settings.cart_type == 'drawer' and settings.cart_rewards_enabled }}"
+      },
+      {
+        "type": "header",
         "content": "t:content.product_media"
       },
       {
@@ -2133,9 +2328,23 @@
       {
         "type": "checkbox",
         "id": "wishlist_card_icon_background",
-        "label": "Show white background behind heart icon",
-        "info": "The circular white background behind the wishlist heart on product cards.",
+        "label": "Show background behind heart icon",
+        "info": "The circular background behind the wishlist heart on product cards.",
         "default": true,
+        "visible_if": "{{ settings.wishlist_enabled and settings.wishlist_show_on_cards }}"
+      },
+      {
+        "type": "color",
+        "id": "wishlist_card_icon_background_color",
+        "label": "Background color",
+        "info": "Colour of the circle behind the heart. Leave blank for the default translucent white.",
+        "visible_if": "{{ settings.wishlist_enabled and settings.wishlist_show_on_cards and settings.wishlist_card_icon_background }}"
+      },
+      {
+        "type": "color",
+        "id": "wishlist_card_icon_color",
+        "label": "Heart icon color",
+        "info": "Colour of the wishlist heart on product cards. Leave blank to use the card's text colour. When an item is saved the heart turns red.",
         "visible_if": "{{ settings.wishlist_enabled and settings.wishlist_show_on_cards }}"
       },
       {

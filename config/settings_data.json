@@ -9,6 +9,14 @@
  */
 {
   "current": {
+    "cart_rewards_enabled": true,
+    "cart_reward_1_amount": 500,
+    "cart_reward_1_label": "Free shipping",
+    "cart_reward_1_icon": "truck",
+    "cart_reward_2_amount": 1000,
+    "cart_reward_2_label": "Free gift",
+    "cart_reward_2_icon": "gift",
+    "cart_reward_2_product": "showcase-2",
     "logo": "shopify://shop_images/mimoa-wordmark.svg",
     "logo_inverse": "shopify://shop_images/mimoa-wordmark-white.svg",
     "logo_height": 30,

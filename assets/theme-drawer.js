@@ -287,8 +287,12 @@ export class ThemeDrawer extends Component {
     this.removeAttribute('open');
     this.dispatchEvent(new DrawerCloseEvent());
 
-    // Only remove scroll-lock if this was the last open modal drawer.
-    if (this.#modalQuery.matches && !document.querySelector('theme-drawer[open]')) {
+    // Only remove scroll-lock if this was the last open modal drawer. Use
+    // #isModalMode() (matching open() and disconnectedCallback) rather than
+    // #modalQuery — `overlay` drawers (cart/wishlist) are modal at ALL widths,
+    // so on desktop #modalQuery is false and the lock would never be released,
+    // freezing page scroll after the drawer closes.
+    if (this.#isModalMode() && !document.querySelector('theme-drawer[open]')) {
       document.documentElement.removeAttribute('scroll-lock');
     }
 

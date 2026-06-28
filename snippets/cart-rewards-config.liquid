@@ -1,0 +1,35 @@
+{%- doc -%}
+  Emits the cart-rewards auto-gift config (tiers with a gift product) + loads the
+  controller. Rendered once in the cart drawer, in a stable spot so it survives
+  the section morph. The controller (assets/cart-rewards.js) auto-adds / removes
+  each tier's gift as the cart crosses its spend threshold; a matching Shopify
+  automatic discount is what makes the gift $0 at checkout.
+{%- enddoc -%}
+
+{%- if settings.cart_rewards_enabled -%}
+  {%- liquid
+    assign tiers_json = ''
+    for i in (1..3)
+      assign amt_key = 'cart_reward_' | append: i | append: '_amount'
+      assign product_key = 'cart_reward_' | append: i | append: '_product'
+      assign amt = settings[amt_key]
+      assign gift_product = settings[product_key]
+      if amt > 0 and gift_product != blank
+        assign gift_variant = gift_product.selected_or_first_available_variant
+        if gift_variant != blank
+          assign amt_cents = amt | times: 100
+          assign entry = '{"amount":' | append: amt_cents | append: ',"variantId":' | append: gift_variant.id | append: '}'
+          if tiers_json == ''
+            assign tiers_json = entry
+          else
+            assign tiers_json = tiers_json | append: ',' | append: entry
+          endif
+        endif
+      endif
+    endfor
+  -%}
+  {%- if tiers_json != '' -%}
+    <script type="application/json" data-cart-rewards-config>{"tiers":[{{ tiers_json }}]}</script>
+    <script src="{{ 'cart-rewards.js' | asset_url }}" type="module" fetchpriority="low"></script>
+  {%- endif -%}
+{%- endif -%}

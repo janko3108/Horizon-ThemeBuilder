@@ -10,16 +10,26 @@
 {%- if product != blank and settings.wishlist_enabled != false -%}
   {%- liquid
     assign toggle_class = 'favorite-toggle'
+    assign toggle_style = ''
     if variant == 'buy-buttons'
       assign toggle_class = toggle_class | append: ' favorite-toggle--buy-buttons'
-    elsif settings.wishlist_card_icon_background == false
-      assign toggle_class = toggle_class | append: ' favorite-toggle--no-bg'
+    else
+      # Product-card heart: colours come from Theme settings → Wishlist → Product card icon.
+      if settings.wishlist_card_icon_background == false
+        assign toggle_class = toggle_class | append: ' favorite-toggle--no-bg'
+      elsif settings.wishlist_card_icon_background_color != blank
+        assign toggle_style = toggle_style | append: '--favorite-bg:' | append: settings.wishlist_card_icon_background_color | append: ';'
+      endif
+      if settings.wishlist_card_icon_color != blank
+        assign toggle_style = toggle_style | append: '--favorite-color:' | append: settings.wishlist_card_icon_color | append: ';'
+      endif
     endif
     assign wishlist_icon = settings.wishlist_icon | default: 'heart'
   -%}
   <button
     type="button"
     class="{{ toggle_class }}"
+    {%- if toggle_style != blank %} style="{{ toggle_style }}"{% endif -%}
     data-action="toggle-favorites"
     data-handle="{{ product.handle | escape }}"
     data-title="{{ product.title | escape }}"
@@ -59,8 +69,8 @@
     padding: 0;
     border: none;
     border-radius: 50%;
-    background: rgb(var(--color-background-rgb, 255 255 255) / 0.82);
-    color: var(--color-foreground, #111);
+    background: var(--favorite-bg, rgb(var(--color-background-rgb, 255 255 255) / 0.82));
+    color: var(--favorite-color, var(--color-foreground, #111));
     cursor: pointer;
     line-height: 0;
     transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
@@ -80,7 +90,7 @@
     }
   }
 
-  .favorite-toggle:hover { background: var(--color-background, #fff); transform: scale(1.06); }
+  .favorite-toggle:hover { background: var(--favorite-bg, var(--color-background, #fff)); transform: scale(1.06); }
   .favorite-toggle__icon { display: none; line-height: 0; }
   .favorite-toggle .favorite-toggle__icon--empty { display: inline-flex; }
   .favorite-toggle[state="active"] .favorite-toggle__icon--empty { display: none; }
