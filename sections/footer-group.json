@@ -13,6 +13,7 @@
   "sections": {
     "divider_k3VQbJ": {
       "type": "divider",
+      "disabled": true,
       "name": "t:names.divider_section",
       "settings": {
         "background_color": "",
