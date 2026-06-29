@@ -119,7 +119,6 @@
               <scroll-hint
                 class="cart-drawer__content"
                 aria-label="{{ 'accessibility.cart' | t }}"
-                style="--header-height: 60px;"
               >
                 {% render 'cart-rewards-bar' %}
                 <scroll-hint class="cart-drawer__items">
@@ -193,6 +192,13 @@
   .cart-drawer__inner {
     display: flex;
     flex-direction: column;
+    /* Fill the dialog via flex-grow, not just height: 100%. The parent
+       cart-drawer-component is display: contents, and percentage-height fill
+       through it is unreliable across browsers — when it fails, the inner
+       collapses to content height and the summary stops short of the bottom,
+       leaving dead space beneath it. flex: 1 stretches it to the full 100dvh. */
+    flex: 1;
+    min-height: 0;
     height: 100%;
     overflow: hidden;
   }
@@ -204,19 +210,28 @@
   }
 
   .cart-drawer__content {
-    height: calc(100% - var(--header-height));
+    /* Fill the space below the header; the content area itself never scrolls —
+       only the item list does. This prevents a spurious outer scrollbar. */
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     padding: 0;
     background-color: var(--color-background);
-    flex-grow: 1;
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .cart-drawer__items {
     display: flex;
     flex-direction: column;
     padding-inline: var(--cart-drawer-padding);
+    /* Breathing room so the first product isn't pressed up against the
+       rewards bar's bottom border above it. */
+    padding-block-start: var(--padding-lg);
+    /* The single scroller: bounded by the flex layout so it only scrolls when
+       the products genuinely overflow, leaving the header + summary pinned. */
+    flex: 1 1 auto;
+    min-height: 0;
     overflow-y: auto;
   }
 
@@ -247,11 +262,15 @@
     position: sticky;
     bottom: 0;
     z-index: 1;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--gap-xl);
     padding: var(--cart-drawer-summary-padding);
+    /* Tighter bottom edge — the payment icons shouldn't have a big gap beneath
+       them. Top/side padding stays at the larger --cart-drawer-summary-padding. */
+    padding-block-end: var(--padding-md);
     margin-top: auto;
     background-color: var(--color-background);
     /* stylelint-disable-next-line color-named */
@@ -262,13 +281,13 @@
     }
   }
 
+  /* When the summary is too tall to pin (>50% of the drawer) it stops being
+     sticky, but the item list stays the single scroller — the flex layout
+     gives the summary its full height and the items the rest. Never give the
+     content area its own overflow, so there can only ever be ONE scrollbar. */
   .theme-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__summary {
     position: static;
     mask-image: none;
-  }
-
-  .theme-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__items {
-    overflow: unset;
   }
 
   .cart-actions summary {
@@ -298,6 +317,10 @@
 
   .cart-drawer--empty .cart-drawer__items {
     padding-inline: 0;
+    /* The loaded cart makes this the flex-grow scroller; in the empty state it's
+       just a placeholder, so don't let it expand and shove the message around. */
+    flex: 0 0 auto;
+    padding-block-start: 0;
   }
 
   cart-drawer-component:not(:has(.cart-form)) .cart-drawer__content {
@@ -308,6 +331,8 @@
 
   cart-drawer-component:not(:has(.cart-form)) .cart-drawer__items {
     padding-inline: 0;
+    flex: 0 0 auto;
+    padding-block-start: 0;
   }
 
   @media screen and (prefers-reduced-motion: no-preference) {
@@ -338,7 +363,9 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    margin-block-start: var(--padding-lg);
+    /* Top spacing comes from the summary's flex gap (--gap-xl); the bottom gap
+       is controlled by the summary's reduced padding-block-end. */
+    margin-block: 0;
   }
 
   .cart-fk-payment-icon {

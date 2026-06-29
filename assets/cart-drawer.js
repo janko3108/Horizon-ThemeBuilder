@@ -1,6 +1,6 @@
 import { Component } from '@theme/component';
 import { StandardEvents } from '@shopify/events';
-import { DrawerOpenEvent } from '@theme/theme-drawer';
+import { DrawerOpenEvent, DrawerCloseEvent } from '@theme/theme-drawer';
 
 /**
  * A custom element that manages cart drawer behavior within a `<theme-drawer>`.
@@ -32,6 +32,7 @@ class CartDrawerComponent extends Component {
     super.connectedCallback();
     document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.addEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
+    this.#themeDrawer?.addEventListener(DrawerCloseEvent.eventName, this.#handleDrawerClose);
 
     // The restore path sets [open] before this module loads, so the
     // theme-drawer:open event will have already fired. Use the attribute
@@ -45,12 +46,25 @@ class CartDrawerComponent extends Component {
     super.disconnectedCallback();
     document.removeEventListener(StandardEvents.cartLinesUpdate, this.#handleCartLinesUpdate);
     this.#themeDrawer?.removeEventListener(DrawerOpenEvent.eventName, this.#handleDrawerOpen);
+    this.#themeDrawer?.removeEventListener(DrawerCloseEvent.eventName, this.#handleDrawerClose);
   }
 
   /**
    * Handles the theme-drawer opening — updates sticky state and wires up the installments CTA.
    */
   #handleDrawerOpen = () => {
+    // Freeze background page scroll while the drawer is open. The drawer is a
+    // modal overlay at all widths, so the page behind must not scroll — without
+    // this the page keeps its own scrollbar next to the drawer's, giving the
+    // appearance of "two scrollbars". Idempotent with the theme's modal lock.
+    document.documentElement.setAttribute('scroll-lock', '');
+
+    // Reconcile free-gift rewards whenever the drawer opens. Opening the drawer
+    // is the moment the shopper sees the cart, so this guarantees an eligible
+    // gift is added/shown even if the live cartLinesUpdate reconcile was missed
+    // or raced — no hard refresh required. sync() no-ops if already in sync.
+    /** @type {any} */ (window).__cartRewardsController?.sync?.();
+
     this.#updateStickyState();
 
     // Close cart drawer when installments CTA is clicked to avoid overlapping dialogs.
@@ -60,6 +74,17 @@ class CartDrawerComponent extends Component {
       const cta = this.querySelector('shopify-payment-terms')?.shadowRoot?.querySelector('#shopify-installments-cta');
       cta?.addEventListener('click', () => this.#themeDrawer?.close(), { once: true });
     });
+  };
+
+  /**
+   * Releases the background scroll lock once the drawer closes — but only if no
+   * other drawer is still open. The closing drawer's [open] attribute is already
+   * removed before DrawerCloseEvent fires, so it won't match its own selector.
+   */
+  #handleDrawerClose = () => {
+    if (!document.querySelector('theme-drawer[open]')) {
+      document.documentElement.removeAttribute('scroll-lock');
+    }
   };
 
   /**

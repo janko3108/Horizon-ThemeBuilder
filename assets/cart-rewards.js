@@ -1,4 +1,5 @@
 import { CartLinesUpdateEvent, StandardEvents } from '@shopify/events';
+import { morphSection } from '@theme/section-renderer';
 
 /**
  * Cart rewards auto-gift controller.
@@ -23,6 +24,7 @@ const MAX_PASSES = 6;
 
 class CartRewardsController {
   #busy = false;
+  #pending = false;
 
   constructor() {
     document.addEventListener(StandardEvents.cartLinesUpdate, this.#handleCartUpdate);
@@ -41,10 +43,22 @@ class CartRewardsController {
   }
 
   // Arrow field so it's bound to the instance (private methods can't be reassigned).
-  #handleCartUpdate = () => {
-    // Our own mutations set #busy; ignore them to avoid a feedback loop.
-    if (this.#busy) return;
-    this.sync();
+  #handleCartUpdate = (event) => {
+    // Our own mutations set #busy; queue a re-run instead of dropping the event,
+    // so a threshold crossed mid-sync still gets reconciled.
+    if (this.#busy) {
+      this.#pending = true;
+      return;
+    }
+    // Reconcile only AFTER the triggering mutation has fully settled, so our
+    // /cart.js read reflects the committed cart rather than an in-flight one
+    // (a too-early read sees the pre-change total and skips the gift).
+    const promise = event?.promise;
+    if (promise && typeof promise.then === 'function') {
+      promise.then(() => this.sync(), () => this.sync());
+    } else {
+      this.sync();
+    }
   };
 
   #cartUrl(suffix = '') {
@@ -60,7 +74,10 @@ class CartRewardsController {
   }
 
   async #fetchCart() {
-    const res = await fetch(`${this.#cartUrl('.js')}`);
+    // no-store: the cart was just mutated; a cached /cart.js can return the
+    // pre-change total, so the spend threshold reads as not-yet-reached and the
+    // gift is never added until a full reload re-fetches it fresh.
+    const res = await fetch(`${this.#cartUrl('.js')}`, { cache: 'no-store' });
     return res.json();
   }
 
@@ -148,6 +165,20 @@ class CartRewardsController {
       }
 
       if (performedLines.length > 0) {
+        // Directly re-render any OPEN cart drawer so the gift shows live. The
+        // dispatched event below also re-renders and notifies other listeners
+        // (cart count, etc.), but relying on it alone left an already-open
+        // drawer stale until it was closed and reopened — this guarantees the
+        // visible drawer reflects the gift immediately. Same HTML, so if the
+        // event's morph also runs it's a no-op.
+        if (lastSections) {
+          for (const node of document.querySelectorAll('cart-items-component[data-drawer]')) {
+            const id = node instanceof HTMLElement ? node.dataset.sectionId : null;
+            const html = id ? lastSections[id] : null;
+            if (typeof html === 'string') morphSection(id, html, { mode: 'hydration' });
+          }
+        }
+
         // One render with the final cart + sections, via the theme's own event.
         // `lines` must contain >=1 entry or the event is rejected; the actual
         // re-render reads detail.sections (lines are only for optimistic UI).
@@ -174,6 +205,12 @@ class CartRewardsController {
       console.warn('[cart-rewards] sync failed:', error);
     } finally {
       this.#busy = false;
+      // A cart change arrived while we were syncing — reconcile again so it
+      // isn't lost (e.g. the threshold was crossed mid-sync).
+      if (this.#pending) {
+        this.#pending = false;
+        this.sync();
+      }
     }
   }
 }

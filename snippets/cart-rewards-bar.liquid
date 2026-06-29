@@ -237,8 +237,9 @@
     text-align: right;
   }
 
-  /* Empty cart: pin the bar to the top and centre the empty message in the
-     space beneath it (overrides the empty-drawer "centre everything" rules). */
+  /* Empty cart: pin the rewards bar to the top, then vertically centre the empty
+     message in the space beneath it (so it sits in the middle of the drawer
+     rather than crammed under the bar). */
   .cart-drawer--empty .cart-drawer__content:has(.cart-rewards) {
     justify-content: flex-start;
     align-items: stretch;
@@ -250,6 +251,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 16px;
     text-align: center;
   }
 {% endstylesheet %}
